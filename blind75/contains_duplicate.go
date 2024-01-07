@@ -1,3 +1,5 @@
+package blind75
+
 func containsDuplicate(nums []int) bool {
 	if len(nums) <= 1 {
 		return false
@@ -5,7 +7,7 @@ func containsDuplicate(nums []int) bool {
 	nm := make(map[int]struct{})
 	for _, v := range nums {
 		if _, ok := nm[v]; ok {
-			return true;
+			return true
 		}
 		nm[v] = struct{}{}
 	}
