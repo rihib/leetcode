@@ -4,12 +4,13 @@ func containsDuplicate(nums []int) bool {
 	if len(nums) <= 1 {
 		return false
 	}
+
 	nm := make(map[int]struct{})
-	for _, v := range nums {
-		if _, ok := nm[v]; ok {
+	for _, n := range nums {
+		if _, ok := nm[n]; ok {
 			return true
 		}
-		nm[v] = struct{}{}
+		nm[n] = struct{}{}
 	}
 	return false
 }
