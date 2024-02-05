@@ -6,7 +6,6 @@ func isAnagram(s string, t string) bool {
 	}
 
 	var freq [26]int
-
 	for i := 0; i < len(s); i++ {
 		freq[s[i]-'a']++
 		freq[t[i]-'a']--
