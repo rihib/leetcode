@@ -10,11 +10,11 @@ func groupAnagrams(strs []string) [][]string {
 		m[freq] = append(m[freq], s)
 	}
 
-	result := make([][]string, len(m))
+	res := make([][]string, len(m))
 	i := 0
 	for _, v := range m {
-		result[i] = v
+		res[i] = v
 		i++
 	}
-	return result
+	return res
 }
