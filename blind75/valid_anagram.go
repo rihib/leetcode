@@ -10,6 +10,7 @@ func isAnagram(s string, t string) bool {
 		freq[s[i]-'a']++
 		freq[t[i]-'a']--
 	}
+
 	for _, v := range freq {
 		if v != 0 {
 			return false
