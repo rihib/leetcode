@@ -9,6 +9,7 @@ func containsDuplicate2(nums []int) bool {
 	for _, n := range nums {
 		m[n] = struct{}{}
 	}
+
 	if len(nums) != len(m) {
 		return true
 	}
