@@ -9,6 +9,7 @@ func isAnagram_unicode(s string, t string) bool {
 	for _, r := range s {
 		freq[r]++
 	}
+
 	for _, r := range t {
 		freq[r]--
 		if freq[r] < 0 {
