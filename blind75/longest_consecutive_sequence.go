@@ -8,12 +8,12 @@ func longestConsecutive(nums []int) int {
 
 	max_len := 0
 	for n := range m {
-		if _, found := m[n-1]; found {
+		if _, ok := m[n-1]; ok {
 			continue
 		}
 
 		for l := 1; ; l++ {
-			if _, found := m[n+l]; !found {
+			if _, ok := m[n+l]; !ok {
 				if l > max_len {
 					max_len = l
 				}

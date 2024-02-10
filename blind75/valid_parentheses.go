@@ -5,9 +5,9 @@ func isValid(s string) bool {
 	var stack []rune
 
 	for _, r := range s {
-		v, found := brackets[r]
+		v, ok := brackets[r]
 
-		if !found {
+		if !ok {
 			stack = append(stack, r)
 			continue
 		}
