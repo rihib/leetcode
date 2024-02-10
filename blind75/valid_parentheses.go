@@ -1,8 +1,8 @@
 package blind75
 
 func isValid(s string) bool {
-	var stack []rune
 	brackets := map[rune]rune{')': '(', '}': '{', ']': '['}
+	var stack []rune
 
 	for _, r := range s {
 		v, found := brackets[r]
