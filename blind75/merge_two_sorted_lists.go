@@ -20,10 +20,11 @@ func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
 		cur = cur.Next
 	}
 
-	if list1 != nil {
-		cur.Next = list1
-	} else {
+	if list1 == nil {
 		cur.Next = list2
+	}
+	if list2 == nil {
+		cur.Next = list1
 	}
 
 	return dummy.Next
