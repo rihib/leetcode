@@ -4,17 +4,11 @@ import "math"
 
 func maxProfit(prices []int) int {
 	res := 0
-	min := math.MaxUint32
+	minPrice := math.MaxUint32
 
 	for _, price := range prices {
-		if price <= min {
-			min = price
-			continue
-		}
-
-		if price-min > res {
-			res = price - min
-		}
+		minPrice = min(price, minPrice)
+		res = max(price-minPrice, res)
 	}
 
 	return res
