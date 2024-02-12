@@ -3,7 +3,7 @@ package blind75
 import "math"
 
 func maxProfit(prices []int) int {
-	maxProfit := 0
+	res := 0
 	min := math.MaxUint32
 
 	for _, price := range prices {
@@ -12,10 +12,10 @@ func maxProfit(prices []int) int {
 			continue
 		}
 
-		if price-min > maxProfit {
-			maxProfit = price - min
+		if price-min > res {
+			res = price - min
 		}
 	}
 
-	return maxProfit
+	return res
 }
