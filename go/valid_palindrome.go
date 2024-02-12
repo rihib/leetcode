@@ -6,19 +6,19 @@ func isPalindrome(s string) bool {
 	i := 0
 	j := len(s) - 1
 	for i < j {
-		si := rune(s[i])
-		sj := rune(s[j])
+		ri := rune(s[i])
+		rj := rune(s[j])
 
-		if !(unicode.IsLetter(si) || unicode.IsDigit(si)) {
+		if !(unicode.IsLetter(ri) || unicode.IsDigit(ri)) {
 			i++
 			continue
 		}
-		if !(unicode.IsLetter(sj) || unicode.IsDigit(sj)) {
+		if !(unicode.IsLetter(rj) || unicode.IsDigit(rj)) {
 			j--
 			continue
 		}
 
-		if unicode.ToLower(si) != unicode.ToLower(sj) {
+		if unicode.ToLower(ri) != unicode.ToLower(rj) {
 			return false
 		}
 
