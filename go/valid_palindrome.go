@@ -3,22 +3,20 @@ package blind75
 import "unicode"
 
 func isPalindrome(s string) bool {
+	r := []rune(s)
 	i := 0
-	j := len(s) - 1
+	j := len(r) - 1
 	for i < j {
-		ri := rune(s[i])
-		rj := rune(s[j])
-
-		if !(unicode.IsLetter(ri) || unicode.IsDigit(ri)) {
+		if !(unicode.IsLetter(r[i]) || unicode.IsDigit(r[i])) {
 			i++
 			continue
 		}
-		if !(unicode.IsLetter(rj) || unicode.IsDigit(rj)) {
+		if !(unicode.IsLetter(r[j]) || unicode.IsDigit(r[j])) {
 			j--
 			continue
 		}
 
-		if unicode.ToLower(ri) != unicode.ToLower(rj) {
+		if unicode.ToLower(r[i]) != unicode.ToLower(r[j]) {
 			return false
 		}
 
