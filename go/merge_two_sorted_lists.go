@@ -10,7 +10,7 @@ func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
 	cur := dummy
 
 	for list1 != nil && list2 != nil {
-		if list1.Val <= list2.Val {
+		if list1.Val < list2.Val {
 			cur.Next = list1
 			list1 = list1.Next
 		} else {
