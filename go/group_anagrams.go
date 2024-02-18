@@ -1,3 +1,4 @@
+//lint:file-ignore U1000 Ignore all unused code
 package blind75
 
 func groupAnagrams(strs []string) [][]string {
