@@ -5,8 +5,7 @@ import "unicode"
 
 func isPalindrome(s string) bool {
 	r := []rune(s)
-	i := 0
-	j := len(r) - 1
+	i, j := 0, len(r)-1
 	for i < j {
 		if !(unicode.IsLetter(r[i]) || unicode.IsDigit(r[i])) {
 			i++

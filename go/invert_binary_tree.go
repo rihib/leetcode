@@ -10,8 +10,7 @@ type TreeNode struct {
 func invertTree(root *TreeNode) *TreeNode {
 	if root != nil {
 		tmp := root.Left
-		root.Left = invertTree(root.Right)
-		root.Right = invertTree(tmp)
+		root.Left, root.Right = invertTree(root.Right), invertTree(tmp)
 	}
 	return root
 }
