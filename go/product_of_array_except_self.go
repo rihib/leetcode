@@ -1,5 +1,5 @@
 //lint:file-ignore U1000 Ignore all unused code
-package blind75
+package main
 
 func productExceptSelf(nums []int) []int {
 	res := make([]int, len(nums))

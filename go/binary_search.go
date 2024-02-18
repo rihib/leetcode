@@ -1,5 +1,5 @@
 //lint:file-ignore U1000 Ignore all unused code
-package blind75
+package main
 
 func search(nums []int, target int) int {
 	left := 0
