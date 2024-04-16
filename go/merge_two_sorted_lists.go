@@ -1,11 +1,6 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
-
 func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
 	dummy := new(ListNode)
 	cur := dummy
