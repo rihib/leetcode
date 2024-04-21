@@ -2,11 +2,11 @@
 package main
 
 func isValid(s string) bool {
-	brackets := map[rune]rune{')': '(', '}': '{', ']': '['}
+	p := map[rune]rune{')': '(', '}': '{', ']': '['}
 	var stack []rune
 
 	for _, r := range s {
-		v, ok := brackets[r]
+		v, ok := p[r]
 
 		if !ok {
 			stack = append(stack, r)
