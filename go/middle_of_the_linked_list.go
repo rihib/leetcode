@@ -2,30 +2,15 @@
 package main
 
 func middleNode(head *ListNode) *ListNode {
-	// TestCase: [], [1], [1, 2], [1, 2, 3], [1, 2, 3, 4]
-	if head == nil {
-		return nil
+	if head == nil || head.Next == nil {
+		return head
 	}
 
-	l := getListLen(head)
-	mid_idx := l / 2
-	mid := head
-	for i := 0; i < mid_idx; i++ {
-		mid = mid.Next
-	}
-	return mid
-}
+	slow, fast := head, head
 
-func getListLen(head *ListNode) int {
-	if head == nil {
-		return 0
+	for fast != nil && fast.Next != nil {
+		slow, fast = slow.Next, fast.Next.Next
 	}
 
-	l := 0
-	for head != nil {
-		l++
-		head = head.Next
-	}
-
-	return l
+	return slow
 }
