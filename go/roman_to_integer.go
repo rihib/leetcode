@@ -1,71 +1,35 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-import (
-	"log"
-)
-
 func romanToInt(s string) int {
-	s_list := []rune(s)
-	result := 0
-
-	symbols := map[rune]int{
-		'I': 1,
-		'V': 5,
-		'X': 10,
-		'L': 50,
-		'C': 100,
-		'D': 500,
-		'M': 1000,
+	symbols := map[string]int{
+		"I":  1,
+		"IV": 4,
+		"V":  5,
+		"IX": 9,
+		"X":  10,
+		"XL": 40,
+		"L":  50,
+		"XC": 90,
+		"C":  100,
+		"CD": 400,
+		"D":  500,
+		"CM": 900,
+		"M":  1000,
 	}
 
+	result := 0
+	runes := []rune(s)
 	for i := 0; i < len(s); i++ {
-		n, ok := symbols[s_list[i]]
-
-		if !ok {
-			log.Fatal("Invalid symbol")
+		if i+1 < len(runes) && symbols[string(runes[i:i+2])] != 0 {
+			result += symbols[string(runes[i:i+2])]
+			i++
+			continue
 		}
 
-		if i+1 < len(s) {
-			if s_list[i] == 'I' {
-				if s_list[i+1] == 'V' {
-					result += 4
-					i++
-					continue
-				}
-				if s_list[i+1] == 'X' {
-					result += 9
-					i++
-					continue
-				}
-			}
-			if s_list[i] == 'X' {
-				if s_list[i+1] == 'L' {
-					result += 40
-					i++
-					continue
-				}
-				if s_list[i+1] == 'C' {
-					result += 90
-					i++
-					continue
-				}
-			}
-			if s_list[i] == 'C' {
-				if s_list[i+1] == 'D' {
-					result += 400
-					i++
-					continue
-				}
-				if s_list[i+1] == 'M' {
-					result += 900
-					i++
-					continue
-				}
-			}
+		if symbols[string(runes[i])] != 0 {
+			result += symbols[string(runes[i])]
 		}
-
-		result += n
 	}
 
 	return result
