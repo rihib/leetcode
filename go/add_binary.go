@@ -9,28 +9,28 @@ import (
 func addBinary(a, b string) string {
 	// TestCase: [0, 1], [1, 1], [11, 1]
 	maxLen := max(len(a), len(b))
-	var reversed_result strings.Builder
+	var reversedRes strings.Builder
 	carry := 0
 
 	for i := 1; i <= maxLen; i++ {
-		a_bit, b_bit := 0, 0
+		bitA, bitB := 0, 0
 
 		if len(a) >= i {
-			a_bit = int(a[len(a)-i] - '0')
+			bitA = int(a[len(a)-i] - '0')
 		}
 		if len(b) >= i {
-			b_bit = int(b[len(b)-i] - '0')
+			bitB = int(b[len(b)-i] - '0')
 		}
 
-		sum := a_bit + b_bit + carry
+		sum := bitA + bitB + carry
 		carry = sum / 2
-		reversed_result.WriteByte(byte(sum%2) + '0')
+		reversedRes.WriteByte(byte(sum%2) + '0')
 	}
 	if carry > 0 {
-		reversed_result.WriteByte(byte(carry) + '0')
+		reversedRes.WriteByte(byte(carry) + '0')
 	}
 
-	result := []rune(reversed_result.String())
-	slices.Reverse(result)
-	return string(result)
+	res := []rune(reversedRes.String())
+	slices.Reverse(res)
+	return string(res)
 }
