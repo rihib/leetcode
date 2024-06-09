@@ -4,8 +4,8 @@ package main
 func hammingWeight(n int) int {
 	cnt := 0
 	for n > 0 {
-		cnt += n % 2
-		n /= 2
+		n &= n - 1
+		cnt += 1
 	}
 	return cnt
 }
