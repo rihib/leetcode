@@ -8,8 +8,8 @@ import (
 
 func addBinary(a, b string) string {
 	// TestCase: [0, 1], [1, 1], [11, 1]
-	maxLen := max(len(a), len(b))
 	var reversedRes strings.Builder
+	maxLen := max(len(a), len(b))
 	carry := 0
 
 	for i := 1; i <= maxLen; i++ {
