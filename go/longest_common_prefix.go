@@ -1,17 +1,18 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-import "strings"
+import "sort"
 
 func longestCommonPrefix(strs []string) string {
-	var prefix strings.Builder
-	for i := 0; i < len(strs[0]); i++ {
-		for _, word := range strs {
-			if i == len(word) || strs[0][i] != word[i] {
-				return prefix.String()
-			}
-		}
-		prefix.WriteByte(strs[0][i])
+	if len(strs) == 1 {
+		return strs[0]
 	}
-	return prefix.String()
+
+	sort.Strings(strs)
+	for i := range strs[0] {
+		if strs[0][i] != strs[len(strs)-1][i] {
+			return strs[0][:i]
+		}
+	}
+	return strs[0]
 }
