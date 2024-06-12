@@ -2,32 +2,14 @@
 package main
 
 func isPalindromeNumber(x int) bool {
-	// TestCase: -1, 0, 1, 12, 121, 1231
-
 	if x < 0 {
 		return false
 	}
-	if x <= 9 {
-		return true
-	}
 
-	var nums []int
+	original, reversed := x, 0
 	for x > 0 {
-		nums = append(nums, x%10)
+		reversed = reversed*10 + x%10
 		x /= 10
 	}
-
-	for i, n := range nums {
-		j := len(nums) - 1 - i
-
-		if i >= j {
-			break
-		}
-
-		if n != nums[j] {
-			return false
-		}
-	}
-
-	return true
+	return original == reversed
 }
