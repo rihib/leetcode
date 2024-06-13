@@ -9,18 +9,17 @@ type TreeBalance struct {
 }
 
 func isBalanced(root *TreeNode) bool {
-	return traversal(root).IsBalanced
+	return checkBalance(root).IsBalanced
 }
 
-func traversal(root *TreeNode) TreeBalance {
+func checkBalance(root *TreeNode) TreeBalance {
 	if root == nil {
 		return TreeBalance{true, 0}
 	}
 
-	l, r := traversal(root.Left), traversal(root.Right)
-	b := l.IsBalanced &&
-		r.IsBalanced &&
-		(int(math.Abs(float64(l.Height)-float64(r.Height))) <= 1)
+	l, r := checkBalance(root.Left), checkBalance(root.Right)
+	b := l.IsBalanced && r.IsBalanced &&
+		math.Abs(float64(l.Height-r.Height)) <= 1
 	h := max(l.Height, r.Height) + 1
 	return TreeBalance{b, h}
 }
