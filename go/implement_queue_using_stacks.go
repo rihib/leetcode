@@ -15,24 +15,18 @@ func (q *MyQueue) Push(x int) {
 }
 
 func (q *MyQueue) Pop() int {
-	tail := q.Peek()
+	x := q.Peek()
 	q.OutputStack = q.OutputStack[:len(q.OutputStack)-1]
-	return tail
+	return x
 }
 
 func (q *MyQueue) Peek() int {
-	if q.Empty() {
-		return -1
-	}
-
 	if len(q.OutputStack) == 0 {
 		for len(q.InputStack) > 0 {
-			tail := q.InputStack[len(q.InputStack)-1]
+			q.OutputStack = append(q.OutputStack, q.InputStack[len(q.InputStack)-1])
 			q.InputStack = q.InputStack[:len(q.InputStack)-1]
-			q.OutputStack = append(q.OutputStack, tail)
 		}
 	}
-
 	return q.OutputStack[len(q.OutputStack)-1]
 }
 
