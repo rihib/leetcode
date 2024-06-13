@@ -2,10 +2,10 @@
 package main
 
 func moveZeroes(nums []int) {
-	for l, r := 0, 0; r < len(nums); r++ {
-		if nums[r] != 0 {
-			nums[l], nums[r] = nums[r], nums[l]
-			l++
+	for nonZero, cur := 0, 0; cur < len(nums); cur++ {
+		if nums[cur] != 0 {
+			nums[nonZero], nums[cur] = nums[cur], nums[nonZero]
+			nonZero++
 		}
 	}
 }
