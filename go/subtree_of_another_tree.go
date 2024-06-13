@@ -8,18 +8,17 @@ func isSubtree(root *TreeNode, subRoot *TreeNode) bool {
 		return subRoot == nil
 	}
 
-	return isPartOfSubtree(root, subRoot) ||
-		isSubtree(root.Left, subRoot) ||
-		isSubtree(root.Right, subRoot)
+	return areEqualTrees(root, subRoot) ||
+		isSubtree(root.Left, subRoot) || isSubtree(root.Right, subRoot)
 }
 
-func isPartOfSubtree(root *TreeNode, subRoot *TreeNode) bool {
-	if root == nil && subRoot == nil {
+func areEqualTrees(t1 *TreeNode, t2 *TreeNode) bool {
+	if t1 == nil && t2 == nil {
 		return true
 	}
-	if root == nil || subRoot == nil || root.Val != subRoot.Val {
+	if t1 == nil || t2 == nil || t1.Val != t2.Val {
 		return false
 	}
-	return isPartOfSubtree(root.Left, subRoot.Left) &&
-		isPartOfSubtree(root.Right, subRoot.Right)
+	return areEqualTrees(t1.Left, t2.Left) &&
+		areEqualTrees(t1.Right, t2.Right)
 }
