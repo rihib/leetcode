@@ -2,18 +2,12 @@
 package main
 
 func hasCycle(head *ListNode) bool {
-	if head == nil || head.Next == nil {
-		return false
-	}
-
-	turtle, rabbit := head.Next, head.Next.Next
-	for turtle != rabbit {
-		if rabbit == nil || rabbit.Next == nil {
-			return false
+	fast, slow := head, head
+	for fast != nil && fast.Next != nil {
+		fast, slow = fast.Next.Next, slow.Next
+		if fast == slow {
+			return true
 		}
-
-		turtle = turtle.Next
-		rabbit = rabbit.Next.Next
 	}
-	return true
+	return false
 }
