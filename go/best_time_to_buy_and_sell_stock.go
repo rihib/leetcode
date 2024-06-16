@@ -2,11 +2,10 @@
 package main
 
 func maxProfit(prices []int) int {
-	res := 0
-	minProfit := prices[0]
-	for i := 0; i < len(prices); i++ {
-		res = max(res, prices[i]-minProfit)
-		minProfit = min(minProfit, prices[i])
+	minPrice, maxProfit := prices[0], 0
+	for _, n := range prices {
+		minPrice = min(minPrice, n)
+		maxProfit = max(maxProfit, n-minPrice)
 	}
-	return res
+	return maxProfit
 }
