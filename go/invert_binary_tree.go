@@ -3,8 +3,7 @@ package main
 
 func invertTree(root *TreeNode) *TreeNode {
 	if root != nil {
-		tmp := root.Left
-		root.Left, root.Right = invertTree(root.Right), invertTree(tmp)
+		root.Left, root.Right = invertTree(root.Right), invertTree(root.Left)
 	}
 	return root
 }
