@@ -25,8 +25,8 @@ func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
 }
 
 func mergeTwoLists2(list1 *ListNode, list2 *ListNode) *ListNode {
-	sorted := new(ListNode)
-	tail := sorted
+	dummy := new(ListNode)
+	tail := dummy
 
 	for list1 != nil || list2 != nil {
 		if list1 == nil {
@@ -47,5 +47,5 @@ func mergeTwoLists2(list1 *ListNode, list2 *ListNode) *ListNode {
 		tail.Next = nil
 	}
 
-	return sorted.Next
+	return dummy.Next
 }
