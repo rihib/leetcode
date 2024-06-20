@@ -19,7 +19,7 @@ func checkBalance(root *TreeNode) TreeBalance {
 
 	l, r := checkBalance(root.Left), checkBalance(root.Right)
 	b := l.IsBalanced && r.IsBalanced &&
-		math.Abs(float64(l.Height-r.Height)) <= 1
+		math.Abs(float64(l.Height-r.Height)) <= 1.0
 	h := max(l.Height, r.Height) + 1
 	return TreeBalance{b, h}
 }
