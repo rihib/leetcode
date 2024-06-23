@@ -14,6 +14,10 @@ package reverselinkedlist
 		- 変数名としてreversedHeadか、reversedListHeadのどちらの方が良いか？
 			- reversedListHeadだとこれぐらいのコードの短さで使うにしては少し長すぎるかなと思った
 				のでここではreversedHeadでも十分通じると思い、これにしました
+
+	他の人のPRを見て思ったこと
+		- スタックを使って解く方法も確かにあるなと思いました。パフォーマンス的には再帰を使って解く
+			方法とほぼ同じ？（再帰もスタックを使っていると言えば使っている）
 */
 
 func reverseList_iterative_step3(head *ListNode) *ListNode {
