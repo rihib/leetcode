@@ -18,6 +18,13 @@ package reverselinkedlist
 	他の人のPRを見て思ったこと
 		- スタックを使って解く方法も確かにあるなと思いました。パフォーマンス的には再帰を使って解く
 			方法とほぼ同じ？（再帰もスタックを使っていると言えば使っている）
+
+		- スタックとヒープ
+			https://github.com/Ryotaro25/leetcode_first60/pull/8/files#r1617095525
+			https://github.com/Ryotaro25/leetcode_first60/pull/8/files#r1616548694
+
+		- 再帰について
+			https://github.com/seal-azarashi/leetcode/pull/7/files#r1640157920
 */
 
 func reverseList_iterative_step3(head *ListNode) *ListNode {
