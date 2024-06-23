@@ -15,7 +15,7 @@ func reverseList_recurssive(head *ListNode) *ListNode {
 	}
 
 	next := head.Next
-	reversedHead := reverseList(next)
+	reversedHead := reverseList_recurssive(next)
 	head.Next, next.Next = nil, head
 	return reversedHead
 }
