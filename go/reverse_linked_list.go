@@ -9,14 +9,13 @@ func reverseList_iterative(head *ListNode) *ListNode {
 	return prev
 }
 
-func reverseList_recursive(head *ListNode) *ListNode {
-	// Test Case: [], [1], [1, 2], [1, 2, 3], [1, 2, 3, 4]
+func reverseList_recurssive(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
 
 	next := head.Next
-	reversedListHead := reverseList_recursive(next)
-	next.Next, head.Next = head, nil
-	return reversedListHead
+	reversedHead := reverseList(next)
+	head.Next, next.Next = nil, head
+	return reversedHead
 }
