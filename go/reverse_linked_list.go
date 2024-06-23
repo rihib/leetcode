@@ -3,19 +3,24 @@ package main
 
 func reverseList_iterative(head *ListNode) *ListNode {
 	var prev *ListNode
+
 	for head != nil {
-		prev, head, head.Next = head, head.Next, prev
+		next := head.Next
+		head.Next = prev
+		prev, head = head, next
 	}
+
 	return prev
 }
 
-func reverseList_recurssive(head *ListNode) *ListNode {
+func reverseList_recursive(head *ListNode) *ListNode {
+	// Test Case: [], [1], [1, 2], [1, 2, 3], [1, 2, 3, 4]
 	if head == nil || head.Next == nil {
 		return head
 	}
 
 	next := head.Next
-	reversedHead := reverseList_recurssive(next)
-	head.Next, next.Next = nil, head
-	return reversedHead
+	reversedListHead := reverseList_recursive(next)
+	next.Next, head.Next = head, nil
+	return reversedListHead
 }
