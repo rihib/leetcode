@@ -3,18 +3,18 @@ package main
 
 func groupAnagrams(strs []string) [][]string {
 	m := make(map[[26]int][]string)
-	for _, s := range strs {
+	for _, word := range strs {
 		var freq [26]int
-		for _, r := range s {
+		for _, r := range word {
 			freq[r-'a']++
 		}
-		m[freq] = append(m[freq], s)
+		m[freq] = append(m[freq], word)
 	}
 
 	res := make([][]string, len(m))
 	i := 0
-	for _, v := range m {
-		res[i] = v
+	for _, words := range m {
+		res[i] = words
 		i++
 	}
 	return res
