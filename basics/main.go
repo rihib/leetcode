@@ -35,13 +35,15 @@ func runSort(f func([]int) []int, testcases [][]int) {
 
 func getFunctionName(f interface{}) string {
 	full := runtime.FuncForPC(reflect.ValueOf(f).Pointer()).Name()
-	n := strings.TrimPrefix(full, "github.com/rihib/leetcode/basics/sort.")
+	n := "=====" +
+		strings.TrimPrefix(full, "github.com/rihib/leetcode/basics/sort.") +
+		"====="
 	return n
 }
 
 func print(nums []int) {
 	if len(nums) == 0 {
-		fmt.Print("none")
+		fmt.Print("Empty")
 	}
 	for _, n := range nums {
 		fmt.Printf("%d ", n)
