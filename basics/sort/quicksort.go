@@ -11,13 +11,18 @@ func Quicksort(nums []int) []int {
 }
 
 func partition(nums []int) int {
-	i := 1
-	for j := 1; j < len(nums); j++ {
-		if nums[j] < nums[0] {
-			nums[i], nums[j] = nums[j], nums[i]
-			i++
+	l, r := 1, len(nums)-1
+	for l <= r {
+		for l <= r && nums[l] <= nums[0] {
+			l++
+		}
+		for l <= r && nums[r] > nums[0] {
+			r--
+		}
+		if l < r {
+			nums[l], nums[r] = nums[r], nums[l]
 		}
 	}
-	nums[i-1], nums[0] = nums[0], nums[i-1]
-	return i - 1
+	nums[0], nums[r] = nums[r], nums[0]
+	return r
 }
