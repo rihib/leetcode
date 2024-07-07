@@ -10,6 +10,7 @@ func Quicksort(nums []int) []int {
 	return nums
 }
 
+// Using the two-pointer technique from both ends for better performance
 func partition(nums []int) int {
 	l, r := 1, len(nums)-1
 	for l <= r {
