@@ -11,6 +11,8 @@ func Quicksort(nums []int) []int {
 }
 
 // Using the two-pointer technique from both ends for better performance
+// The single-direction approach starting from the beginning is
+// more likely to result in skewed partitions
 func partition(nums []int) int {
 	l, r := 1, len(nums)-1
 	for l <= r {
