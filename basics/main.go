@@ -8,8 +8,13 @@ import (
 
 func main() {
 	nums := []int{4, 3, 2, 1}
-	sortedNums := sort.Insertion(nums)
-	for _, n := range sortedNums {
-		fmt.Println(n)
+	sorted := sort.Insertion(nums)
+	print(sorted)
+}
+
+func print(nums []int) {
+	for _, n := range nums {
+		fmt.Printf("%d ", n)
 	}
+	fmt.Print("\n")
 }
