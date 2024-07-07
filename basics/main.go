@@ -22,6 +22,7 @@ func main() {
 
 	runSort(sort.Insertion, testcases)
 	runSort(sort.Selection, testcases)
+	runSort(sort.Quicksort, testcases)
 }
 
 func runSort(f func([]int) []int, testcases [][]int) {
