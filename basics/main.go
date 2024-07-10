@@ -6,10 +6,16 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/rihib/leetcode/basics/queue"
 	"github.com/rihib/leetcode/basics/sort"
 )
 
 func main() {
+	testSort()
+	testPriorityQueue()
+}
+
+func testSort() {
 	testcases := [][]int{
 		{},
 		{1},
@@ -52,4 +58,25 @@ func print(nums []int) {
 		fmt.Printf("%d ", n)
 	}
 	fmt.Print("\n")
+}
+
+func testPriorityQueue() {
+	fmt.Println("=====Priority Queue=====")
+	pq := new(queue.PriorityQueue)
+
+	node, l, isEmpty := pq.Peek(), pq.Len(), pq.IsEmpty()
+	fmt.Printf("Peek returns nil: %t, Len: %d, IsEmpty: %t\n", node == nil, l, isEmpty)
+
+	node = pq.Pop()
+	fmt.Printf("Pop returns nil: %t\n", node == nil)
+
+	node = &queue.Node{Priority: 100, Val: 1}
+	fmt.Printf("Push Node: Priority is %d, Val is %d\n", node.Priority, node.Val)
+	pq.Push(*node)
+
+	node, l, isEmpty = pq.Peek(), pq.Len(), pq.IsEmpty()
+	fmt.Printf("Priority: %d, Val: %d, Len: %d, IsEmpty: %t\n", node.Priority, node.Val, l, isEmpty)
+
+	node = pq.Pop()
+	fmt.Printf("Pop Node: Priority is %d, Val is %d\n", node.Priority, node.Val)
 }
