@@ -6,6 +6,7 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/rihib/leetcode/basics/graph"
 	"github.com/rihib/leetcode/basics/queue"
 	"github.com/rihib/leetcode/basics/sort"
 )
@@ -13,6 +14,7 @@ import (
 func main() {
 	testSort()
 	testPriorityQueue()
+	testDijkstra()
 }
 
 func testSort() {
@@ -109,4 +111,22 @@ func testPriorityQueue() {
 
 	node, l, isEmpty = pq.Peek(), pq.Len(), pq.IsEmpty()
 	fmt.Printf("Peek returns nil: %t, Len: %d, IsEmpty: %t\n", node == nil, l, isEmpty)
+
+	fmt.Println("")
+}
+
+func testDijkstra() {
+	fmt.Println("=====Dijkstra=====")
+	g := &graph.Graph{
+		Nodes: make(map[int][]graph.Edge),
+	}
+	g.Nodes[0] = []graph.Edge{{To: 1, Weight: 4}, {To: 2, Weight: 1}}
+	g.Nodes[1] = []graph.Edge{{To: 3, Weight: 1}}
+	g.Nodes[2] = []graph.Edge{{To: 1, Weight: 2}, {To: 3, Weight: 5}}
+	g.Nodes[3] = []graph.Edge{}
+
+	dist := g.Dijkstra(0)
+	for node, distance := range dist {
+		fmt.Printf("Distance from node 0 to node %d is %d\n", node, distance)
+	}
 }
