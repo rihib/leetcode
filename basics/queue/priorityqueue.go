@@ -32,26 +32,18 @@ func (pq *PriorityQueue) Pop() *Node {
 
 	for parent := 0; ; {
 		l, r := parent*2+1, parent*2+2
-		if len(pq.heap) <= l {
+		largest := parent
+		if l < len(pq.heap) && pq.heap[l].Priority > pq.heap[parent].Priority {
+			largest = l
+		}
+		if r < len(pq.heap) && pq.heap[r].Priority > pq.heap[parent].Priority {
+			largest = r
+		}
+		if largest == parent {
 			break
 		}
-		if len(pq.heap) <= r {
-			if pq.heap[parent].Priority < pq.heap[l].Priority {
-				pq.heap[parent], pq.heap[l] = pq.heap[l], pq.heap[parent]
-				parent = l
-				continue
-			}
-		}
-		if pq.heap[parent].Priority < pq.heap[l].Priority ||
-			pq.heap[parent].Priority < pq.heap[r].Priority {
-			if pq.heap[l].Priority < pq.heap[r].Priority {
-				pq.heap[parent], pq.heap[l] = pq.heap[l], pq.heap[parent]
-				parent = l
-			} else {
-				pq.heap[parent], pq.heap[r] = pq.heap[r], pq.heap[parent]
-				parent = r
-			}
-		}
+		pq.heap[parent], pq.heap[largest] = pq.heap[largest], pq.heap[parent]
+		parent = largest
 	}
 
 	return &n

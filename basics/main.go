@@ -75,8 +75,38 @@ func testPriorityQueue() {
 	pq.Push(*node)
 
 	node, l, isEmpty = pq.Peek(), pq.Len(), pq.IsEmpty()
-	fmt.Printf("Priority: %d, Val: %d, Len: %d, IsEmpty: %t\n", node.Priority, node.Val, l, isEmpty)
+	fmt.Printf("Peek: Priority is %d and Val is %d, Len: %d, IsEmpty: %t\n", node.Priority, node.Val, l, isEmpty)
 
 	node = pq.Pop()
 	fmt.Printf("Pop Node: Priority is %d, Val is %d\n", node.Priority, node.Val)
+
+	node, l, isEmpty = pq.Peek(), pq.Len(), pq.IsEmpty()
+	fmt.Printf("Peek returns nil: %t, Len: %d, IsEmpty: %t\n", node == nil, l, isEmpty)
+
+	node = &queue.Node{Priority: 100, Val: 1}
+	fmt.Printf("Push Node: Priority is %d, Val is %d\n", node.Priority, node.Val)
+	pq.Push(*node)
+
+	node = &queue.Node{Priority: 200, Val: 2}
+	fmt.Printf("Push Node: Priority is %d, Val is %d\n", node.Priority, node.Val)
+	pq.Push(*node)
+
+	node = &queue.Node{Priority: 300, Val: 3}
+	fmt.Printf("Push Node: Priority is %d, Val is %d\n", node.Priority, node.Val)
+	pq.Push(*node)
+
+	node, l, isEmpty = pq.Peek(), pq.Len(), pq.IsEmpty()
+	fmt.Printf("Peek: Priority is %d and Val is %d, Len: %d, IsEmpty: %t\n", node.Priority, node.Val, l, isEmpty)
+
+	node = pq.Pop()
+	fmt.Printf("Pop Node: Priority is %d, Val is %d\n", node.Priority, node.Val)
+
+	node = pq.Pop()
+	fmt.Printf("Pop Node: Priority is %d, Val is %d\n", node.Priority, node.Val)
+
+	node = pq.Pop()
+	fmt.Printf("Pop Node: Priority is %d, Val is %d\n", node.Priority, node.Val)
+
+	node, l, isEmpty = pq.Peek(), pq.Len(), pq.IsEmpty()
+	fmt.Printf("Peek returns nil: %t, Len: %d, IsEmpty: %t\n", node == nil, l, isEmpty)
 }
