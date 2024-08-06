@@ -3,17 +3,13 @@ package main
 
 func lengthOfLongestSubstring(s string) int {
 	maxLen, head := 0, 0
-	inUse := make(map[byte]struct{})
+	inUse := make(map[byte]bool)
 	for tail := range s {
-		if _, ok := inUse[s[tail]]; ok {
-			for s[head] != s[tail] {
-				delete(inUse, s[head])
-				head++
-			}
+		for inUse[s[tail]] {
+			delete(inUse, s[head])
 			head++
-		} else {
-			inUse[s[tail]] = struct{}{}
 		}
+		inUse[s[tail]] = true
 		maxLen = max(maxLen, tail-head+1)
 	}
 	return maxLen
