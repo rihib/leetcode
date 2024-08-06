@@ -2,22 +2,19 @@
 package main
 
 func lengthOfLongestSubstring(s string) int {
-	runeS := []rune(s)
-	maxLen := 0
-	head := 0
-	using := make(map[rune]struct{})
-	for tail := 0; tail < len(runeS); tail++ {
-		if _, ok := using[runeS[tail]]; ok {
-			for runeS[head] != runeS[tail] {
-				delete(using, runeS[head])
+	maxLen, head := 0, 0
+	using := make(map[byte]struct{})
+	for tail := range s {
+		if _, ok := using[s[tail]]; ok {
+			for s[head] != s[tail] {
+				delete(using, s[head])
 				head++
 			}
 			head++
 		} else {
-			using[runeS[tail]] = struct{}{}
+			using[s[tail]] = struct{}{}
 		}
-		substring := runeS[head : tail+1]
-		maxLen = max(maxLen, len(substring))
+		maxLen = max(maxLen, tail-head+1)
 	}
 	return maxLen
 }
