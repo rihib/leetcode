@@ -5,18 +5,22 @@ func convert(s string, numRows int) string {
 	if numRows == 1 {
 		return s
 	}
-	var rows = make([][]rune, numRows)
+
+	rows := make([][]rune, numRows)
 	for i, r := range s {
-		tmp := i % (numRows*2 - 2)
-		if tmp < numRows {
-			rows[tmp] = append(rows[tmp], r)
+		offset := i % (numRows*2 - 2)
+		var rowNum int
+		if offset < numRows {
+			rowNum = offset
 		} else {
-			rows[2*numRows-tmp-2] = append(rows[2*numRows-tmp-2], r)
+			rowNum = 2*numRows - offset - 2
 		}
+		rows[rowNum] = append(rows[rowNum], r)
 	}
-	var res []rune
+
+	var oneline []rune
 	for _, row := range rows {
-		res = append(res, row...)
+		oneline = append(oneline, row...)
 	}
-	return string(res)
+	return string(oneline)
 }
