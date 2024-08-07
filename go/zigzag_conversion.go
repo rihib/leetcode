@@ -7,13 +7,11 @@ func convert(s string, numRows int) string {
 	}
 
 	rows := make([][]rune, numRows)
+	cycleLen := 2*numRows - 2
 	for i, r := range s {
-		offset := i % (numRows*2 - 2)
-		var rowNum int
-		if offset < numRows {
-			rowNum = offset
-		} else {
-			rowNum = 2*numRows - offset - 2
+		rowNum := i % cycleLen
+		if rowNum >= numRows {
+			rowNum = cycleLen - rowNum
 		}
 		rows[rowNum] = append(rows[rowNum], r)
 	}
