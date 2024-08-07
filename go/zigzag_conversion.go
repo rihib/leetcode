@@ -24,3 +24,23 @@ func convert(s string, numRows int) string {
 	}
 	return oneline.String()
 }
+
+func convert_anothersolution(s string, numRows int) string {
+	if numRows == 1 {
+		return s
+	}
+	var oneline strings.Builder
+	cycleLen := 2*numRows - 2
+	for rowNum := 0; rowNum < numRows; rowNum++ {
+		for i := rowNum; i < len(s); i += cycleLen {
+			oneline.WriteByte(s[i])
+			if 0 < rowNum && rowNum < numRows-1 {
+				diagIdx := i + cycleLen - rowNum*2
+				if diagIdx < len(s) {
+					oneline.WriteByte(s[diagIdx])
+				}
+			}
+		}
+	}
+	return oneline.String()
+}
