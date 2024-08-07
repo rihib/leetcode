@@ -24,13 +24,14 @@ func myAtoi(s string) int {
 
 	num := 0
 	for i < len(s) && '0' <= s[i] && s[i] <= '9' {
-		num = num*10 + int(s[i]-'0')
-		if sign == 1 && num > intMax {
+		next := int(s[i] - '0')
+		if sign != -1 && num > (intMax-next)/10 {
 			return intMax
 		}
-		if sign == -1 && -num < intMin {
+		if sign == -1 && -num < (intMin+next)/10 {
 			return intMin
 		}
+		num = num*10 + next
 		i++
 	}
 	return sign * num
