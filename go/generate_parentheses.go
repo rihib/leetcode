@@ -15,7 +15,7 @@ func generateParenthesis(n int) []string {
 			backtrack(open+1, closed)
 			stack = stack[:len(stack)-1]
 		}
-		if closed < open {
+		if open > closed {
 			stack = append(stack, ')')
 			backtrack(open, closed+1)
 			stack = stack[:len(stack)-1]
