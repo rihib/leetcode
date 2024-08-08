@@ -1,25 +1,26 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-import "sort"
-
 func nextPermutation(nums []int) {
-	for i := len(nums) - 1; i > 0; i-- {
-		if nums[i-1] < nums[i] {
-			candidate, candidateIndex := nums[i], i
-			for j := i; j < len(nums); j++ {
-				if nums[j] < candidate && nums[i-1] < nums[j] {
-					candidate, candidateIndex = nums[j], j
-				}
-			}
-			nums[i-1], nums[candidateIndex] = nums[candidateIndex], nums[i-1]
-			sort.Slice(nums[i:], func(a, b int) bool {
-				return nums[i+a] < nums[i+b]
-			})
-			return
-		}
+	if len(nums) < 2 {
+		return
 	}
-	sort.Slice(nums, func(a, b int) bool {
-		return nums[a] < nums[b]
-	})
+	i := len(nums) - 2
+	for i >= 0 && nums[i] >= nums[i+1] {
+		i--
+	}
+	if i >= 0 {
+		j := len(nums) - 1
+		for nums[j] <= nums[i] {
+			j--
+		}
+		nums[i], nums[j] = nums[j], nums[i]
+	}
+	reverse(nums[i+1:])
+}
+
+func reverse(nums []int) {
+	for i, j := 0, len(nums)-1; i < j; i, j = i+1, j-1 {
+		nums[i], nums[j] = nums[j], nums[i]
+	}
 }
