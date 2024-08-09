@@ -3,20 +3,16 @@ package main
 
 func searchInsert(nums []int, target int) int {
 	left, right := 0, len(nums)
-	var mid int
 	for left < right {
-		mid = (left + right) / 2
-		if target == nums[mid] {
+		mid := (left + right) / 2
+		if nums[mid] == target {
 			return mid
 		}
-		if target < nums[mid] {
-			right = mid
-		} else {
+		if nums[mid] < target {
 			left = mid + 1
+		} else {
+			right = mid
 		}
 	}
-	if target < nums[mid] {
-		return mid
-	}
-	return mid + 1
+	return left
 }
