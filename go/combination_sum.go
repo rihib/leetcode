@@ -4,18 +4,18 @@ package main
 import "sort"
 
 func combinationSum_dp(candidates []int, target int) [][]int {
-	combinations := make([][][]int, target+1)
-	combinations[0] = [][]int{{}}
+	combinationsGroups := make([][][]int, target+1)
+	combinationsGroups[0] = [][]int{{}}
 	for _, candidate := range candidates {
 		for i := candidate; i <= target; i++ {
-			for _, combination := range combinations[i-candidate] {
-				newCombination := append([]int(nil), combination...)
+			for _, combination := range combinationsGroups[i-candidate] {
+				newCombination := append([]int{}, combination...)
 				newCombination = append(newCombination, candidate)
-				combinations[i] = append(combinations[i], newCombination)
+				combinationsGroups[i] = append(combinationsGroups[i], newCombination)
 			}
 		}
 	}
-	return combinations[target]
+	return combinationsGroups[target]
 }
 
 func combinationSum_backtracking_stack(candidates []int, target int) [][]int {
@@ -68,3 +68,24 @@ func combinationSum_backtracking_recursion(candidates []int, target int) [][]int
 	generateCombinations(0, 0)
 	return combinations
 }
+
+// https://discord.com/channels/1084280443945353267/1233603535862628432/1237744279363915878
+// https://github.com/Exzrgs/LeetCode/pull/13#discussion_r1606819961
+// https://github.com/fhiyo/leetcode/pull/52#issuecomment-2248269934
+// Goは、ランタイムのスタックサイズがデフォルトが小さく、かつスタックサイズの大きさを最小にするような最適化を行っていないため、深さの数だけスタックを浪費する実装になっており、再帰の深さが極端に処理性能が落ちる要因になる。そのため、Goに慣れた人は自然と深い再帰処理はループ処理に書き換えるらしい？
+// https://ymotongpoo.hatenablog.com/entry/2015/02/23/165341
+// https://zenn.dev/nobonobo/articles/e651c66a15aaed657d6e#%E6%80%A7%E8%83%BD%E3%81%AFgo%E4%B8%AD%E7%B4%9A%E3%81%A7c%2B%2B%E7%8E%84%E4%BA%BA%E3%81%AE9%E5%89%B2%E4%BB%A5%E4%B8%8A
+// なぜbacktracking_stackの場合はsortしないとバグる？
+// 末尾再帰？
+// この前解いたバックトラッキングの問題をDPで解いてみる
+// 全ての組み合わせを出すのはバックトラッキングとDP以外になんかあったけ？それぞれのPros Consは？
+// appendは容量が余ってるとそのまま要素を入れるとかGPTが言ってなかったっけ
+
+// https://github.com/hayashi-ay/leetcode/pull/4
+// https://github.com/hayashi-ay/leetcode/pull/65
+// https://github.com/shining-ai/leetcode/pull/52
+// https://github.com/SuperHotDogCat/coding-interview/pull/11
+// https://github.com/goto-untrapped/Arai60/pull/15
+// https://github.com/Exzrgs/LeetCode/pull/13
+// https://github.com/nittoco/leetcode/pull/25
+// https://github.com/fhiyo/leetcode/pull/52
