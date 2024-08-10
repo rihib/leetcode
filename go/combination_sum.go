@@ -1,7 +1,53 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-func combinationSum(candidates []int, target int) [][]int {
+import "sort"
+
+func combinationSum_dp(candidates []int, target int) [][]int {
+	combinations := make([][][]int, target+1)
+	combinations[0] = [][]int{{}}
+	for _, candidate := range candidates {
+		for i := candidate; i <= target; i++ {
+			for _, combination := range combinations[i-candidate] {
+				newCombination := append([]int(nil), combination...)
+				newCombination = append(newCombination, candidate)
+				combinations[i] = append(combinations[i], newCombination)
+			}
+		}
+	}
+	return combinations[target]
+}
+
+func combinationSum_backtracking_stack(candidates []int, target int) [][]int {
+	sort.Ints(candidates)
+	combinations := [][]int{}
+	type state struct {
+		combination []int
+		sum         int
+		index       int
+	}
+	stack := []state{{[]int{}, 0, 0}}
+	for len(stack) > 0 {
+		current := stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		if current.sum == target {
+			combinations = append(combinations, append([]int{}, current.combination...))
+			continue
+		}
+		for i := current.index; i < len(candidates); i++ {
+			newSum := current.sum + candidates[i]
+			if newSum > target {
+				break
+			}
+			newCombination := append([]int{}, current.combination...)
+			newCombination = append(newCombination, candidates[i])
+			stack = append(stack, state{newCombination, newSum, i})
+		}
+	}
+	return combinations
+}
+
+func combinationSum_backtracking_recursion(candidates []int, target int) [][]int {
 	var combinations [][]int
 	var stack []int
 	var generateCombinations func(int, int)
