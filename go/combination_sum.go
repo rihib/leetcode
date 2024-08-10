@@ -5,7 +5,7 @@ func combinationSum(candidates []int, target int) [][]int {
 	var combinations [][]int
 	var stack []int
 	var generateCombinations func(int, int)
-	generateCombinations = func(curr int, sum int) {
+	generateCombinations = func(currentIndex int, sum int) {
 		if sum == target {
 			combinations = append(combinations, append([]int{}, stack...))
 			return
@@ -13,7 +13,7 @@ func combinationSum(candidates []int, target int) [][]int {
 		if sum > target {
 			return
 		}
-		for i := curr; i < len(candidates); i++ {
+		for i := currentIndex; i < len(candidates); i++ {
 			stack = append(stack, candidates[i])
 			generateCombinations(i, sum+candidates[i])
 			stack = stack[:len(stack)-1]
