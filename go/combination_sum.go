@@ -1,8 +1,6 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-import "sort"
-
 func combinationSum_dp(candidates []int, target int) [][]int {
 	combinationsGroups := make([][][]int, target+1)
 	combinationsGroups[0] = [][]int{{}}
@@ -19,7 +17,6 @@ func combinationSum_dp(candidates []int, target int) [][]int {
 }
 
 func combinationSum_backtracking_stack(candidates []int, target int) [][]int {
-	sort.Ints(candidates)
 	combinations := [][]int{}
 	type state struct {
 		combination []int
@@ -37,7 +34,7 @@ func combinationSum_backtracking_stack(candidates []int, target int) [][]int {
 		for i := current.index; i < len(candidates); i++ {
 			newSum := current.sum + candidates[i]
 			if newSum > target {
-				break
+				continue
 			}
 			newCombination := append([]int{}, current.combination...)
 			newCombination = append(newCombination, candidates[i])
