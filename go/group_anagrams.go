@@ -2,20 +2,20 @@
 package main
 
 func groupAnagrams(strs []string) [][]string {
-	m := make(map[[26]int][]string)
+	anagramsMap := make(map[[26]int][]string)
 	for _, word := range strs {
-		var freq [26]int
+		var frequency [26]int
 		for _, r := range word {
-			freq[r-'a']++
+			frequency[r-'a']++
 		}
-		m[freq] = append(m[freq], word)
+		anagramsMap[frequency] = append(anagramsMap[frequency], word)
 	}
 
-	res := make([][]string, len(m))
+	anagrams := make([][]string, len(anagramsMap))
 	i := 0
-	for _, words := range m {
-		res[i] = words
+	for _, words := range anagramsMap {
+		anagrams[i] = words
 		i++
 	}
-	return res
+	return anagrams
 }
