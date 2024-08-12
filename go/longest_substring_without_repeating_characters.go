@@ -2,15 +2,13 @@
 package main
 
 func lengthOfLongestSubstring(s string) int {
-	maxLen, head := 0, 0
-	inUse := make(map[byte]bool)
-	for tail := range s {
-		for inUse[s[tail]] {
-			delete(inUse, s[head])
-			head++
+	maxLength, left, seen := 0, 0, make(map[rune]int)
+	for right, r := range s {
+		if lastIndex, ok := seen[r]; ok && lastIndex >= left {
+			left = lastIndex + 1
 		}
-		inUse[s[tail]] = true
-		maxLen = max(maxLen, tail-head+1)
+		seen[r] = right
+		maxLength = max(maxLength, right-left+1)
 	}
-	return maxLen
+	return maxLength
 }
