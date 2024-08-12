@@ -2,14 +2,15 @@
 package main
 
 func isAnagram(s string, t string) bool {
-	var frequencyS, frequencyT [26]int
+	return frequency(s) == frequency(t)
+}
+
+func frequency(s string) [26]int {
+	var f [26]int
 	for _, r := range s {
-		frequencyS[r-'a']++
+		f[r-'a']++
 	}
-	for _, r := range t {
-		frequencyT[r-'a']++
-	}
-	return frequencyS == frequencyT
+	return f
 }
 
 // ちゃんとUnicodeに対応させるなら結合文字などを考慮する必要がある
