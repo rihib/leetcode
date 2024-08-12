@@ -2,12 +2,12 @@
 package main
 
 func containsDuplicate(nums []int) bool {
-	m := make(map[int]struct{})
+	seen := make(map[int]struct{})
 	for _, n := range nums {
-		if _, ok := m[n]; ok {
+		if _, ok := seen[n]; ok {
 			return true
 		}
-		m[n] = struct{}{}
+		seen[n] = struct{}{}
 	}
 	return false
 }
