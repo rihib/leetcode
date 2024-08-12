@@ -9,13 +9,13 @@ func convert(s string, numRows int) string {
 	}
 
 	rows := make([]strings.Builder, numRows)
-	cycleLen := 2*numRows - 2
+	cycleLength := 2*numRows - 2
 	for i, r := range s {
-		rowNum := i % cycleLen
-		if rowNum >= numRows {
-			rowNum = cycleLen - rowNum
+		rowIndex := i % cycleLength
+		if rowIndex >= numRows {
+			rowIndex = cycleLength - rowIndex
 		}
-		rows[rowNum].WriteRune(r)
+		rows[rowIndex].WriteRune(r)
 	}
 
 	var oneline strings.Builder
@@ -30,15 +30,16 @@ func convert_anothersolution(s string, numRows int) string {
 		return s
 	}
 	var oneline strings.Builder
-	cycleLen := 2*numRows - 2
-	for rowNum := 0; rowNum < numRows; rowNum++ {
-		for i := rowNum; i < len(s); i += cycleLen {
+	cycleLength := 2*numRows - 2
+	for rowIndex := 0; rowIndex < numRows; rowIndex++ {
+		for i := rowIndex; i < len(s); i += cycleLength {
 			oneline.WriteByte(s[i])
-			if 0 < rowNum && rowNum < numRows-1 {
-				diagIdx := i + cycleLen - rowNum*2
-				if diagIdx < len(s) {
-					oneline.WriteByte(s[diagIdx])
-				}
+			if rowIndex == 0 || rowIndex == numRows-1 {
+				continue
+			}
+			diagIndex := i + cycleLength - rowIndex*2
+			if diagIndex < len(s) {
+				oneline.WriteByte(s[diagIndex])
 			}
 		}
 	}
