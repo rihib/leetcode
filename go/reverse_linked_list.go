@@ -2,20 +2,21 @@
 package main
 
 func reverseList_iterative(head *ListNode) *ListNode {
+	curr := head
 	var prev *ListNode
-	for head != nil {
-		prev, head, head.Next = head, head.Next, prev
+	for curr != nil {
+		prev, curr, curr.Next = curr, curr.Next, prev
 	}
 	return prev
 }
 
 func reverseList_recurssive(head *ListNode) *ListNode {
-	if head == nil || head.Next == nil {
-		return head
+	curr := head
+	if curr == nil || curr.Next == nil {
+		return curr
 	}
-
-	next := head.Next
+	next := curr.Next
 	reversedHead := reverseList_recurssive(next)
-	head.Next, next.Next = nil, head
+	curr.Next, next.Next = nil, curr
 	return reversedHead
 }
