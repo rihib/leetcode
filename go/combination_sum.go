@@ -16,7 +16,7 @@ func combinationSum_dp(candidates []int, target int) [][]int {
 	return combinationsGroups[target]
 }
 
-func combinationSum_backtracking_stack(candidates []int, target int) [][]int {
+func combinationSum_backtracking_iterative(candidates []int, target int) [][]int {
 	combinations := [][]int{}
 	type state struct {
 		combination []int
@@ -46,20 +46,20 @@ func combinationSum_backtracking_stack(candidates []int, target int) [][]int {
 
 func combinationSum_backtracking_recursion(candidates []int, target int) [][]int {
 	var combinations [][]int
-	var stack []int
+	var combination []int
 	var generateCombinations func(int, int)
 	generateCombinations = func(currentIndex int, sum int) {
 		if sum == target {
-			combinations = append(combinations, append([]int{}, stack...))
+			combinations = append(combinations, append([]int{}, combination...))
 			return
 		}
 		if sum > target {
 			return
 		}
 		for i := currentIndex; i < len(candidates); i++ {
-			stack = append(stack, candidates[i])
+			combination = append(combination, candidates[i])
 			generateCombinations(i, sum+candidates[i])
-			stack = stack[:len(stack)-1]
+			combination = combination[:len(combination)-1]
 		}
 	}
 	generateCombinations(0, 0)
