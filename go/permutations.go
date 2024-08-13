@@ -26,10 +26,7 @@ func permute_backtracking_iterative(nums []int) [][]int {
 				newInUse[k] = v
 			}
 			newInUse[n] = struct{}{}
-			stack = append(stack, state{
-				permutation: newPermutation,
-				inUse:       newInUse,
-			})
+			stack = append(stack, state{newPermutation, newInUse})
 		}
 	}
 	return permutations
