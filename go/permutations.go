@@ -7,12 +7,7 @@ func permute_backtracking_iterative(nums []int) [][]int {
 		permutation []int
 		inUse       map[int]struct{}
 	}
-	stack := []state{
-		{
-			permutation: []int{},
-			inUse:       make(map[int]struct{}),
-		},
-	}
+	stack := []state{{[]int{}, make(map[int]struct{})}}
 	for len(stack) > 0 {
 		current := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
