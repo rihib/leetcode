@@ -1,6 +1,30 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
+import "sort"
+
+func permuteLexicographically(nums []int) [][]int {
+	sort.Ints(nums)
+	var permutations [][]int
+	for {
+		permutations = append(permutations, append([]int{}, nums...))
+		i := len(nums) - 2
+		for i >= 0 && nums[i] >= nums[i+1] {
+			i--
+		}
+		if i < 0 {
+			break
+		}
+		j := len(nums) - 1
+		for nums[j] <= nums[i] {
+			j--
+		}
+		nums[i], nums[j] = nums[j], nums[i]
+		reverse(nums[i+1:])
+	}
+	return permutations
+}
+
 func permuteBacktrackingIterative(nums []int) [][]int {
 	var permutations [][]int
 	type state struct {
