@@ -3,22 +3,22 @@ package main
 
 func generateParenthesis(n int) []string {
 	var parentheses []string
-	stack := make([]byte, 0, n*2)
+	parenthesis := make([]byte, 0, n*2)
 	var generate func(int, int)
 	generate = func(open int, closed int) {
 		if open == n && closed == n {
-			parentheses = append(parentheses, string(stack))
+			parentheses = append(parentheses, string(parenthesis))
 			return
 		}
 		if open < n {
-			stack = append(stack, '(')
+			parenthesis = append(parenthesis, '(')
 			generate(open+1, closed)
-			stack = stack[:len(stack)-1]
+			parenthesis = parenthesis[:len(parenthesis)-1]
 		}
 		if open > closed {
-			stack = append(stack, ')')
+			parenthesis = append(parenthesis, ')')
 			generate(open, closed+1)
-			stack = stack[:len(stack)-1]
+			parenthesis = parenthesis[:len(parenthesis)-1]
 		}
 	}
 	generate(0, 0)
