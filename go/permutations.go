@@ -20,7 +20,6 @@ func permute(nums []int) [][]int {
 			}
 		}
 	}
-	inUse := make(map[int]struct{})
-	generate(inUse)
+	generate(make(map[int]struct{}))
 	return permutations
 }
