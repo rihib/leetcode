@@ -25,7 +25,7 @@ func convert(s string, numRows int) string {
 	return oneline.String()
 }
 
-func convert_anothersolution(s string, numRows int) string {
+func convert2(s string, numRows int) string {
 	if numRows == 1 {
 		return s
 	}

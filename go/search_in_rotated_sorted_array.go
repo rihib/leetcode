@@ -1,7 +1,7 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-func search_closed(nums []int, target int) int {
+func searchClosed(nums []int, target int) int {
 	left, right := 0, len(nums)-1
 	for left <= right {
 		mid := left + (right-left)/2
@@ -25,7 +25,7 @@ func search_closed(nums []int, target int) int {
 	return -1
 }
 
-func search_half_closed(nums []int, target int) int {
+func searchHalfClosed(nums []int, target int) int {
 	left, right := 0, len(nums)
 	for left < right {
 		mid := left + (right-left)/2

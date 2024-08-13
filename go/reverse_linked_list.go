@@ -1,7 +1,7 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-func reverseList_iterative(head *ListNode) *ListNode {
+func reverseListIterative(head *ListNode) *ListNode {
 	curr := head
 	var prev *ListNode
 	for curr != nil {
@@ -10,13 +10,13 @@ func reverseList_iterative(head *ListNode) *ListNode {
 	return prev
 }
 
-func reverseList_recurssive(head *ListNode) *ListNode {
+func reverseListRecurssive(head *ListNode) *ListNode {
 	curr := head
 	if curr == nil || curr.Next == nil {
 		return curr
 	}
 	next := curr.Next
-	reversedHead := reverseList_recurssive(next)
+	reversedHead := reverseListRecurssive(next)
 	curr.Next, next.Next = nil, curr
 	return reversedHead
 }

@@ -15,7 +15,7 @@ func frequency(s string) [26]int {
 
 // ちゃんとUnicodeに対応させるなら結合文字などを考慮する必要がある
 // https://github.com/rihib/leetcode/pull/5#discussion_r1706198268
-func isAnagram_unicode(s string, t string) bool {
+func isAnagramUnicode(s string, t string) bool {
 	frequency := make(map[rune]int)
 	for _, r := range s {
 		frequency[r]++

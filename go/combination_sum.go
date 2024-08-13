@@ -1,7 +1,7 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-func combinationSum_dp(candidates []int, target int) [][]int {
+func combinationSumDP(candidates []int, target int) [][]int {
 	combinationsGroups := make([][][]int, target+1)
 	combinationsGroups[0] = [][]int{{}}
 	for _, candidate := range candidates {
@@ -16,7 +16,7 @@ func combinationSum_dp(candidates []int, target int) [][]int {
 	return combinationsGroups[target]
 }
 
-func combinationSum_backtracking_iterative(candidates []int, target int) [][]int {
+func combinationSumBacktrackingIterative(candidates []int, target int) [][]int {
 	combinations := [][]int{}
 	type state struct {
 		combination []int
@@ -44,7 +44,7 @@ func combinationSum_backtracking_iterative(candidates []int, target int) [][]int
 	return combinations
 }
 
-func combinationSum_backtracking_recursion(candidates []int, target int) [][]int {
+func combinationSumBacktrackingRecursion(candidates []int, target int) [][]int {
 	var combinations [][]int
 	var combination []int
 	var generateCombinations func(int, int)

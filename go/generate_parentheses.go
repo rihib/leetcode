@@ -1,7 +1,7 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-func generateParenthesis_iterative(n int) []string {
+func generateParenthesisIterative(n int) []string {
 	var parentheses []string
 	type state struct {
 		parenthesis []byte
@@ -30,7 +30,7 @@ func generateParenthesis_iterative(n int) []string {
 	return parentheses
 }
 
-func generateParenthesis_recursive(n int) []string {
+func generateParenthesisRecursive(n int) []string {
 	var parentheses []string
 	parenthesis := make([]byte, 0, n*2)
 	var generate func(int, int)

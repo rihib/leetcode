@@ -1,7 +1,7 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-func permute_backtracking_iterative(nums []int) [][]int {
+func permuteBacktrackingIterative(nums []int) [][]int {
 	var permutations [][]int
 	type state struct {
 		permutation []int
@@ -32,7 +32,7 @@ func permute_backtracking_iterative(nums []int) [][]int {
 	return permutations
 }
 
-func permute_backtracking_recursion(nums []int) [][]int {
+func permuteBacktrackingRecursion(nums []int) [][]int {
 	var permutations [][]int
 	permutation := make([]int, 0, len(nums))
 	inUse := make(map[int]struct{})

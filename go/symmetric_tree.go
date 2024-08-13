@@ -3,7 +3,7 @@ package main
 
 import "container/list"
 
-func isSymmetric_recursive(root *TreeNode) bool {
+func isSymmetricRecursive(root *TreeNode) bool {
 	if root == nil {
 		return true
 	}
@@ -21,7 +21,7 @@ func isMirror(t1, t2 *TreeNode) bool {
 		isMirror(t1.Left, t2.Right) && isMirror(t1.Right, t2.Left)
 }
 
-func isSymmetric_iterative(root *TreeNode) bool {
+func isSymmetricIterative(root *TreeNode) bool {
 	if root == nil {
 		return true
 	}
