@@ -3,7 +3,7 @@ package main
 
 func generateParenthesis(n int) []string {
 	var parentheses []string
-	var stack []byte
+	stack := make([]byte, 0, n*2)
 	var generate func(int, int)
 	generate = func(open int, closed int) {
 		if open == n && closed == n {
