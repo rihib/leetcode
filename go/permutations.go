@@ -3,9 +3,10 @@ package main
 
 func permute(nums []int) [][]int {
 	var permutations [][]int
-	var stack []int
-	var generate func(map[int]struct{})
-	generate = func(inUse map[int]struct{}) {
+	stack := make([]int, 0, len(nums))
+	inUse := make(map[int]struct{})
+	var generate func()
+	generate = func() {
 		if len(stack) == len(nums) {
 			permutations = append(permutations, append([]int{}, stack...))
 			return
@@ -14,12 +15,12 @@ func permute(nums []int) [][]int {
 			if _, ok := inUse[n]; !ok {
 				stack = append(stack, n)
 				inUse[n] = struct{}{}
-				generate(inUse)
+				generate()
 				stack = stack[:len(stack)-1]
 				delete(inUse, n)
 			}
 		}
 	}
-	generate(make(map[int]struct{}))
+	generate()
 	return permutations
 }
