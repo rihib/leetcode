@@ -1,22 +1,22 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-func permute(nums []int) [][]int {
+func permute_backtracking_recursion(nums []int) [][]int {
 	var permutations [][]int
-	stack := make([]int, 0, len(nums))
+	permutation := make([]int, 0, len(nums))
 	inUse := make(map[int]struct{})
 	var generate func()
 	generate = func() {
-		if len(stack) == len(nums) {
-			permutations = append(permutations, append([]int{}, stack...))
+		if len(permutation) == len(nums) {
+			permutations = append(permutations, append([]int{}, permutation...))
 			return
 		}
 		for _, n := range nums {
 			if _, ok := inUse[n]; !ok {
-				stack = append(stack, n)
+				permutation = append(permutation, n)
 				inUse[n] = struct{}{}
 				generate()
-				stack = stack[:len(stack)-1]
+				permutation = permutation[:len(permutation)-1]
 				delete(inUse, n)
 			}
 		}
