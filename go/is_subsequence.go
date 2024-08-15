@@ -2,17 +2,17 @@
 package main
 
 func isSubsequence(s string, t string) bool {
-	i := 0
-	for _, r := range s {
+	current := 0
+	for i := 0; i < len(s); i++ {
 		for {
-			if i >= len(t) {
+			if current >= len(t) {
 				return false
 			}
-			if r == rune(t[i]) {
-				i++
+			if s[i] == t[current] {
+				current++
 				break
 			}
-			i++
+			current++
 		}
 	}
 	return true
