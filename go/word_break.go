@@ -3,16 +3,14 @@ package main
 
 func wordBreak(s string, wordDict []string) bool {
 	canBreak := make([]bool, len(s)+1)
-	canBreak[len(s)] = true
-	for i := len(s) - 1; i >= 0; i-- {
+	canBreak[0] = true
+	for i := 1; i <= len(s); i++ {
 		for _, w := range wordDict {
-			if (i+len(w)) <= len(s) && s[i:i+len(w)] == w {
-				canBreak[i] = canBreak[i+len(w)]
-			}
-			if canBreak[i] {
+			if i >= len(w) && canBreak[i-len(w)] && s[i-len(w):i] == w {
+				canBreak[i] = true
 				break
 			}
 		}
 	}
-	return canBreak[0]
+	return canBreak[len(s)]
 }
