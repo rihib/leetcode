@@ -3,6 +3,7 @@ package main
 
 import (
 	"math/rand/v2"
+	"sort"
 )
 
 type Element struct {
@@ -97,4 +98,19 @@ func partitionMedianOf3(elements []Element, left, right int) int {
 	}
 	elements[storeIndex], elements[right] = elements[right], elements[storeIndex]
 	return storeIndex
+}
+
+func topKFrequentPDQSort(nums []int, k int) []int {
+	frequency := make(map[int]int)
+	for _, num := range nums {
+		frequency[num]++
+	}
+	numsSet := make([]int, 0, len(frequency))
+	for num := range frequency {
+		numsSet = append(numsSet, num)
+	}
+	sort.Slice(numsSet, func(i, j int) bool {
+		return frequency[numsSet[i]] > frequency[numsSet[j]]
+	})
+	return numsSet[:k]
 }
