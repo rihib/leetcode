@@ -2,24 +2,6 @@
 package main
 
 func productExceptSelf(nums []int) []int {
-	res := make([]int, len(nums))
-
-	lp := 1
-	for i := 0; i < len(nums); i++ {
-		res[i] = lp
-		lp *= nums[i]
-	}
-
-	rp := 1
-	for i := len(nums) - 1; i >= 0; i-- {
-		res[i] *= rp
-		rp *= nums[i]
-	}
-
-	return res
-}
-
-func productExceptSelf2(nums []int) []int {
 	allProduct, zeroCount := 0, 0
 	for _, n := range nums {
 		if n == 0 {
@@ -33,7 +15,7 @@ func productExceptSelf2(nums []int) []int {
 		}
 	}
 	products := make([]int, len(nums))
-	for i, _ := range products {
+	for i := range products {
 		if zeroCount > 0 {
 			if nums[i] == 0 && zeroCount == 1 {
 				products[i] = allProduct
@@ -43,6 +25,21 @@ func productExceptSelf2(nums []int) []int {
 		} else {
 			products[i] = allProduct / nums[i]
 		}
+	}
+	return products
+}
+
+func productExceptSelf2(nums []int) []int {
+	products := make([]int, len(nums))
+	leftProduct := 1
+	for i := 0; i < len(nums); i++ {
+		products[i] = leftProduct
+		leftProduct *= nums[i]
+	}
+	rightProduct := 1
+	for i := len(nums) - 1; i >= 0; i-- {
+		products[i] *= rightProduct
+		rightProduct *= nums[i]
 	}
 	return products
 }
