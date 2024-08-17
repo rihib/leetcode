@@ -2,6 +2,7 @@
 package main
 
 import (
+	"container/heap"
 	"math/rand/v2"
 	"sort"
 )
@@ -114,3 +115,39 @@ func topKFrequentPDQSort(nums []int, k int) []int {
 	})
 	return numsSet[:k]
 }
+
+func topKFrequentMinHeap(nums []int, k int) []int {
+	frequency := make(map[int]int)
+	for _, num := range nums {
+		frequency[num]++
+	}
+	h := &MinHeap{}
+	heap.Init(h)
+	for num, count := range frequency {
+		heap.Push(h, Element{num: num, count: count})
+		if h.Len() > k {
+			heap.Pop(h)
+		}
+	}
+	topK := make([]int, 0, k)
+	for h.Len() > 0 {
+		topK = append(topK, heap.Pop(h).(Element).num)
+	}
+	return topK
+}
+
+type MinHeap []Element
+
+func (h *MinHeap) Push(x interface{}) {
+	*h = append(*h, x.(Element))
+}
+
+func (h *MinHeap) Pop() interface{} {
+	x := (*h)[len(*h)-1]
+	*h = (*h)[0 : len(*h)-1]
+	return x
+}
+
+func (h MinHeap) Len() int           { return len(h) }
+func (h MinHeap) Less(i, j int) bool { return h[i].count < h[j].count }
+func (h MinHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
