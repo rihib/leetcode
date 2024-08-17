@@ -151,3 +151,36 @@ func (h *MinHeap) Pop() interface{} {
 func (h MinHeap) Len() int           { return len(h) }
 func (h MinHeap) Less(i, j int) bool { return h[i].count < h[j].count }
 func (h MinHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+
+func topKFrequentMaxHeap(nums []int, k int) []int {
+	frequency := make(map[int]int)
+	for _, num := range nums {
+		frequency[num]++
+	}
+	h := &MaxHeap{}
+	heap.Init(h)
+	for num, count := range frequency {
+		heap.Push(h, Element{num: num, count: count})
+	}
+	topK := make([]int, 0, k)
+	for i := 0; i < k; i++ {
+		topK = append(topK, heap.Pop(h).(Element).num)
+	}
+	return topK
+}
+
+type MaxHeap []Element
+
+func (h *MaxHeap) Push(x interface{}) {
+	*h = append(*h, x.(Element))
+}
+
+func (h *MaxHeap) Pop() interface{} {
+	x := (*h)[len(*h)-1]
+	*h = (*h)[0 : len(*h)-1]
+	return x
+}
+
+func (h MaxHeap) Len() int           { return len(h) }
+func (h MaxHeap) Less(i, j int) bool { return h[i].count > h[j].count }
+func (h MaxHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
