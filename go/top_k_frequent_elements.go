@@ -2,22 +2,20 @@
 package main
 
 func topKFrequent(nums []int, k int) []int {
-	freq := make(map[int]int)
-	for _, n := range nums {
-		freq[n]++
+	frequency := make(map[int]int)
+	for _, num := range nums {
+		frequency[num]++
 	}
-
-	cs := make([][]int, len(nums))
-	for n, c := range freq {
-		cs[c-1] = append(cs[c-1], n)
+	countToNum := make([][]int, len(nums)+1)
+	for num, count := range frequency {
+		countToNum[count] = append(countToNum[count], num)
 	}
-
-	var res []int
-	for i := len(cs) - 1; i >= 0; i-- {
-		res = append(res, cs[i]...)
-		if len(res) >= k {
+	var topK []int
+	for i := len(countToNum) - 1; i >= 0; i-- {
+		topK = append(topK, countToNum[i]...)
+		if len(topK) >= k {
 			break
 		}
 	}
-	return res
+	return topK
 }
