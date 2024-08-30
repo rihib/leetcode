@@ -7,7 +7,7 @@ func longestConsecutive(nums []int) int {
 		numsMap[n] = struct{}{}
 	}
 	maxLength := 0
-	for _, n := range nums {
+	for n := range numsMap {
 		if _, ok := numsMap[n-1]; ok {
 			continue
 		}
@@ -18,6 +18,7 @@ func longestConsecutive(nums []int) int {
 				break
 			}
 			length++
+			delete(numsMap, n)
 		}
 		maxLength = max(maxLength, length)
 	}
