@@ -3,9 +3,9 @@ package main
 
 func isValid(s string) bool {
 	var stack []rune
-	brackets := map[rune]rune{')': '(', '}': '{', ']': '['}
+	closeToOpens := map[rune]rune{')': '(', '}': '{', ']': '['}
 	for _, bracket := range s {
-		openBracket, ok := brackets[bracket]
+		openBracket, ok := closeToOpens[bracket]
 		if !ok {
 			stack = append(stack, bracket)
 			continue
