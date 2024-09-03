@@ -4,22 +4,21 @@ package main
 import "math"
 
 type TreeBalance struct {
-	IsBalanced bool
-	Height     int
+	isBalanced bool
+	height     int
 }
 
 func isBalanced(root *TreeNode) bool {
-	return checkBalance(root).IsBalanced
+	return checkBalance(root).isBalanced
 }
 
-func checkBalance(root *TreeNode) TreeBalance {
+func checkBalance(root *TreeNode) *TreeBalance {
 	if root == nil {
-		return TreeBalance{true, 0}
+		return &TreeBalance{true, 0}
 	}
-
-	l, r := checkBalance(root.Left), checkBalance(root.Right)
-	b := l.IsBalanced && r.IsBalanced &&
-		math.Abs(float64(l.Height-r.Height)) <= 1.0
-	h := max(l.Height, r.Height) + 1
-	return TreeBalance{b, h}
+	left, right := checkBalance(root.Left), checkBalance(root.Right)
+	isBalanced := left.isBalanced && right.isBalanced &&
+		math.Abs(float64(left.height-right.height)) <= 1.0
+	height := max(left.height, right.height) + 1
+	return &TreeBalance{isBalanced, height}
 }
