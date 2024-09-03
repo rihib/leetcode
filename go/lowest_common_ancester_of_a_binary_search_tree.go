@@ -4,15 +4,15 @@ package main
 func lowestCommonAncestorIterative(root, p, q *TreeNode) *TreeNode {
 	node := root
 	for node != nil {
-		if p.Val <= node.Val && node.Val <= q.Val || q.Val <= node.Val && node.Val <= p.Val {
-			return node
-		}
 		if p.Val < node.Val && q.Val < node.Val {
 			node = node.Left
+			continue
 		}
 		if node.Val < p.Val && node.Val < q.Val {
 			node = node.Right
+			continue
 		}
+		return node
 	}
 	return nil
 }
