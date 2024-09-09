@@ -2,15 +2,13 @@
 package main
 
 func canConstruct(ransomNote string, magazine string) bool {
-	var freq [26]int
-
+	var frequency [26]int
 	for _, r := range magazine {
-		freq[r-'a']++
+		frequency[r-'a']++
 	}
-
 	for _, r := range ransomNote {
-		freq[r-'a']--
-		if freq[r-'a'] < 0 {
+		frequency[r-'a']--
+		if frequency[r-'a'] < 0 {
 			return false
 		}
 	}
