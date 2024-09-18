@@ -2,21 +2,18 @@
 package main
 
 func longestPalindrome(s string) int {
-	m := make(map[rune]struct{})
-	l := 0
-
+	length := 0
+	frequencies := make(map[rune]struct{})
 	for _, r := range s {
-		if _, ok := m[r]; ok {
-			delete(m, r)
-			l += 2
+		if _, ok := frequencies[r]; !ok {
+			frequencies[r] = struct{}{}
 		} else {
-			m[r] = struct{}{}
+			delete(frequencies, r)
+			length += 2
 		}
 	}
-
-	if len(m) > 0 {
-		l++
+	if len(frequencies) > 0 {
+		length++
 	}
-
-	return l
+	return length
 }
