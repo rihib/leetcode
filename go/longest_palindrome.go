@@ -3,16 +3,15 @@ package main
 
 func longestPalindrome(s string) int {
 	length := 0
-	frequencies := make(map[rune]struct{})
+	frequencies := make(map[rune]int, len(s))
 	for _, r := range s {
-		if _, ok := frequencies[r]; !ok {
-			frequencies[r] = struct{}{}
-		} else {
-			delete(frequencies, r)
+		frequencies[r]++
+		if frequencies[r] == 2 {
 			length += 2
+			delete(frequencies, r)
 		}
 	}
-	if len(frequencies) > 0 {
+	if len(frequencies) != 0 {
 		length++
 	}
 	return length
