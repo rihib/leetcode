@@ -2,16 +2,16 @@
 package main
 
 func majorityElement(nums []int) int {
-	candidate, cnt := nums[0], 0
+	candidate, count := nums[0], 0
 	for _, n := range nums {
 		if n == candidate {
-			cnt++
+			count++
 		} else {
-			cnt--
-			if cnt == 0 {
-				candidate = n
-				cnt++
-			}
+			count--
+		}
+		if count < 0 {
+			candidate = n
+			count = 0
 		}
 	}
 	return candidate
