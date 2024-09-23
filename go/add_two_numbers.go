@@ -3,7 +3,7 @@ package main
 
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	dummy := new(ListNode)
-	curr := dummy
+	node := dummy
 	carry := 0
 	for l1 != nil || l2 != nil || carry != 0 {
 		sum := carry
@@ -15,9 +15,9 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 			sum += l2.Val
 			l2 = l2.Next
 		}
-		curr.Next = &ListNode{Val: sum % 10}
+		node.Next = &ListNode{Val: sum % 10}
 		carry = sum / 10
-		curr = curr.Next
+		node = node.Next
 	}
 	return dummy.Next
 }
