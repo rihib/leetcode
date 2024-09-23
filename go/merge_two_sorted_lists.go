@@ -2,7 +2,7 @@
 package main
 
 func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
-	dummy := new(ListNode)
+	dummy := &ListNode{}
 	tail := dummy
 	for list1 != nil && list2 != nil {
 		if list1.Val < list2.Val {
