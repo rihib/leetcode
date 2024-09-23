@@ -1,8 +1,8 @@
 //lint:file-ignore U1000 Ignore all unused code
 package mergetwosortedlists
 
-func mergeTwoListsStep4(list1 *ListNode, list2 *ListNode) *ListNode {
-	dummy := new(ListNode)
+func mergeTwoListsStep5(list1 *ListNode, list2 *ListNode) *ListNode {
+	dummy := &ListNode{}
 	tail := dummy
 	for list1 != nil && list2 != nil {
 		if list1.Val < list2.Val {

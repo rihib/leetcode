@@ -23,7 +23,7 @@ package mergetwosortedlists
 			どう思いますか？
 */
 
-func mergeTwoLists_step3(list1 *ListNode, list2 *ListNode) *ListNode {
+func mergeTwoListsStep3(list1 *ListNode, list2 *ListNode) *ListNode {
 	dummy := new(ListNode)
 	tail := dummy
 

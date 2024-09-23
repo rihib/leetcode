@@ -5,7 +5,7 @@ package mergetwosortedlists
 	他の人のコードを色々見て、冗長な部分を消し、リファクタをしました。
 */
 
-func mergeTwoLists_step2(list1 *ListNode, list2 *ListNode) *ListNode {
+func mergeTwoListsStep2(list1 *ListNode, list2 *ListNode) *ListNode {
 	dummy := new(ListNode)
 	cur := dummy
 

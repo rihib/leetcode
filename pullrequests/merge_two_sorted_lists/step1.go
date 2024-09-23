@@ -19,7 +19,7 @@ type ListNode struct {
 	Next *ListNode
 }
 
-func mergeTwoLists_step1(list1 *ListNode, list2 *ListNode) *ListNode {
+func mergeTwoListsStep1(list1 *ListNode, list2 *ListNode) *ListNode {
 	if list1 == nil {
 		return list2
 	}
