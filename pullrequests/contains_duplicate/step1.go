@@ -10,7 +10,7 @@ package containsduplicate
 - valueの意味でvを使ったのですが、nのほうがnumsと対応していてより良いかなと思ったので同様にStep2ではnを使うようにしました。
 - nmもnumsMapのつもりで使ったのですが同様に他にマップが使われているわけではないのでStep2では単にmとしました。
 */
-func containsDuplicate_step1(nums []int) bool {
+func containsDuplicateStep1(nums []int) bool {
 	if len(nums) <= 1 {
 		return false
 	}
