@@ -6,7 +6,7 @@ package twosum
 
 また同じ要素を２回使うのを避けるために、毎回追加する前に対応する要素がないかを確認してから追加するようにしました。
 */
-func twoSum_step1(nums []int, target int) []int {
+func twoSumStep1(nums []int, target int) []int {
 	m := make(map[int]int)
 	for i, n := range nums {
 		if j, ok := m[target-n]; ok {

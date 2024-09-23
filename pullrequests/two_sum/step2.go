@@ -13,7 +13,7 @@ GoogleのGoスタイルガイドには変数名に型名を使うのは良くな
   - https://github.com/seal-azarashi/leetcode/pull/11#discussion_r1672537855
   - https://github.com/sendahuang14/leetcode/pull/11#discussion_r1702393602
 */
-func twoSum_step2(nums []int, target int) []int {
+func twoSumStep2(nums []int, target int) []int {
 	numsMap := make(map[int]int)
 	for i, n := range nums {
 		if j, ok := numsMap[target-n]; ok {
