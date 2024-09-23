@@ -2,9 +2,10 @@
 package main
 
 func invertTreeRecursive(root *TreeNode) *TreeNode {
-	if root != nil {
-		root.Left, root.Right = invertTreeRecursive(root.Right), invertTreeRecursive(root.Left)
+	if root == nil {
+		return nil
 	}
+	root.Left, root.Right = invertTreeRecursive(root.Right), invertTreeRecursive(root.Left)
 	return root
 }
 
