@@ -8,7 +8,7 @@ package groupanagrams
 	配列のインデックスを用いて頻度を取得し、keyにすることにした。
 */
 
-func groupAnagrams_step1(strs []string) [][]string {
+func groupAnagramsStep1(strs []string) [][]string {
 	m := make(map[[26]int][]string)
 	for _, s := range strs {
 		var freq [26]int

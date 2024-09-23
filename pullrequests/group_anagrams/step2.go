@@ -5,7 +5,7 @@ package groupanagrams
 	変数名を改善した。
 */
 
-func groupAnagrams_step2(strs []string) [][]string {
+func groupAnagramsStep2(strs []string) [][]string {
 	m := make(map[[26]int][]string)
 	for _, s := range strs {
 		var freq [26]int

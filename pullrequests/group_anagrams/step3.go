@@ -11,7 +11,7 @@ package groupanagrams
 		- wordsという変数名をどう思いますか？
 */
 
-func groupAnagrams_step3(strs []string) [][]string {
+func groupAnagramsStep3(strs []string) [][]string {
 	m := make(map[[26]int][]string)
 	for _, word := range strs {
 		var freq [26]int

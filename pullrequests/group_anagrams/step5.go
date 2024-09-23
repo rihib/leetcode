@@ -1,14 +1,14 @@
 //lint:file-ignore U1000 Ignore all unused code
 package groupanagrams
 
-func groupAnagramsStep4(strs []string) [][]string {
+func groupAnagramsStep5(strs []string) [][]string {
 	anagramsMap := make(map[[26]int][]string)
 	for _, word := range strs {
-		var frequency [26]int
+		var frequencies [26]int
 		for _, r := range word {
-			frequency[r-'a']++
+			frequencies[r-'a']++
 		}
-		anagramsMap[frequency] = append(anagramsMap[frequency], word)
+		anagramsMap[frequencies] = append(anagramsMap[frequencies], word)
 	}
 
 	anagrams := make([][]string, len(anagramsMap))
