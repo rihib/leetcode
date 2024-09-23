@@ -5,7 +5,7 @@ package template
 Step1では再帰を使ってバックトラッキングを解いたので、スタックを使った方法も実装しました。
 また、Step1の実装のリファクタもしました。
 */
-func combinationSumBacktrackingStack(candidates []int, target int) [][]int {
+func combinationSumBacktrackingStackStep4(candidates []int, target int) [][]int {
 	combinations := [][]int{}
 	type state struct {
 		combination []int
@@ -17,7 +17,7 @@ func combinationSumBacktrackingStack(candidates []int, target int) [][]int {
 		current := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
 		if current.sum == target {
-			combinations = append(combinations, append([]int{}, current.combination...))
+			combinations = append(combinations, current.combination)
 			continue
 		}
 		for i := current.index; i < len(candidates); i++ {
@@ -33,7 +33,7 @@ func combinationSumBacktrackingStack(candidates []int, target int) [][]int {
 	return combinations
 }
 
-func combinationSumBacktrackingRecursion(candidates []int, target int) [][]int {
+func combinationSumBacktrackingRecursionStep4(candidates []int, target int) [][]int {
 	var combinations [][]int
 	var stack []int
 	var generateCombinations func(int, int)

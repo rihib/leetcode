@@ -5,7 +5,7 @@ package template
 時間：24分
 少し前にバックトラッキングの問題を解いたので、ある条件を満たす全ての組み合わせを求めるためにバックトラッキングを使って解きました。
 */
-func combinationSum_step1(candidates []int, target int) [][]int {
+func combinationSumStep1(candidates []int, target int) [][]int {
 	var combinations [][]int
 	var stack []int
 	var findCombinations func(int, int)
