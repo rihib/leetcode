@@ -2,16 +2,27 @@
 package main
 
 func majorityElement(nums []int) int {
-	candidate, cnt := nums[0], 0
+	frequencies := make(map[int]int, len(nums))
+	for _, n := range nums {
+		frequencies[n]++
+		if frequencies[n] > len(nums)/2 {
+			return n
+		}
+	}
+	return -1
+}
+
+func majorityElementBoyerMooreMajorityVote(nums []int) int {
+	candidate, count := nums[0], 0
 	for _, n := range nums {
 		if n == candidate {
-			cnt++
+			count++
 		} else {
-			cnt--
-			if cnt == 0 {
-				candidate = n
-				cnt++
-			}
+			count--
+		}
+		if count < 0 {
+			candidate = n
+			count = 0
 		}
 	}
 	return candidate

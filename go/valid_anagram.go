@@ -2,18 +2,29 @@
 package main
 
 func isAnagram(s string, t string) bool {
-	if len(s) != len(t) {
-		return false
-	}
+	return frequency(s) == frequency(t)
+}
 
-	var freq [26]int
-	for i := 0; i < len(s); i++ {
-		freq[s[i]-'a']++
-		freq[t[i]-'a']--
+func frequency(s string) [26]int {
+	var f [26]int
+	for _, r := range s {
+		f[r-'a']++
 	}
+	return f
+}
 
-	for _, v := range freq {
-		if v != 0 {
+// ちゃんとUnicodeに対応させるなら結合文字などを考慮する必要がある
+// https://github.com/rihib/leetcode/pull/5#discussion_r1706198268
+func isAnagramUnicode(s string, t string) bool {
+	frequency := make(map[rune]int)
+	for _, r := range s {
+		frequency[r]++
+	}
+	for _, r := range t {
+		frequency[r]--
+	}
+	for _, n := range frequency {
+		if n != 0 {
 			return false
 		}
 	}

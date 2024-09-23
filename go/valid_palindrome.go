@@ -4,23 +4,22 @@ package main
 import "unicode"
 
 func isPalindrome(s string) bool {
-	r := []rune(s)
-	for i, j := 0, len(r)-1; i < j; {
-		if !(unicode.IsLetter(r[i]) || unicode.IsDigit(r[i])) {
-			i++
+	runeS := []rune(s)
+	left, right := 0, len(s)-1
+	for left < right {
+		if !(unicode.IsDigit(runeS[left]) || unicode.IsLetter(runeS[left])) {
+			left++
 			continue
 		}
-		if !(unicode.IsLetter(r[j]) || unicode.IsDigit(r[j])) {
-			j--
+		if !(unicode.IsDigit(runeS[right]) || unicode.IsLetter(runeS[right])) {
+			right--
 			continue
 		}
-
-		if unicode.ToLower(r[i]) != unicode.ToLower(r[j]) {
+		if unicode.ToLower(runeS[left]) != unicode.ToLower(runeS[right]) {
 			return false
 		}
-
-		i++
-		j--
+		left++
+		right--
 	}
 	return true
 }

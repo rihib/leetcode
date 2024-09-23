@@ -1,11 +1,13 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
+import "math"
+
 func maxProfit(prices []int) int {
-	lowestPrice, highestProfit := prices[0], 0
-	for _, n := range prices {
-		lowestPrice = min(lowestPrice, n)
-		highestProfit = max(highestProfit, n-lowestPrice)
+	minPrice, maxValue := math.MaxInt, 0
+	for _, price := range prices {
+		minPrice = min(minPrice, price)
+		maxValue = max(maxValue, price-minPrice)
 	}
-	return highestProfit
+	return maxValue
 }

@@ -1,11 +1,24 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-func hasCycle(head *ListNode) bool {
-	fast, slow := head, head
+func hasCycleMap(head *ListNode) bool {
+	seen := make(map[*ListNode]struct{})
+	node := head
+	for node != nil {
+		if _, ok := seen[node]; ok {
+			return true
+		}
+		seen[node] = struct{}{}
+		node = node.Next
+	}
+	return false
+}
+
+func hasCycleFloyd(head *ListNode) bool {
+	slow, fast := head, head
 	for fast != nil && fast.Next != nil {
-		fast, slow = fast.Next.Next, slow.Next
-		if fast == slow {
+		slow, fast = slow.Next, fast.Next.Next
+		if slow == fast {
 			return true
 		}
 	}
