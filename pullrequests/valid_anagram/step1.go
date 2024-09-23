@@ -8,7 +8,7 @@ package validanagram
 基本的にはそれぞれの文字列に含まれる文字の種類と数が一致しているかを見ています。
 下の解法について、40行目で0未満になった場合のみfalseを返すのは一見おかしいように見えますが、30行目で文字数が等しいことを確認しているため、一方より多い文字があれば何かの文字は少なくなるはずであるため、ロジック的には問題ないと思います。
 */
-func isAnagram_step1(s string, t string) bool {
+func isAnagramStep1(s string, t string) bool {
 	if len(s) != len(t) {
 		return false
 	}
@@ -26,7 +26,7 @@ func isAnagram_step1(s string, t string) bool {
 	return true
 }
 
-func isAnagram_unicode_step1(s string, t string) bool {
+func isAnagramUnicodeStep1(s string, t string) bool {
 	if len(s) != len(t) {
 		return false
 	}

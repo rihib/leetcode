@@ -8,7 +8,7 @@ package validanagram
 
 下の解法についてはStep1のロジックがわかりづらかったので、より明確になるように変更しました。
 */
-func isAnagram_step2(s string, t string) bool {
+func isAnagramStep2(s string, t string) bool {
 	var frequency [26]int
 	for _, r := range s {
 		frequency[r-'a']++
@@ -24,7 +24,7 @@ func isAnagram_step2(s string, t string) bool {
 	return true
 }
 
-func isAnagram_unicode_step2(s string, t string) bool {
+func isAnagramUnicodeStep2(s string, t string) bool {
 	frequency := make(map[rune]int)
 	for _, r := range s {
 		frequency[r]++
