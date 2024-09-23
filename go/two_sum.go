@@ -2,12 +2,12 @@
 package main
 
 func twoSum(nums []int, target int) []int {
-	numsMap := make(map[int]int)
+	numToIndex := make(map[int]int)
 	for i, n := range nums {
-		if j, ok := numsMap[target-n]; ok {
+		if j, ok := numToIndex[target-n]; ok {
 			return []int{i, j}
 		}
-		numsMap[n] = i
+		numToIndex[n] = i
 	}
-	return nil
+	return nil // 本来ならerrorを返したい
 }
