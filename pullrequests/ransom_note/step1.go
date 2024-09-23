@@ -1,5 +1,5 @@
 //lint:file-ignore U1000 Ignore all unused code
-package template
+package ransomnote
 
 /*
 レビュワーの方へ：
@@ -12,7 +12,7 @@ package template
 入力が小文字に限らない場合は、runeをkeyとするmapを使えば良い。その際、Unicodeの扱いには気をつける必要がある。
 https://github.com/rihib/leetcode/pull/5#issue-2446890745
 */
-func canConstruct(ransomNote string, magazine string) bool {
+func canConstructStep1(ransomNote string, magazine string) bool {
 	var frequency [26]int
 	for _, r := range magazine {
 		frequency[r-'a']++
