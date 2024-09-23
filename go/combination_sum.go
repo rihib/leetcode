@@ -28,7 +28,7 @@ func combinationSumBacktrackingIterative(candidates []int, target int) [][]int {
 		current := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
 		if current.sum == target {
-			combinations = append(combinations, append([]int{}, current.combination...))
+			combinations = append(combinations, current.combination)
 			continue
 		}
 		for i := current.index; i < len(candidates); i++ {
