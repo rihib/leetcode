@@ -12,10 +12,11 @@ func containsDuplicate(nums []int) bool {
 	return false
 }
 
+// 若干トリッキーで意図がわかりづらいので上の方がベター
 func containsDuplicate2(nums []int) bool {
-	m := make(map[int]struct{})
+	numsMap := make(map[int]struct{})
 	for _, n := range nums {
-		m[n] = struct{}{}
+		numsMap[n] = struct{}{}
 	}
-	return len(nums) > len(m)
+	return len(nums) > len(numsMap)
 }
