@@ -6,31 +6,26 @@ import (
 	"strings"
 )
 
-func addBinary(a, b string) string {
-	// TestCase: [0, 1], [1, 1], [11, 1]
-	var reversedRes strings.Builder
-	maxLen := max(len(a), len(b))
+func addBinary(a string, b string) string {
+	var reversed strings.Builder
+	maxLength := max(len(a), len(b))
 	carry := 0
-
-	for i := 1; i <= maxLen; i++ {
+	for i := 1; i <= maxLength; i++ {
 		bitA, bitB := 0, 0
-
-		if len(a) >= i {
-			bitA = int(a[len(a)-i] - '0')
+		if i <= len(a) {
+			bitA = int(a[len(a)-i] - '0') // a[len(a)-i]がbyte型なので'0'もbyte型と解釈される
 		}
-		if len(b) >= i {
+		if i <= len(b) {
 			bitB = int(b[len(b)-i] - '0')
 		}
-
 		sum := bitA + bitB + carry
 		carry = sum / 2
-		reversedRes.WriteByte(byte(sum%2) + '0')
+		reversed.WriteByte(byte(sum%2 + '0')) // sum%2がint型なので'0'もint型として扱われる
 	}
-	if carry > 0 {
-		reversedRes.WriteByte(byte(carry) + '0')
+	if carry == 1 {
+		reversed.WriteByte(byte(carry + '0'))
 	}
-
-	res := []rune(reversedRes.String())
-	slices.Reverse(res)
-	return string(res)
+	result := []rune(reversed.String())
+	slices.Reverse(result)
+	return string(result)
 }
