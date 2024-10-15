@@ -2,36 +2,68 @@
 package main
 
 func backspaceCompare(s string, t string) bool {
-	i, j := len(s)-1, len(t)-1
-	sCnt, tCnt := 0, 0
-
+	runeS, runeT := []rune(s), []rune(t)
+	i, j := len(runeS)-1, len(runeT)-1
 	for i >= 0 || j >= 0 {
-		i = nextIdx(s, i, &sCnt)
-		j = nextIdx(t, j, &tCnt)
-
-		if i >= 0 && j >= 0 && s[i] != t[j] {
+		i, j = nextIndex(runeS, i), nextIndex(runeT, j)
+		if i >= 0 && j >= 0 && runeS[i] == runeT[j] {
+			i--
+			j--
+			continue
+		}
+		if i >= 0 || j >= 0 {
 			return false
 		}
-		if (i >= 0) != (j >= 0) {
-			return false
-		}
-		i--
-		j--
 	}
-
 	return true
 }
 
-func nextIdx(str string, idx int, cnt *int) int {
-	for idx >= 0 {
-		if str[idx] == '#' {
-			*cnt++
-		} else if *cnt > 0 {
-			*cnt--
+func nextIndex(runeS []rune, index int) int {
+	count := 0
+	for {
+		if index >= 0 && runeS[index] == '#' {
+			count++
+		} else if count > 0 {
+			count--
 		} else {
 			break
 		}
-		idx--
+		index--
 	}
-	return idx
+	return index
+}
+
+func backspaceCompare2(s string, t string) bool {
+	runeS, runeT := []rune(s), []rune(t)
+	i, j := len(runeS)-1, len(runeT)-1
+	sCount, tCount := 0, 0
+	for i >= 0 || j >= 0 {
+		if i >= 0 && runeS[i] == '#' {
+			sCount++
+			i--
+			continue
+		}
+		if j >= 0 && runeT[j] == '#' {
+			tCount++
+			j--
+			continue
+		}
+		if sCount > 0 {
+			sCount--
+			i--
+			continue
+		}
+		if tCount > 0 {
+			tCount--
+			j--
+			continue
+		}
+		if i >= 0 && j >= 0 && runeS[i] == runeT[j] {
+			i--
+			j--
+			continue
+		}
+		return false
+	}
+	return true
 }
