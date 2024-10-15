@@ -1,7 +1,25 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-func backspaceCompare(s string, t string) bool {
+func backspaceCompareStack(s string, t string) bool {
+	return typedText(s) == typedText(t)
+}
+
+func typedText(s string) string {
+	var stack []rune
+	for _, r := range s {
+		if r == '#' {
+			if len(stack) > 0 {
+				stack = stack[:len(stack)-1]
+			}
+			continue
+		}
+		stack = append(stack, r)
+	}
+	return string(stack)
+}
+
+func backspaceCompareReverse1(s string, t string) bool {
 	runeS, runeT := []rune(s), []rune(t)
 	i, j := len(runeS)-1, len(runeT)-1
 	for i >= 0 || j >= 0 {
@@ -33,7 +51,7 @@ func nextIndex(runeS []rune, index int) int {
 	return index
 }
 
-func backspaceCompare2(s string, t string) bool {
+func backspaceCompareReverse2(s string, t string) bool {
 	runeS, runeT := []rune(s), []rune(t)
 	i, j := len(runeS)-1, len(runeT)-1
 	sCount, tCount := 0, 0
