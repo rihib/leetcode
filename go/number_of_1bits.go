@@ -2,10 +2,10 @@
 package main
 
 func hammingWeight(n int) int {
-	cnt := 0
+	count := 0
 	for n > 0 {
-		n &= n - 1
-		cnt += 1
+		count += n % 2
+		n /= 2
 	}
-	return cnt
+	return count
 }
