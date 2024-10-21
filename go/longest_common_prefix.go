@@ -9,22 +9,19 @@ func longestCommonPrefix1(strs []string) string {
 	if len(strs) == 0 {
 		return ""
 	}
-	var prefix []rune
-	for i := 0; ; i++ {
-		if i >= len(strs[0]) {
-			return string(prefix)
-		}
-		curr := strs[0][i]
-		for _, word := range strs {
-			if i >= len(word) {
-				return string(prefix)
-			}
-			if word[i] != curr {
-				return string(prefix)
-			}
-		}
-		prefix = append(prefix, rune(curr))
+	minLength := len(strs[0])
+	for _, s := range strs {
+		minLength = min(minLength, len(s))
 	}
+	for i := 0; i < minLength; i++ {
+		c := strs[0][i]
+		for _, word := range strs[1:] {
+			if word[i] != c {
+				return strs[0][:i]
+			}
+		}
+	}
+	return strs[0][:minLength]
 }
 
 func longestCommonPrefix2(strs []string) string {
@@ -38,25 +35,4 @@ func longestCommonPrefix2(strs []string) string {
 		}
 	}
 	return strs[0]
-}
-
-func longestCommonPrefix3(strs []string) string {
-	if len(strs) == 0 {
-		return ""
-	}
-	minLen := len(strs[0])
-	for _, str := range strs {
-		if len(str) < minLen {
-			minLen = len(str)
-		}
-	}
-	for i := 0; i < minLen; i++ {
-		curr := strs[0][i]
-		for _, word := range strs[1:] {
-			if word[i] != curr {
-				return strs[0][:i]
-			}
-		}
-	}
-	return strs[0][:minLen]
 }
