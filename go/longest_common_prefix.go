@@ -39,3 +39,24 @@ func longestCommonPrefix2(strs []string) string {
 	}
 	return strs[0]
 }
+
+func longestCommonPrefix3(strs []string) string {
+	if len(strs) == 0 {
+		return ""
+	}
+	minLen := len(strs[0])
+	for _, str := range strs {
+		if len(str) < minLen {
+			minLen = len(str)
+		}
+	}
+	for i := 0; i < minLen; i++ {
+		curr := strs[0][i]
+		for _, word := range strs[1:] {
+			if word[i] != curr {
+				return strs[0][:i]
+			}
+		}
+	}
+	return strs[0][:minLen]
+}
