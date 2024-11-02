@@ -2,17 +2,17 @@
 package main
 
 func middleNode(head *ListNode) *ListNode {
-	count := 0
+	length := 0
 	node := head
 	for node != nil {
+		length++
 		node = node.Next
-		count++
 	}
-	middle := head
-	for i := 0; i < count/2; i++ {
-		middle = middle.Next
+	node = head
+	for i := 0; i < length/2; i++ {
+		node = node.Next
 	}
-	return middle
+	return node
 }
 
 func middleNode2(head *ListNode) *ListNode {
