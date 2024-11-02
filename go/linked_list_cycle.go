@@ -2,13 +2,13 @@
 package main
 
 func hasCycleMap(head *ListNode) bool {
-	seen := make(map[*ListNode]struct{})
+	visited := make(map[*ListNode]struct{})
 	node := head
 	for node != nil {
-		if _, ok := seen[node]; ok {
+		if _, ok := visited[node]; ok {
 			return true
 		}
-		seen[node] = struct{}{}
+		visited[node] = struct{}{}
 		node = node.Next
 	}
 	return false
