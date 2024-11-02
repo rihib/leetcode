@@ -22,11 +22,12 @@ func (q *MyQueue) Pop() int {
 }
 
 func (q *MyQueue) Peek() int {
-	if len(q.popStack) == 0 {
-		for len(q.pushStack) > 0 {
-			q.popStack = append(q.popStack, q.pushStack[len(q.pushStack)-1])
-			q.pushStack = q.pushStack[:len(q.pushStack)-1]
-		}
+	if len(q.popStack) > 0 {
+		return q.popStack[len(q.popStack)-1]
+	}
+	for len(q.pushStack) > 0 {
+		q.popStack = append(q.popStack, q.pushStack[len(q.pushStack)-1])
+		q.pushStack = q.pushStack[:len(q.pushStack)-1]
 	}
 	return q.popStack[len(q.popStack)-1]
 }
