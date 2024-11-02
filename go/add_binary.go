@@ -22,7 +22,7 @@ func addBinary(a string, b string) string {
 		reversed.WriteByte(byte(sum%2 + '0')) // sum%2がint型なので'0'もint型として扱われる
 	}
 	if carry == 1 {
-		reversed.WriteByte(byte(carry + '0'))
+		reversed.WriteByte('1')
 	}
 	result := []rune(reversed.String())
 	slices.Reverse(result)
