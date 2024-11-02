@@ -13,12 +13,12 @@ func reverseListIterative(head *ListNode) *ListNode {
 }
 
 func reverseListRecurssive(head *ListNode) *ListNode {
-	curr := head
-	if curr == nil || curr.Next == nil {
-		return curr
+	if head == nil || head.Next == nil {
+		return head
 	}
-	next := curr.Next
-	reversedHead := reverseListRecurssive(next)
-	curr.Next, next.Next = nil, curr
-	return reversedHead
+	curr, next := head, head.Next
+	reversed := reverseListRecurssive(next)
+	next.Next = curr
+	curr.Next = nil
+	return reversed
 }
