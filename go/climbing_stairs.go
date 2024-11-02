@@ -1,7 +1,7 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-func climbStairsFibonacci(n int) int {
+func climbStairsDP(n int) int {
 	prev, curr := 0, 1
 	for i := 1; i <= n; i++ {
 		prev, curr = curr, prev+curr
@@ -9,7 +9,7 @@ func climbStairsFibonacci(n int) int {
 	return curr
 }
 
-func climbStairsDP(n int) int {
+func climbStairsmemorizedRecursion(n int) int {
 	m := make(map[int]int, n)
 	return climbStairsHelper(n, m)
 }
