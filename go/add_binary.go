@@ -8,12 +8,11 @@ import (
 
 func addBinary(a string, b string) string {
 	var reversed strings.Builder
-	maxLength := max(len(a), len(b))
 	carry := 0
-	for i := 1; i <= maxLength; i++ {
+	for i := 1; i <= len(a) || i <= len(b); i++ {
 		bitA, bitB := 0, 0
 		if i <= len(a) {
-			bitA = int(a[len(a)-i] - '0') // a[len(a)-i]がbyte型なので'0'もbyte型と解釈される
+			bitA = int(a[len(a)-i] - '0') // a[len(a)-i]がbyte型なので'0'もbyte型と解釈さ
 		}
 		if i <= len(b) {
 			bitB = int(b[len(b)-i] - '0')
