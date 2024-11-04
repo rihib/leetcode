@@ -1,6 +1,11 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
+type entry struct {
+	node  *TreeNode
+	depth int
+}
+
 /*
 再帰
 */
@@ -22,7 +27,7 @@ func maxDepthRecursive(root *TreeNode) int {
 DFS
 */
 // pushする前にnilノードを弾く
-func maxDepthIterativeDFS(root *TreeNode) int {
+func maxDepthIterativePreOrder1(root *TreeNode) int {
 	if root == nil {
 		return 0
 	}
@@ -32,18 +37,18 @@ func maxDepthIterativeDFS(root *TreeNode) int {
 		e := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
 		maximum = max(maximum, e.depth)
-		if e.node.Left != nil {
-			stack = append(stack, entry{e.node.Left, e.depth + 1})
-		}
 		if e.node.Right != nil {
 			stack = append(stack, entry{e.node.Right, e.depth + 1})
+		}
+		if e.node.Left != nil {
+			stack = append(stack, entry{e.node.Left, e.depth + 1})
 		}
 	}
 	return maximum
 }
 
 // popした後にnilノードを弾く
-func maxDepthIterativeDFS2(root *TreeNode) int {
+func maxDepthIterativePreOrder2(root *TreeNode) int {
 	maximum := 0
 	stack := []entry{{root, 1}}
 	for len(stack) > 0 {
@@ -53,60 +58,37 @@ func maxDepthIterativeDFS2(root *TreeNode) int {
 			continue
 		}
 		maximum = max(maximum, e.depth)
-		stack = append(stack, entry{e.node.Left, e.depth + 1})
 		stack = append(stack, entry{e.node.Right, e.depth + 1})
+		stack = append(stack, entry{e.node.Left, e.depth + 1})
 	}
 	return maximum
 }
 
-// 帰りがけにdepthを更新
-func maxDepthIterativeDFS3(root *TreeNode) int {
-	maximum := 0
-	stack := []*entry2{
-		{
-			node:       root,
-			isPreorder: true,
-			depth:      &maximum,
-			leftDepth:  new(int),
-			rightDepth: new(int),
-		},
+func maxDepthIterativePostOrder(root *TreeNode) int {
+	if root == nil {
+		return 0
 	}
+	maximum := 0
+	stack := []entry{{root, 1}}
+	var lastVisited *TreeNode
 	for len(stack) > 0 {
 		e := stack[len(stack)-1]
-		stack = stack[:len(stack)-1]
-		if e.isPreorder {
-			if e.node == nil {
-				continue
-			}
-			e.isPreorder = false
-			stack = append(stack, e)
-			stack = append(stack, &entry2{
-				node:       e.node.Left,
-				isPreorder: true,
-				depth:      e.leftDepth,
-				leftDepth:  new(int),
-				rightDepth: new(int),
-			})
-			stack = append(stack, &entry2{
-				node:       e.node.Right,
-				isPreorder: true,
-				depth:      e.rightDepth,
-				leftDepth:  new(int),
-				rightDepth: new(int),
-			})
+		node := e.node
+		depth := e.depth
+		if node == nil {
+			stack = stack[:len(stack)-1]
+			continue
+		}
+		if (node.Left == nil && node.Right == nil) || (lastVisited != nil && (lastVisited == node.Left || lastVisited == node.Right)) {
+			stack = stack[:len(stack)-1]
+			maximum = max(maximum, depth)
+			lastVisited = node
 		} else {
-			*e.depth = max(*e.leftDepth, *e.rightDepth) + 1
+			stack = append(stack, entry{node.Right, depth + 1})
+			stack = append(stack, entry{node.Left, depth + 1})
 		}
 	}
 	return maximum
-}
-
-type entry2 struct {
-	node       *TreeNode
-	isPreorder bool
-	depth      *int
-	leftDepth  *int
-	rightDepth *int
 }
 
 /*
@@ -148,11 +130,6 @@ func maxDepthIterativeBFS2(root *TreeNode) int {
 		queue = append(queue, entry{e.node.Right, e.depth + 1})
 	}
 	return maximum
-}
-
-type entry struct {
-	node  *TreeNode
-	depth int
 }
 
 // depthを保持せずに処理する
