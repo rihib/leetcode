@@ -9,12 +9,14 @@ import (
 	"github.com/rihib/leetcode/basics/graph"
 	"github.com/rihib/leetcode/basics/queue"
 	"github.com/rihib/leetcode/basics/sort"
+	"github.com/rihib/leetcode/basics/tree"
 )
 
 func main() {
 	testSort()
 	testPriorityQueue()
 	testDijkstra()
+	testTree()
 }
 
 func testSort() {
@@ -112,7 +114,7 @@ func testPriorityQueue() {
 	node, l, isEmpty = pq.Peek(), pq.Len(), pq.IsEmpty()
 	fmt.Printf("Peek returns nil: %t, Len: %d, IsEmpty: %t\n", node == nil, l, isEmpty)
 
-	fmt.Println("")
+	fmt.Print("\n")
 }
 
 func testDijkstra() {
@@ -129,4 +131,72 @@ func testDijkstra() {
 	for node, distance := range dist {
 		fmt.Printf("Distance from node 0 to node %d is %d\n", node, distance)
 	}
+
+	fmt.Print("\n")
+}
+
+func testTree() {
+	/*
+		下記のツリーが構築される。
+								1
+						/       \
+					2          3
+				/   \       / \
+			x      4     5   x
+						/ \   /
+						x x  6
+	*/
+	nums := []int{1, 2, 3, -1, 4, 5, -1, -1, -1, 6}
+	root := buildTree(nums)
+	fmt.Println("=====Tree=====")
+
+	fmt.Print("Pre-order: ")
+	tree.PreOrderTraversal(root) // 1, 2, 4, 3, 5, 6
+	fmt.Print("\n")
+
+	fmt.Print("In-order: ")
+	tree.InOrderTraversal(root) // 2, 4, 1, 6, 5, 3
+	fmt.Print("\n")
+
+	fmt.Print("Post-order: ")
+	tree.PostOrderTraversal(root) // 4, 2, 6, 5, 3, 1
+	fmt.Print("\n")
+
+	fmt.Print("Pre-order Iterative: ")
+	tree.PreOrderTraversalIterative(root) // 1, 2, 4, 3, 5, 6
+	fmt.Print("\n")
+
+	fmt.Print("In-order Iterative: ")
+	tree.InOrderTraversalIterative(root) // 2, 4, 1, 6, 5, 3
+	fmt.Print("\n")
+
+	fmt.Print("Post-order Iterative: ")
+	tree.PostOrderTraversalIterative(root) // 4, 2, 6, 5, 3, 1
+	fmt.Print("\n")
+
+	fmt.Print("\n")
+}
+
+func buildTree(nums []int) *tree.Node {
+	if len(nums) == 0 || nums[0] < 0 {
+		return nil
+	}
+	root := &tree.Node{Val: nums[0]}
+	queue := []*tree.Node{root}
+	index := 1
+	for len(queue) > 0 && index < len(nums) {
+		node := queue[0]
+		queue = queue[1:]
+		if nums[index] >= 0 {
+			node.Left = &tree.Node{Val: nums[index]}
+			queue = append(queue, node.Left)
+		}
+		index++
+		if index < len(nums) && nums[index] >= 0 {
+			node.Right = &tree.Node{Val: nums[index]}
+			queue = append(queue, node.Right)
+		}
+		index++
+	}
+	return root
 }
