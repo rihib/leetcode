@@ -170,8 +170,16 @@ func testTree() {
 	tree.InOrderTraversalIterative(root) // 2, 4, 1, 6, 5, 3
 	fmt.Print("\n")
 
-	fmt.Print("Post-order Iterative: ")
-	tree.PostOrderTraversalIterative(root) // 4, 2, 6, 5, 3, 1
+	fmt.Print("Post-order Iterative1: ")
+	tree.PostOrderTraversalIterative1(root) // 4, 2, 6, 5, 3, 1
+	fmt.Print("\n")
+
+	fmt.Print("Post-order Iterative2: ")
+	tree.PostOrderTraversalIterative2(root) // 4, 2, 6, 5, 3, 1
+	fmt.Print("\n")
+
+	fmt.Print("Post-order Iterative3: ")
+	tree.PostOrderTraversalIterative3(root) // 4, 2, 6, 5, 3, 1
 	fmt.Print("\n")
 
 	fmt.Print("\n")

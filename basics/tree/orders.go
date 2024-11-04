@@ -72,7 +72,7 @@ func InOrderTraversalIterative(root *Node) {
 	}
 }
 
-func PostOrderTraversalIterative(root *Node) {
+func PostOrderTraversalIterative1(root *Node) {
 	if root == nil {
 		return
 	}
@@ -95,5 +95,53 @@ func PostOrderTraversalIterative(root *Node) {
 			stack = append(stack, node.Right)
 			stack = append(stack, node.Left)
 		}
+	}
+}
+
+func PostOrderTraversalIterative2(root *Node) {
+	if root == nil {
+		return
+	}
+	stack := []*Node{}
+	var lastVisited *Node
+	node := root
+	for len(stack) > 0 || node != nil {
+		if node != nil {
+			stack = append(stack, node)
+			node = node.Left
+			continue
+		}
+		peekNode := stack[len(stack)-1]
+		if peekNode.Right != nil && lastVisited != peekNode.Right {
+			node = peekNode.Right
+		} else {
+			fmt.Printf("%d ", peekNode.Val)
+			lastVisited = stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+		}
+	}
+}
+
+func PostOrderTraversalIterative3(root *Node) {
+	if root == nil {
+		return
+	}
+	stack1 := []*Node{root}
+	stack2 := []*Node{}
+	for len(stack1) > 0 {
+		node := stack1[len(stack1)-1]
+		stack1 = stack1[:len(stack1)-1]
+		stack2 = append(stack2, node)
+		if node.Left != nil {
+			stack1 = append(stack1, node.Left)
+		}
+		if node.Right != nil {
+			stack1 = append(stack1, node.Right)
+		}
+	}
+	for len(stack2) > 0 {
+		node := stack2[len(stack2)-1]
+		stack2 = stack2[:len(stack2)-1]
+		fmt.Printf("%d ", node.Val)
 	}
 }
