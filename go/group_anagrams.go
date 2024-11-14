@@ -2,7 +2,7 @@
 package main
 
 func groupAnagrams(strs []string) [][]string {
-	anagramsMap := make(map[[26]int][]string)
+	anagramsMap := make(map[[26]int][]string, len(strs))
 	for _, word := range strs {
 		var frequencies [26]int
 		for _, r := range word {
