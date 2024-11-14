@@ -10,12 +10,9 @@ func groupAnagrams(strs []string) [][]string {
 		}
 		anagramsMap[frequencies] = append(anagramsMap[frequencies], word)
 	}
-
-	anagrams := make([][]string, len(anagramsMap))
-	i := 0
-	for _, words := range anagramsMap {
-		anagrams[i] = words
-		i++
+	anagrams := make([][]string, 0, len(anagramsMap))
+	for _, group := range anagramsMap {
+		anagrams = append(anagrams, group)
 	}
 	return anagrams
 }
