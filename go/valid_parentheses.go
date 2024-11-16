@@ -2,15 +2,19 @@
 package main
 
 func isValid(s string) bool {
+	closeToOpen := map[rune]rune{
+		')': '(',
+		'}': '{',
+		']': '[',
+	}
 	var stack []rune
-	closeToOpens := map[rune]rune{')': '(', '}': '{', ']': '['}
-	for _, bracket := range s {
-		openBracket, ok := closeToOpens[bracket]
+	for _, r := range s {
+		p, ok := closeToOpen[r]
 		if !ok {
-			stack = append(stack, bracket)
+			stack = append(stack, r)
 			continue
 		}
-		if len(stack) == 0 || stack[len(stack)-1] != openBracket {
+		if len(stack) == 0 || stack[len(stack)-1] != p {
 			return false
 		}
 		stack = stack[:len(stack)-1]
