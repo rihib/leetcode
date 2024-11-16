@@ -23,3 +23,33 @@ func isPalindrome(s string) bool {
 	}
 	return true
 }
+
+func isPalindrome2(s string) bool {
+	left := make(chan rune)
+	right := make(chan rune)
+	go filter(s, left, false)
+	go filter(s, right, true)
+	for {
+		l, lok := <-left
+		r, rok := <-right
+		if !lok || !rok {
+			return true
+		}
+		if l != r {
+			return false
+		}
+	}
+}
+
+func filter(s string, c chan rune, reversed bool) {
+	for i := range s {
+		if reversed {
+			i = len(s) - 1 - i
+		}
+		r := rune(s[i])
+		if unicode.IsDigit(r) || unicode.IsLetter(r) {
+			c <- unicode.ToLower(r)
+		}
+	}
+	close(c)
+}
