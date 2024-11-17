@@ -3,13 +3,8 @@ package main
 
 func countBits(n int) []int {
 	bitCounts := make([]int, n+1)
-	for i := 0; i <= n; i++ {
-		if i == 0 || i == 1 {
-			bitCounts[i] = i
-			continue
-		}
-		j := i & (i - 1)
-		bitCounts[i] = bitCounts[j] + 1
+	for i := 1; i <= n; i++ {
+		bitCounts[i] = 1 + bitCounts[i&(i-1)] // i&(i-1) unset rightmost set bit
 	}
 	return bitCounts
 }
