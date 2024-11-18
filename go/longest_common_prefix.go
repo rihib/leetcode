@@ -2,40 +2,27 @@
 package main
 
 import (
-	"sort"
 	"strings"
 )
 
-func longestCommonPrefix1(strs []string) string {
-	if len(strs) == 0 {
-		return ""
-	}
-	minLength := len(strs[0])
-	for _, s := range strs {
-		minLength = min(minLength, len(s))
-	}
-	for i := 0; i < minLength; i++ {
-		c := strs[0][i]
-		for _, word := range strs[1:] {
-			if word[i] != c {
-				return strs[0][:i]
+func longestCommonPrefix(strs []string) string {
+	var prefix strings.Builder
+	for i := 0; ; i++ {
+		var curr rune
+		for _, word := range strs {
+			if i >= len(word) {
+				return prefix.String()
+			}
+			if curr == 0 {
+				curr = rune(word[i])
+				continue
+			}
+			if rune(word[i]) != curr {
+				return prefix.String()
 			}
 		}
+		prefix.WriteRune(curr)
 	}
-	return strs[0][:minLength]
-}
-
-func longestCommonPrefix2(strs []string) string {
-	if len(strs) == 0 {
-		return ""
-	}
-	sort.Strings(strs)
-	for i := range strs[0] {
-		if strs[0][i] != strs[len(strs)-1][i] {
-			return strs[0][:i]
-		}
-	}
-	return strs[0]
 }
 
 /*
@@ -77,7 +64,7 @@ func (t *Trie) Prefix() string {
 	return prefix.String()
 }
 
-func longestCommonPrefix(strs []string) string {
+func longestCommonPrefixTrie(strs []string) string {
 	t := NewTrie()
 	for _, word := range strs {
 		t.Insert(word)
