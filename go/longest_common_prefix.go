@@ -3,6 +3,7 @@ package main
 
 import (
 	"sort"
+	"strings"
 )
 
 func longestCommonPrefix1(strs []string) string {
@@ -65,24 +66,21 @@ func (t *Trie) Insert(word string) {
 }
 
 func (t *Trie) Prefix() string {
+	var prefix strings.Builder
 	node := t.root
-	var prefix []rune
 	for len(node.children) == 1 && !node.isWordEnd {
 		for r, child := range node.children {
-			prefix = append(prefix, r)
+			prefix.WriteRune(r)
 			node = child // ここでnodeをchildで更新してもrangeは評価済みなのでループが続くことはない
 		}
 	}
-	return string(prefix)
+	return prefix.String()
 }
 
 func longestCommonPrefix(strs []string) string {
-	if len(strs) == 0 {
-		return ""
-	}
-	trie := NewTrie()
+	t := NewTrie()
 	for _, word := range strs {
-		trie.Insert(word)
+		t.Insert(word)
 	}
-	return trie.Prefix()
+	return t.Prefix()
 }
