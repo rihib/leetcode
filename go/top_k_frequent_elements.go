@@ -7,19 +7,14 @@ import (
 	"sort"
 )
 
-type Element struct {
-	num   int
-	count int
-}
-
 func topKFrequentBucketSort(nums []int, k int) []int {
-	frequency := make(map[int]int)
-	for _, num := range nums {
-		frequency[num]++
+	frequencies := make(map[int]int, len(nums))
+	for _, n := range nums {
+		frequencies[n]++
 	}
 	countToNum := make([][]int, len(nums)+1)
-	for num, count := range frequency {
-		countToNum[count] = append(countToNum[count], num)
+	for n, count := range frequencies {
+		countToNum[count] = append(countToNum[count], n)
 	}
 	topK := make([]int, 0, k)
 	for i := len(countToNum) - 1; i >= 0 && len(topK) < k; i-- {
@@ -28,16 +23,21 @@ func topKFrequentBucketSort(nums []int, k int) []int {
 	return topK
 }
 
+type element struct {
+	num   int
+	count int
+}
+
 func topKFrequentQuickselect(nums []int, k int) []int {
-	frequency := make(map[int]int)
-	for _, num := range nums {
-		frequency[num]++
+	frequencies := make(map[int]int, len(nums))
+	for _, n := range nums {
+		frequencies[n]++
 	}
-	elements := make([]Element, 0, len(frequency))
-	for num, count := range frequency {
-		elements = append(elements, Element{num: num, count: count})
+	elements := make([]element, 0, len(frequencies))
+	for n, count := range frequencies {
+		elements = append(elements, element{n, count})
 	}
-	quickselect(elements, 0, len(elements)-1, len(elements)-k, partitionRandom)
+	quickselect(elements, 0, len(elements)-1, len(elements)-k)
 	topK := make([]int, k)
 	for i := 0; i < k; i++ {
 		topK[i] = elements[len(elements)-1-i].num
@@ -45,55 +45,28 @@ func topKFrequentQuickselect(nums []int, k int) []int {
 	return topK
 }
 
-func quickselect(
-	elements []Element, left, right, k int,
-	partition func([]Element, int, int) int) {
+func quickselect(elements []element, left, right, k int) {
 	for left < right {
 		pivotIndex := partition(elements, left, right)
-		if pivotIndex == k {
+		if k == pivotIndex {
 			return
 		}
-		if pivotIndex < k {
-			left = pivotIndex + 1
-		} else {
+		if k < pivotIndex {
 			right = pivotIndex - 1
+		} else {
+			left = pivotIndex + 1
 		}
 	}
 }
 
-func partitionRandom(elements []Element, left, right int) int {
+func partition(elements []element, left, right int) int {
 	pivotIndex := left + rand.IntN(right-left+1)
+	pivotValue := elements[pivotIndex].count
 	elements[pivotIndex], elements[right] = elements[right], elements[pivotIndex]
-	pivot := elements[right].count
 	storeIndex := left
 	for i := left; i < right; i++ {
-		if elements[i].count < pivot {
-			elements[i], elements[storeIndex] = elements[storeIndex], elements[i]
-			storeIndex++
-		}
-	}
-	elements[storeIndex], elements[right] = elements[right], elements[storeIndex]
-	return storeIndex
-}
-
-func partitionMedianOf3(elements []Element, left, right int) int {
-	mid := left + (right-left)/2
-	if elements[right].count < elements[left].count {
-		elements[right], elements[left] = elements[left], elements[right]
-	}
-	if elements[mid].count < elements[left].count {
-		elements[mid], elements[left] = elements[left], elements[mid]
-	}
-	if elements[right].count < elements[mid].count {
-		elements[right], elements[mid] = elements[mid], elements[right]
-	}
-	pivotIndex := mid
-	elements[pivotIndex], elements[right] = elements[right], elements[pivotIndex]
-	pivot := elements[right].count
-	storeIndex := left
-	for i := left; i < right; i++ {
-		if elements[i].count < pivot {
-			elements[i], elements[storeIndex] = elements[storeIndex], elements[i]
+		if elements[i].count < pivotValue {
+			elements[storeIndex], elements[i] = elements[i], elements[storeIndex]
 			storeIndex++
 		}
 	}
@@ -124,22 +97,22 @@ func topKFrequentMinHeap(nums []int, k int) []int {
 	h := &MinHeap{}
 	heap.Init(h)
 	for num, count := range frequency {
-		heap.Push(h, Element{num: num, count: count})
+		heap.Push(h, element{num: num, count: count})
 		if h.Len() > k {
 			heap.Pop(h)
 		}
 	}
 	topK := make([]int, 0, k)
 	for h.Len() > 0 {
-		topK = append(topK, heap.Pop(h).(Element).num)
+		topK = append(topK, heap.Pop(h).(element).num)
 	}
 	return topK
 }
 
-type MinHeap []Element
+type MinHeap []element
 
 func (h *MinHeap) Push(x interface{}) {
-	*h = append(*h, x.(Element))
+	*h = append(*h, x.(element))
 }
 
 func (h *MinHeap) Pop() interface{} {
@@ -160,19 +133,19 @@ func topKFrequentMaxHeap(nums []int, k int) []int {
 	h := &MaxHeap{}
 	heap.Init(h)
 	for num, count := range frequency {
-		heap.Push(h, Element{num: num, count: count})
+		heap.Push(h, element{num: num, count: count})
 	}
 	topK := make([]int, 0, k)
 	for i := 0; i < k; i++ {
-		topK = append(topK, heap.Pop(h).(Element).num)
+		topK = append(topK, heap.Pop(h).(element).num)
 	}
 	return topK
 }
 
-type MaxHeap []Element
+type MaxHeap []element
 
 func (h *MaxHeap) Push(x interface{}) {
-	*h = append(*h, x.(Element))
+	*h = append(*h, x.(element))
 }
 
 func (h *MaxHeap) Pop() interface{} {
