@@ -38,9 +38,9 @@ func topKFrequentQuickselect(nums []int, k int) []int {
 		elements = append(elements, element{n, count})
 	}
 	quickselect(elements, 0, len(elements)-1, len(elements)-k)
-	topK := make([]int, k)
+	topK := make([]int, 0, k)
 	for i := 0; i < k; i++ {
-		topK[i] = elements[len(elements)-1-i].num
+		topK = append(topK, elements[len(elements)-1-i].num)
 	}
 	return topK
 }
