@@ -28,6 +28,7 @@ type element struct {
 	count int
 }
 
+// see https://ja.wikipedia.org/wiki/クイックセレクト
 func topKFrequentQuickselect(nums []int, k int) []int {
 	frequencies := make(map[int]int, len(nums))
 	for _, n := range nums {
@@ -75,16 +76,17 @@ func partition(elements []element, left, right int) int {
 }
 
 func topKFrequentPDQSort(nums []int, k int) []int {
-	frequency := make(map[int]int)
-	for _, num := range nums {
-		frequency[num]++
+	frequencies := make(map[int]int, len(nums))
+	for _, n := range nums {
+		frequencies[n]++
 	}
-	numsSet := make([]int, 0, len(frequency))
-	for num := range frequency {
-		numsSet = append(numsSet, num)
+	numsSet := make([]int, 0, len(frequencies))
+	for n := range frequencies {
+		numsSet = append(numsSet, n)
 	}
+	// 第２引数の比較関数でtrueになる並び順にnumsSetをソートする
 	sort.Slice(numsSet, func(i, j int) bool {
-		return frequency[numsSet[i]] > frequency[numsSet[j]]
+		return frequencies[numsSet[i]] > frequencies[numsSet[j]]
 	})
 	return numsSet[:k]
 }
