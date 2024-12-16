@@ -2,9 +2,9 @@
 package main
 
 func singleNumber(nums []int) int {
-	res := 0
+	singleNum := 0
 	for _, n := range nums {
-		res ^= n
+		singleNum ^= n
 	}
-	return res
+	return singleNum
 }
