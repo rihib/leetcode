@@ -2,27 +2,19 @@
 package main
 
 func isPalindromeLinkedList(head *ListNode) bool {
-	slow, fast := head, head
-	var rev *ListNode
-
-	for fast != nil && fast.Next != nil {
-		fast = fast.Next.Next
-		tmp := slow.Next
-		slow.Next = rev
-		rev = slow
-		slow = tmp
+	var values []int
+	node := head
+	for node != nil {
+		values = append(values, node.Val)
+		node = node.Next
 	}
-
-	if fast != nil {
-		slow = slow.Next
-	}
-
-	for slow != nil {
-		if slow.Val != rev.Val {
+	left, right := 0, len(values)-1
+	for left < right {
+		if values[left] != values[right] {
 			return false
 		}
-		slow, rev = slow.Next, rev.Next
+		left++
+		right--
 	}
-
 	return true
 }
