@@ -10,42 +10,36 @@ func isSymmetricRecursive(root *TreeNode) bool {
 	return isMirror(root.Left, root.Right)
 }
 
-func isMirror(t1, t2 *TreeNode) bool {
-	if t1 == nil && t2 == nil {
+func isMirror(left, right *TreeNode) bool {
+	if left == nil && right == nil {
 		return true
 	}
-	if t1 == nil || t2 == nil {
+	if left == nil || right == nil {
 		return false
 	}
-	return (t1.Val == t2.Val) &&
-		isMirror(t1.Left, t2.Right) && isMirror(t1.Right, t2.Left)
+	return left.Val == right.Val && isMirror(left.Left, right.Right) && isMirror(left.Right, right.Left)
 }
 
-func isSymmetricIterative(root *TreeNode) bool {
+func isSymmetric(root *TreeNode) bool {
 	if root == nil {
 		return true
 	}
-
 	queue := list.New()
 	queue.PushBack(root.Left)
 	queue.PushBack(root.Right)
-
 	for queue.Len() > 0 {
-		t1 := queue.Remove(queue.Front()).(*TreeNode)
-		t2 := queue.Remove(queue.Front()).(*TreeNode)
-
-		if t1 == nil && t2 == nil {
+		left := queue.Remove(queue.Front()).(*TreeNode)
+		right := queue.Remove(queue.Front()).(*TreeNode)
+		if left == nil && right == nil {
 			continue
 		}
-		if t1 == nil || t2 == nil || t1.Val != t2.Val {
+		if left == nil || right == nil || left.Val != right.Val {
 			return false
 		}
-
-		queue.PushBack(t1.Left)
-		queue.PushBack(t2.Right)
-		queue.PushBack(t1.Right)
-		queue.PushBack(t2.Left)
+		queue.PushBack(left.Left)
+		queue.PushBack(right.Right)
+		queue.PushBack(left.Right)
+		queue.PushBack(right.Left)
 	}
-
 	return true
 }
