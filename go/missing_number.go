@@ -2,18 +2,17 @@
 package main
 
 func missingNumber(nums []int) int {
-	sum := 0
-	for _, n := range nums {
-		sum += n
+	var difference int
+	for i, n := range nums {
+		difference += i + 1 - n
 	}
-	l := len(nums)
-	return l*(l+1)/2 - sum
+	return difference
 }
 
 func missingNumber2(nums []int) int {
-	res := len(nums)
-	for i, n := range nums {
-		res += i - n
+	var total int
+	for _, n := range nums {
+		total += n
 	}
-	return res
+	return (1+len(nums))*len(nums)/2 - total
 }
