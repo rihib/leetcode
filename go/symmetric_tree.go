@@ -20,23 +20,26 @@ func isMirror(left, right *TreeNode) bool {
 	return isMirror(left.Left, right.Right) && isMirror(left.Right, right.Left)
 }
 
+type nodePair struct {
+	left  *TreeNode
+	right *TreeNode
+}
+
 func isSymmetricIterative(root *TreeNode) bool {
 	queue := list.New()
-	queue.PushBack(root)
-	queue.PushBack(root)
+	pair := nodePair{root, root}
+	queue.PushBack(pair)
 	for queue.Len() > 0 {
-		left := queue.Remove(queue.Front()).(*TreeNode)
-		right := queue.Remove(queue.Front()).(*TreeNode)
+		pair := queue.Remove(queue.Front()).(nodePair)
+		left, right := pair.left, pair.right
 		if left == nil && right == nil {
 			continue
 		}
 		if left == nil || right == nil || left.Val != right.Val {
 			return false
 		}
-		queue.PushBack(left.Left)
-		queue.PushBack(right.Right)
-		queue.PushBack(left.Right)
-		queue.PushBack(right.Left)
+		queue.PushBack(nodePair{left.Left, right.Right})
+		queue.PushBack(nodePair{left.Right, right.Left})
 	}
 	return true
 }
