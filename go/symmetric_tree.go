@@ -4,10 +4,7 @@ package main
 import "container/list"
 
 func isSymmetricRecursive(root *TreeNode) bool {
-	if root == nil {
-		return true
-	}
-	return isMirror(root.Left, root.Right)
+	return isMirror(root, root)
 }
 
 func isMirror(left, right *TreeNode) bool {
@@ -17,16 +14,16 @@ func isMirror(left, right *TreeNode) bool {
 	if left == nil || right == nil {
 		return false
 	}
-	return left.Val == right.Val && isMirror(left.Left, right.Right) && isMirror(left.Right, right.Left)
+	if left.Val != right.Val {
+		return false
+	}
+	return isMirror(left.Left, right.Right) && isMirror(left.Right, right.Left)
 }
 
-func isSymmetric(root *TreeNode) bool {
-	if root == nil {
-		return true
-	}
+func isSymmetricIterative(root *TreeNode) bool {
 	queue := list.New()
-	queue.PushBack(root.Left)
-	queue.PushBack(root.Right)
+	queue.PushBack(root)
+	queue.PushBack(root)
 	for queue.Len() > 0 {
 		left := queue.Remove(queue.Front()).(*TreeNode)
 		right := queue.Remove(queue.Front()).(*TreeNode)
