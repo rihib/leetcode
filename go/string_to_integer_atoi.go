@@ -1,38 +1,40 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-import "math"
+import (
+	"math"
+	"unicode"
+)
 
 func myAtoi(s string) int {
-	const (
-		intMax = int(math.MaxInt32)
-		intMin = int(math.MinInt32)
-	)
-
-	i := 0
-	for i < len(s) && s[i] == ' ' {
-		i++
+	var num int
+	isNegative := false
+	currentIndex := 0
+	runeS := []rune(s)
+	for currentIndex < len(runeS) && runeS[currentIndex] == ' ' {
+		currentIndex++
 	}
-
-	sign := 1
-	if i < len(s) && (s[i] == '-' || s[i] == '+') {
-		if s[i] == '-' {
-			sign = -1
+	if currentIndex < len(runeS) && (runeS[currentIndex] == '+' || runeS[currentIndex] == '-') {
+		if runeS[currentIndex] == '-' {
+			isNegative = true
 		}
-		i++
+		currentIndex++
 	}
-
-	num := 0
-	for i < len(s) && '0' <= s[i] && s[i] <= '9' {
-		digit := int(s[i] - '0')
-		if sign == 1 && (num > intMax/10 || num == intMax/10 && digit >= intMax%10) {
-			return intMax
+	for i := currentIndex; i < len(runeS); i++ {
+		if !unicode.IsDigit(runeS[i]) {
+			break
 		}
-		if sign == -1 && (-num < intMin/10 || -num == intMin/10 && -digit <= intMin%10) {
-			return intMin
+		digit := int(runeS[i] - '0')
+		if !isNegative && (num > math.MaxInt32/10 || num == math.MaxInt32/10 && digit > math.MaxInt32%10) {
+			return math.MaxInt32
+		}
+		if isNegative && (-num < math.MinInt32/10 || -num == math.MinInt32/10 && -digit < math.MinInt32%10) {
+			return math.MinInt32
 		}
 		num = num*10 + digit
-		i++
 	}
-	return sign * num
+	if isNegative {
+		return num * -1
+	}
+	return num
 }
