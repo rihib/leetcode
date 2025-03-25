@@ -3,45 +3,27 @@ package main
 
 import "strings"
 
+// ジグザグの行ごとに作成していき、最後に１つにする
+// sの先頭から見ていくので、その文字の行番号さえわかればその行に追加していくだけ
 func convert(s string, numRows int) string {
 	if numRows == 1 {
 		return s
 	}
-
-	rows := make([]strings.Builder, numRows)
-	cycleLength := 2*numRows - 2
+	convertedRows := make([]strings.Builder, numRows)
+	blockSize := numRows*2 - 2
 	for i, r := range s {
-		rowIndex := i % cycleLength
-		if rowIndex >= numRows {
-			rowIndex = cycleLength - rowIndex
+		offset := i % blockSize
+		var rowIndex int
+		if offset < numRows {
+			rowIndex = offset
+		} else {
+			rowIndex = numRows - 2 - (offset - numRows)
 		}
-		rows[rowIndex].WriteRune(r)
+		convertedRows[rowIndex].WriteRune(r)
 	}
-
-	var oneline strings.Builder
-	for _, row := range rows {
-		oneline.WriteString(row.String())
+	var converted strings.Builder
+	for _, row := range convertedRows {
+		converted.WriteString(row.String())
 	}
-	return oneline.String()
-}
-
-func convert2(s string, numRows int) string {
-	if numRows == 1 {
-		return s
-	}
-	var oneline strings.Builder
-	cycleLength := 2*numRows - 2
-	for rowIndex := 0; rowIndex < numRows; rowIndex++ {
-		for i := rowIndex; i < len(s); i += cycleLength {
-			oneline.WriteByte(s[i])
-			if rowIndex == 0 || rowIndex == numRows-1 {
-				continue
-			}
-			diagIndex := i + cycleLength - rowIndex*2
-			if diagIndex < len(s) {
-				oneline.WriteByte(s[diagIndex])
-			}
-		}
-	}
-	return oneline.String()
+	return converted.String()
 }
