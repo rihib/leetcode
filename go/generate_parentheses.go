@@ -1,6 +1,30 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
+func generateParenthesisRecursive(n int) []string {
+	var combinations []string
+	currentCombination := make([]byte, 0, n*2)
+	var generate func(int, int)
+	generate = func(numLeft, numRight int) {
+		if numLeft == n && numRight == n {
+			combinations = append(combinations, string(currentCombination))
+			return
+		}
+		if numLeft < n {
+			currentCombination = append(currentCombination, '(')
+			generate(numLeft+1, numRight)
+			currentCombination = currentCombination[:len(currentCombination)-1]
+		}
+		if numRight < numLeft {
+			currentCombination = append(currentCombination, ')')
+			generate(numLeft, numRight+1)
+			currentCombination = currentCombination[:len(currentCombination)-1]
+		}
+	}
+	generate(0, 0)
+	return combinations
+}
+
 func generateParenthesisIterative(n int) []string {
 	var parentheses []string
 	type state struct {
@@ -27,29 +51,5 @@ func generateParenthesisIterative(n int) []string {
 			stack = append(stack, state{newParenthesis, current.open, current.closed + 1})
 		}
 	}
-	return parentheses
-}
-
-func generateParenthesisRecursive(n int) []string {
-	var parentheses []string
-	parenthesis := make([]byte, 0, n*2)
-	var generate func(int, int)
-	generate = func(open int, closed int) {
-		if open == n && closed == n {
-			parentheses = append(parentheses, string(parenthesis))
-			return
-		}
-		if open < n {
-			parenthesis = append(parenthesis, '(')
-			generate(open+1, closed)
-			parenthesis = parenthesis[:len(parenthesis)-1]
-		}
-		if open > closed {
-			parenthesis = append(parenthesis, ')')
-			generate(open, closed+1)
-			parenthesis = parenthesis[:len(parenthesis)-1]
-		}
-	}
-	generate(0, 0)
 	return parentheses
 }
