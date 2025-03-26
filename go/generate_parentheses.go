@@ -1,6 +1,8 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
+import "slices"
+
 func generateParenthesisRecursive(n int) []string {
 	var combinations []string
 	currentCombination := make([]byte, 0, n*2)
@@ -25,31 +27,32 @@ func generateParenthesisRecursive(n int) []string {
 	return combinations
 }
 
+type combination struct {
+	parenthesis []byte
+	numLeft     int
+	numRight    int
+}
+
 func generateParenthesisIterative(n int) []string {
-	var parentheses []string
-	type state struct {
-		parenthesis []byte
-		open        int
-		closed      int
-	}
-	stack := []state{{[]byte{}, 0, 0}}
+	var combinations []string
+	stack := []combination{{[]byte{}, 0, 0}}
 	for len(stack) > 0 {
 		current := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
-		if current.open == n && current.closed == n {
-			parentheses = append(parentheses, string(current.parenthesis))
+		if current.numLeft == n && current.numRight == n {
+			combinations = append(combinations, string(current.parenthesis))
 			continue
 		}
-		if current.open < n {
-			newParenthesis := append([]byte{}, current.parenthesis...)
+		if current.numLeft < n {
+			newParenthesis := slices.Clone(current.parenthesis)
 			newParenthesis = append(newParenthesis, '(')
-			stack = append(stack, state{newParenthesis, current.open + 1, current.closed})
+			stack = append(stack, combination{newParenthesis, current.numLeft + 1, current.numRight})
 		}
-		if current.open > current.closed {
-			newParenthesis := append([]byte{}, current.parenthesis...)
+		if current.numRight < current.numLeft {
+			newParenthesis := slices.Clone(current.parenthesis)
 			newParenthesis = append(newParenthesis, ')')
-			stack = append(stack, state{newParenthesis, current.open, current.closed + 1})
+			stack = append(stack, combination{newParenthesis, current.numLeft, current.numRight + 1})
 		}
 	}
-	return parentheses
+	return combinations
 }
