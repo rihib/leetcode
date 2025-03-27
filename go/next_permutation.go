@@ -10,7 +10,7 @@ package main
 // nums[isSortedUntil] >= nums[isSortedUntil+1]は>ではなく、>=でないと
 // [1, 1]などではOut of indexになる
 func nextPermutation(nums []int) {
-	if len(nums) <= 1 {
+	if len(nums) == 0 {
 		return
 	}
 	isSortedUntil := len(nums) - 2
