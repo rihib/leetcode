@@ -8,6 +8,11 @@ func searchClosed(nums []int, target int) int {
 		if nums[mid] == target {
 			return mid
 		}
+		// ここでは左側がソートされているかを判定しているが
+		// nums[left] < nums[mid]としてしまうと
+		// left == midになるとき（例えばnums=[3, 1]）
+		// 左側がソートされていないと判断されて
+		// 誤った条件分岐に入ってしまう
 		if nums[left] <= nums[mid] {
 			if nums[left] <= target && target < nums[mid] {
 				right = mid - 1
@@ -34,7 +39,14 @@ func searchHalfClosed(nums []int, target int) int {
 		if nums[mid] == target {
 			return mid
 		}
-		if nums[left] < nums[mid] {
+		// ここでは左側がソートされているかを判定しているが
+		// searchClosedとは違ってsearchHalfClosedの場合は
+		// nums[left] < nums[mid]でも、nums[left] <= nums[mid]でも問題なく動作する
+		// なぜならsearchHalfClosedでは、nums内にtargetが存在する場合において
+		// left == mid && nums[mid] != targetになることはないので
+		// left == midになってもバグらないためである
+		// 単にたまたまバグらないだけで、意味的にnums[left] <= nums[mid]の方が適切
+		if nums[left] <= nums[mid] {
 			if nums[left] <= target && target < nums[mid] { // leftがtargetの可能性もあるので<=とする
 				right = mid
 			} else {
