@@ -44,6 +44,7 @@ func searchHalfClosed(nums []int, target int) int {
 		// nums[left] < nums[mid]でも、nums[left] <= nums[mid]でも問題なく動作する
 		// なぜならsearchHalfClosedでは、nums内にtargetが存在する場合において
 		// left == mid && nums[mid] != targetになることはないので
+		// （left==midになるにはlen(nums)==1である必要がある）
 		// left == midになってもバグらないためである
 		// 単にたまたまバグらないだけで、意味的にnums[left] <= nums[mid]の方が適切
 		if nums[left] <= nums[mid] {
