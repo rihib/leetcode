@@ -5,7 +5,7 @@ func searchClosed(nums []int, target int) int {
 	left, right := 0, len(nums)-1
 	for left <= right {
 		mid := left + (right-left)/2
-		if target == nums[mid] {
+		if nums[mid] == target {
 			return mid
 		}
 		if nums[left] <= nums[mid] {
@@ -26,6 +26,7 @@ func searchClosed(nums []int, target int) int {
 }
 
 // 半閉区画ではleft~right-1が未探索で、rightは常に探索済み
+// そのため、for文の条件はleft < rightとなる（left=1, right=2のときmid=1となり、未探索のleftのみが探索の対象となる）
 func searchHalfClosed(nums []int, target int) int {
 	left, right := 0, len(nums)
 	for left < right {
@@ -33,7 +34,7 @@ func searchHalfClosed(nums []int, target int) int {
 		if nums[mid] == target {
 			return mid
 		}
-		if nums[left] < nums[mid] { // この問題の条件では全ての要素が異なるので、nums[left] == nums[mid]の時点で-1を返せばいいので、<=とする必要はない
+		if nums[left] < nums[mid] {
 			if nums[left] <= target && target < nums[mid] { // leftがtargetの可能性もあるので<=とする
 				right = mid
 			} else {
