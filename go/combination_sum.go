@@ -1,19 +1,21 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
+import "slices"
+
 func combinationSumDP(candidates []int, target int) [][]int {
-	combinationsGroups := make([][][]int, target+1)
-	combinationsGroups[0] = [][]int{{}}
+	combinationsGroup := make([][][]int, target+1)
+	combinationsGroup[0] = [][]int{{}}
 	for _, candidate := range candidates {
 		for i := candidate; i <= target; i++ {
-			for _, combination := range combinationsGroups[i-candidate] {
-				newCombination := append([]int{}, combination...)
+			for _, combination := range combinationsGroup[i-candidate] {
+				newCombination := slices.Clone(combination)
 				newCombination = append(newCombination, candidate)
-				combinationsGroups[i] = append(combinationsGroups[i], newCombination)
+				combinationsGroup[i] = append(combinationsGroup[i], newCombination)
 			}
 		}
 	}
-	return combinationsGroups[target]
+	return combinationsGroup[target]
 }
 
 func combinationSumBacktrackingIterative(candidates []int, target int) [][]int {
