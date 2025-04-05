@@ -3,6 +3,57 @@ package main
 
 import "slices"
 
+func combinationSumBacktrackingRecursion(candidates []int, target int) [][]int {
+	var combinations [][]int
+	var combination []int
+	var generate func(int, int)
+	generate = func(currentIndex, sum int) {
+		if sum == target {
+			newCombination := slices.Clone(combination)
+			combinations = append(combinations, newCombination)
+			return
+		}
+		if sum > target {
+			return
+		}
+		for i := currentIndex; i < len(candidates); i++ {
+			combination = append(combination, candidates[i])
+			generate(i, sum+candidates[i])
+			combination = combination[:len(combination)-1]
+		}
+	}
+	generate(0, 0)
+	return combinations
+}
+
+type frame struct {
+	combination  []int
+	currentIndex int
+	sum          int
+}
+
+func combinationSumacktrackingIterative(candidates []int, target int) [][]int {
+	var combinations [][]int
+	stack := []frame{{[]int{}, 0, 0}}
+	for len(stack) > 0 {
+		f := stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		if f.sum == target {
+			combinations = append(combinations, f.combination)
+			continue
+		}
+		if f.sum > target {
+			continue
+		}
+		for i := f.currentIndex; i < len(candidates); i++ {
+			newCombination := slices.Clone(f.combination)
+			newCombination = append(newCombination, candidates[i])
+			stack = append(stack, frame{newCombination, i, f.sum + candidates[i]})
+		}
+	}
+	return combinations
+}
+
 func combinationSumDP(candidates []int, target int) [][]int {
 	combinationsGroup := make([][][]int, target+1)
 	combinationsGroup[0] = [][]int{{}}
@@ -16,54 +67,4 @@ func combinationSumDP(candidates []int, target int) [][]int {
 		}
 	}
 	return combinationsGroup[target]
-}
-
-func combinationSumBacktrackingIterative(candidates []int, target int) [][]int {
-	combinations := [][]int{}
-	type state struct {
-		combination []int
-		sum         int
-		index       int
-	}
-	stack := []state{{[]int{}, 0, 0}}
-	for len(stack) > 0 {
-		current := stack[len(stack)-1]
-		stack = stack[:len(stack)-1]
-		if current.sum == target {
-			combinations = append(combinations, current.combination)
-			continue
-		}
-		for i := current.index; i < len(candidates); i++ {
-			newSum := current.sum + candidates[i]
-			if newSum > target {
-				continue
-			}
-			newCombination := append([]int{}, current.combination...)
-			newCombination = append(newCombination, candidates[i])
-			stack = append(stack, state{newCombination, newSum, i})
-		}
-	}
-	return combinations
-}
-
-func combinationSumBacktrackingRecursion(candidates []int, target int) [][]int {
-	var combinations [][]int
-	var combination []int
-	var generateCombinations func(int, int)
-	generateCombinations = func(currentIndex int, sum int) {
-		if sum == target {
-			combinations = append(combinations, append([]int{}, combination...))
-			return
-		}
-		if sum > target {
-			return
-		}
-		for i := currentIndex; i < len(candidates); i++ {
-			combination = append(combination, candidates[i])
-			generateCombinations(i, sum+candidates[i])
-			combination = combination[:len(combination)-1]
-		}
-	}
-	generateCombinations(0, 0)
-	return combinations
 }
