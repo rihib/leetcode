@@ -3,11 +3,15 @@ package main
 
 import "slices"
 
+// 時間計算量： 両者とも最悪で指数だが、バックトラッキングの方が剪定の効果があり実行時間は短くなりやすい。
+
+// 空間計算量： DPはすべての部分和の組み合わせを記録するため重い。バックトラッキングは再帰の深さ分だけを保持するため軽い。
+
 func combinationSumBacktrackingRecursion(candidates []int, target int) [][]int {
 	var combinations [][]int
 	var combination []int
 	var generate func(int, int)
-	generate = func(currentIndex, sum int) {
+	generate = func(sum, currentIndex int) {
 		if sum == target {
 			newCombination := slices.Clone(combination)
 			combinations = append(combinations, newCombination)
@@ -18,7 +22,7 @@ func combinationSumBacktrackingRecursion(candidates []int, target int) [][]int {
 		}
 		for i := currentIndex; i < len(candidates); i++ {
 			combination = append(combination, candidates[i])
-			generate(i, sum+candidates[i])
+			generate(sum+candidates[i], i)
 			combination = combination[:len(combination)-1]
 		}
 	}
