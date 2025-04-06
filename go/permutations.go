@@ -7,24 +7,32 @@ import (
 	"sort"
 )
 
+// 辞書順に生成していく
+// [1, 2, 4, 3]の次は[1, 3, 2, 4]
+// まず後ろから昇順になっている箇所を探す（2）
+// そしてまた後ろから2までで、2よりも大きい一番小さい数を探す（3）
+// そしてその２つを入れ替える（[1, 3, 4, 2]）
+// そしてその後ろの部分を逆順にする（[1, 3, 2, 4]）
 func permuteLexicographically(nums []int) [][]int {
-	sort.Ints(nums)
 	var permutations [][]int
+	permutation := slices.Clone(nums)
+	sort.Ints(permutation)
 	for {
-		permutations = append(permutations, append([]int{}, nums...))
-		i := len(nums) - 2
-		for i >= 0 && nums[i] >= nums[i+1] {
-			i--
+		newPermutation := slices.Clone(permutation)
+		permutations = append(permutations, newPermutation)
+		sortedUntil := len(permutation) - 2
+		for sortedUntil >= 0 && permutation[sortedUntil] > permutation[sortedUntil+1] {
+			sortedUntil--
 		}
-		if i < 0 {
+		if sortedUntil < 0 {
 			break
 		}
-		j := len(nums) - 1
-		for nums[j] <= nums[i] {
-			j--
+		swapTarget := len(permutation) - 1
+		for permutation[sortedUntil] > permutation[swapTarget] {
+			swapTarget--
 		}
-		nums[i], nums[j] = nums[j], nums[i]
-		reverse(nums[i+1:])
+		permutation[sortedUntil], permutation[swapTarget] = permutation[swapTarget], permutation[sortedUntil]
+		sort.Ints(permutation[sortedUntil+1:])
 	}
 	return permutations
 }
