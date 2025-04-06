@@ -2,6 +2,7 @@
 package main
 
 import (
+	"maps"
 	"slices"
 	"sort"
 )
@@ -54,32 +55,32 @@ func permuteBacktrackingRecursion(nums []int) [][]int {
 	return permutations
 }
 
+type permutationFrame struct {
+	permutation []int
+	inUse       map[int]struct{}
+}
+
 func permuteBacktrackingIterative(nums []int) [][]int {
 	var permutations [][]int
-	type state struct {
-		permutation []int
-		inUse       map[int]struct{}
-	}
-	stack := []state{{[]int{}, make(map[int]struct{})}}
+	permutation := make([]int, 0, len(nums))
+	inUse := make(map[int]struct{}, len(nums))
+	stack := []permutationFrame{{permutation, inUse}}
 	for len(stack) > 0 {
-		current := stack[len(stack)-1]
+		f := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
-		if len(current.permutation) == len(nums) {
-			permutations = append(permutations, current.permutation)
+		if len(f.permutation) == len(nums) {
+			permutations = append(permutations, f.permutation)
 			continue
 		}
 		for _, n := range nums {
-			if _, ok := current.inUse[n]; ok {
+			if _, ok := f.inUse[n]; ok {
 				continue
 			}
-			newPermutation := append([]int{}, current.permutation...)
+			newPermutation := slices.Clone(f.permutation)
 			newPermutation = append(newPermutation, n)
-			newInUse := make(map[int]struct{})
-			for k, v := range current.inUse {
-				newInUse[k] = v
-			}
+			newInUse := maps.Clone(f.inUse)
 			newInUse[n] = struct{}{}
-			stack = append(stack, state{newPermutation, newInUse})
+			stack = append(stack, permutationFrame{newPermutation, newInUse})
 		}
 	}
 	return permutations

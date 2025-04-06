@@ -29,7 +29,7 @@ func combinationSumBacktrackingRecursion(candidates []int, target int) [][]int {
 	return combinations
 }
 
-type frame struct {
+type combinationFrame struct {
 	combination  []int
 	sum          int
 	currentIndex int
@@ -37,7 +37,7 @@ type frame struct {
 
 func combinationSum(candidates []int, target int) [][]int {
 	var combinations [][]int
-	stack := []frame{{[]int{}, 0, 0}}
+	stack := []combinationFrame{{[]int{}, 0, 0}}
 	for len(stack) > 0 {
 		f := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
@@ -51,7 +51,7 @@ func combinationSum(candidates []int, target int) [][]int {
 		for i := f.currentIndex; i < len(candidates); i++ {
 			combination := slices.Clone(f.combination)
 			combination = append(combination, candidates[i])
-			stack = append(stack, frame{combination, f.sum + candidates[i], i})
+			stack = append(stack, combinationFrame{combination, f.sum + candidates[i], i})
 		}
 	}
 	return combinations
