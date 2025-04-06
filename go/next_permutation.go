@@ -1,37 +1,30 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
+import "sort"
+
 // [1, 3, 5, 4, 2]という入力があるとき
 // 3 < 5なので、3を変える必要がある
 // 3より大きい最小の値は4なので、3と4を入れ替えると
 // [1, 4, 5, 3, 2]となる
 // 3以降の要素を逆順にすると、
 // next permutationの[1, 4, 2, 3, 5]となる。
-// nums[isSortedUntil] >= nums[isSortedUntil+1]は>ではなく、>=でないと
+// nums[sortedUntil] >= nums[sortedUntil+1]は>ではなく、>=でないと
 // [1, 1]などではOut of indexになる
 func nextPermutation(nums []int) {
 	if len(nums) == 0 {
 		return
 	}
-	isSortedUntil := len(nums) - 2
-	for isSortedUntil >= 0 && nums[isSortedUntil] >= nums[isSortedUntil+1] {
-		isSortedUntil--
+	sortedUntil := len(nums) - 2
+	for sortedUntil >= 0 && nums[sortedUntil] >= nums[sortedUntil+1] {
+		sortedUntil--
 	}
-	if isSortedUntil >= 0 {
+	if sortedUntil >= 0 {
 		swapTarget := len(nums) - 1
-		for nums[isSortedUntil] >= nums[swapTarget] {
+		for nums[sortedUntil] >= nums[swapTarget] {
 			swapTarget--
 		}
-		nums[isSortedUntil], nums[swapTarget] = nums[swapTarget], nums[isSortedUntil]
+		nums[sortedUntil], nums[swapTarget] = nums[swapTarget], nums[sortedUntil]
 	}
-	reverse(nums[isSortedUntil+1:])
-}
-
-func reverse(nums []int) {
-	i, j := 0, len(nums)-1
-	for i < j {
-		nums[i], nums[j] = nums[j], nums[i]
-		i++
-		j--
-	}
+	sort.Ints(nums[sortedUntil+1:])
 }
