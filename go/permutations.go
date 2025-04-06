@@ -1,7 +1,10 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-import "sort"
+import (
+	"slices"
+	"sort"
+)
 
 func permuteLexicographically(nums []int) [][]int {
 	sort.Ints(nums)
@@ -22,6 +25,32 @@ func permuteLexicographically(nums []int) [][]int {
 		nums[i], nums[j] = nums[j], nums[i]
 		reverse(nums[i+1:])
 	}
+	return permutations
+}
+
+func permuteBacktrackingRecursion(nums []int) [][]int {
+	var permutations [][]int
+	permutation := make([]int, 0, len(nums))
+	inUse := make(map[int]struct{}, len(nums))
+	var generate func()
+	generate = func() {
+		if len(inUse) == len(nums) {
+			newPermutation := slices.Clone(permutation)
+			permutations = append(permutations, newPermutation)
+			return
+		}
+		for _, n := range nums {
+			if _, ok := inUse[n]; ok {
+				continue
+			}
+			permutation = append(permutation, n)
+			inUse[n] = struct{}{}
+			generate()
+			permutation = permutation[:len(permutation)-1]
+			delete(inUse, n)
+		}
+	}
+	generate()
 	return permutations
 }
 
@@ -53,29 +82,5 @@ func permuteBacktrackingIterative(nums []int) [][]int {
 			stack = append(stack, state{newPermutation, newInUse})
 		}
 	}
-	return permutations
-}
-
-func permuteBacktrackingRecursion(nums []int) [][]int {
-	var permutations [][]int
-	permutation := make([]int, 0, len(nums))
-	inUse := make(map[int]struct{})
-	var generate func()
-	generate = func() {
-		if len(permutation) == len(nums) {
-			permutations = append(permutations, append([]int{}, permutation...))
-			return
-		}
-		for _, n := range nums {
-			if _, ok := inUse[n]; !ok {
-				permutation = append(permutation, n)
-				inUse[n] = struct{}{}
-				generate()
-				permutation = permutation[:len(permutation)-1]
-				delete(inUse, n)
-			}
-		}
-	}
-	generate()
 	return permutations
 }
