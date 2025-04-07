@@ -2,12 +2,12 @@
 package main
 
 func firstUniqChar(s string) int {
-	frequency := make(map[rune]int)
+	frequencies := make(map[rune]int)
 	for _, r := range s {
-		frequency[r]++
+		frequencies[r]++
 	}
 	for i, r := range s {
-		if frequency[r] == 1 {
+		if frequencies[r] == 1 {
 			return i
 		}
 	}
@@ -15,12 +15,12 @@ func firstUniqChar(s string) int {
 }
 
 func firstUniqChar2(s string) int {
-	var frequency [26]int
+	var frequencies [26]int
 	for _, r := range s {
-		frequency[r-'a']++
+		frequencies[r-'a']++
 	}
 	for i, r := range s {
-		if frequency[r-'a'] == 1 {
+		if frequencies[r-'a'] == 1 {
 			return i
 		}
 	}
