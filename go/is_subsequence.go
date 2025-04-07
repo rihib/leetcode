@@ -2,12 +2,23 @@
 package main
 
 func isSubsequence(s string, t string) bool {
-	i, j := 0, 0
-	for i < len(s) && j < len(t) {
-		if s[i] == t[j] {
-			i++
+	sIndex, tIndex := 0, 0
+	for sIndex < len(s) && tIndex < len(t) {
+		if s[sIndex] == t[tIndex] {
+			sIndex++
 		}
-		j++
+		tIndex++
 	}
-	return i == len(s)
+	return sIndex == len(s)
+}
+
+func isSubsequence2(s string, t string) bool {
+	sIndex := 0
+	runeS := []rune(s)
+	for _, r := range t {
+		if sIndex < len(runeS) && r == runeS[sIndex] {
+			sIndex++
+		}
+	}
+	return sIndex == len(runeS)
 }
