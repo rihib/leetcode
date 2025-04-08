@@ -5,21 +5,21 @@ package main
 // 単純にl1とl2の数を求めて足し算する方法だと、64個以上のノード数を持つリスト同士の足し算ができない
 func addTwoNumbersIteratice(l1 *ListNode, l2 *ListNode) *ListNode {
 	dummy := new(ListNode)
-	node := dummy
+	current, node1, node2 := dummy, l1, l2
 	carry := 0
-	for l1 != nil || l2 != nil || carry != 0 {
+	for node1 != nil || node2 != nil || carry != 0 {
 		sum := carry
-		if l1 != nil {
-			sum += l1.Val
-			l1 = l1.Next
+		if node1 != nil {
+			sum += node1.Val
+			node1 = node1.Next
 		}
-		if l2 != nil {
-			sum += l2.Val
-			l2 = l2.Next
+		if node2 != nil {
+			sum += node2.Val
+			node2 = node2.Next
 		}
-		node.Next = &ListNode{Val: sum % 10}
+		current.Next = &ListNode{sum % 10, nil}
+		current = current.Next
 		carry = sum / 10
-		node = node.Next
 	}
 	return dummy.Next
 }
