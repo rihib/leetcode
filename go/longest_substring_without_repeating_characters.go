@@ -11,11 +11,11 @@ func lengthOfLongestSubstring(s string) int {
 	left := 0
 	seen := make(map[rune]int)
 	for right, r := range s {
-		if lastSeen, ok := seen[r]; ok && left <= lastSeen {
-			left = lastSeen + 1
+		if i, ok := seen[r]; ok && left <= i {
+			left = i + 1
 		}
-		seen[r] = right
 		maxLength = max(maxLength, right-left+1)
+		seen[r] = right
 	}
 	return maxLength
 }
