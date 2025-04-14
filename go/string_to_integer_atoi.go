@@ -12,27 +12,24 @@ func myAtoi(s string) int {
 	for currentIndex < len(runeS) && runeS[currentIndex] == ' ' {
 		currentIndex++
 	}
-	isNegative := false
+	sign := 1
 	if currentIndex < len(runeS) && (runeS[currentIndex] == '+' || runeS[currentIndex] == '-') {
 		if runeS[currentIndex] == '-' {
-			isNegative = true
+			sign = -1
 		}
 		currentIndex++
 	}
 	num := 0
 	for currentIndex < len(runeS) && unicode.IsDigit(runeS[currentIndex]) {
 		digit := int(runeS[currentIndex] - '0')
-		if !isNegative && (num > math.MaxInt32/10 || num == math.MaxInt32/10 && digit > math.MaxInt32%10) {
+		if sign == 1 && (math.MaxInt32/10 < num || math.MaxInt32/10 == num && math.MaxInt32%10 < digit) {
 			return math.MaxInt32
 		}
-		if isNegative && (-num < math.MinInt32/10 || -num == math.MinInt32/10 && -digit < math.MinInt32%10) {
+		if sign == -1 && (math.MinInt32/10 > -num || math.MinInt32/10 == -num && math.MinInt32%10 > -digit) {
 			return math.MinInt32
 		}
 		num = num*10 + digit
 		currentIndex++
 	}
-	if isNegative {
-		return -num
-	}
-	return num
+	return sign * num
 }
