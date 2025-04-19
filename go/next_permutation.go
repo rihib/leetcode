@@ -12,10 +12,7 @@ import "sort"
 // nums[sortedUntil] >= nums[sortedUntil+1]は>ではなく、>=でないと
 // [1, 1]などではOut of indexになる
 func nextPermutation(nums []int) {
-	if len(nums) == 0 {
-		return
-	}
-	sortedUntil := len(nums) - 2
+	sortedUntil := len(nums) - 2 // len(nums) <= 1だとsortedUntil=-1になる点に注意
 	for sortedUntil >= 0 && nums[sortedUntil] >= nums[sortedUntil+1] {
 		sortedUntil--
 	}
@@ -26,5 +23,5 @@ func nextPermutation(nums []int) {
 		}
 		nums[sortedUntil], nums[swapTarget] = nums[swapTarget], nums[sortedUntil]
 	}
-	sort.Ints(nums[sortedUntil+1:])
+	sort.Ints(nums[sortedUntil+1:]) // sortを使うとO(n log n)になるので、別途reverse関数を作るのもあり
 }
