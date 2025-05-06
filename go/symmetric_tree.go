@@ -25,21 +25,36 @@ type nodePair struct {
 	right *TreeNode
 }
 
-func isSymmetricIterative(root *TreeNode) bool {
+func isSymmetricBFS(root *TreeNode) bool {
 	queue := list.New()
-	pair := nodePair{root, root}
-	queue.PushBack(pair)
+	queue.PushBack(nodePair{root.Left, root.Right})
 	for queue.Len() > 0 {
-		pair := queue.Remove(queue.Front()).(nodePair)
-		left, right := pair.left, pair.right
-		if left == nil && right == nil {
+		f := queue.Remove(queue.Front()).(nodePair)
+		if f.left == nil && f.right == nil {
 			continue
 		}
-		if left == nil || right == nil || left.Val != right.Val {
+		if f.left == nil || f.right == nil || f.left.Val != f.right.Val {
 			return false
 		}
-		queue.PushBack(nodePair{left.Left, right.Right})
-		queue.PushBack(nodePair{left.Right, right.Left})
+		queue.PushBack(nodePair{f.left.Left, f.right.Right})
+		queue.PushBack(nodePair{f.left.Right, f.right.Left})
+	}
+	return true
+}
+
+func isSymmetricDFS(root *TreeNode) bool {
+	stack := []nodePair{{root.Left, root.Right}}
+	for len(stack) > 0 {
+		f := stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		if f.left == nil && f.right == nil {
+			continue
+		}
+		if f.left == nil || f.right == nil || f.left.Val != f.right.Val {
+			return false
+		}
+		stack = append(stack, nodePair{f.left.Left, f.right.Right})
+		stack = append(stack, nodePair{f.left.Right, f.right.Left})
 	}
 	return true
 }
