@@ -42,6 +42,5 @@ func addTwoNumbersHelper(l1 *ListNode, l2 *ListNode, carry int) *ListNode {
 		l2 = l2.Next
 	}
 	next := addTwoNumbersHelper(l1, l2, sum/10)
-	node := &ListNode{sum % 10, next}
-	return node
+	return &ListNode{sum % 10, next}
 }
