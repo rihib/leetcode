@@ -5,21 +5,21 @@ import "slices"
 
 func generateParenthesisRecursive(n int) []string {
 	var combinations []string
-	var combination []rune
+	combination := make([]rune, 0, n*2)
 	var generate func(int, int)
-	generate = func(open, close int) {
-		if open == n && close == n {
+	generate = func(openNum, closeNum int) {
+		if openNum == n && closeNum == n {
 			combinations = append(combinations, string(combination))
 			return
 		}
-		if open < n {
+		if openNum < n {
 			combination = append(combination, '(')
-			generate(open+1, close)
+			generate(openNum+1, closeNum)
 			combination = combination[:len(combination)-1]
 		}
-		if open > close {
+		if closeNum < openNum {
 			combination = append(combination, ')')
-			generate(open, close+1)
+			generate(openNum, closeNum+1)
 			combination = combination[:len(combination)-1]
 		}
 	}
@@ -29,8 +29,8 @@ func generateParenthesisRecursive(n int) []string {
 
 type frame struct {
 	combination []rune
-	open        int
-	close       int
+	openNum     int
+	closeNum    int
 }
 
 func generateParenthesisIterative(n int) []string {
@@ -39,19 +39,17 @@ func generateParenthesisIterative(n int) []string {
 	for len(stack) > 0 {
 		f := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
-		if f.open == n && f.close == n {
+		if f.openNum == n && f.closeNum == n {
 			combinations = append(combinations, string(f.combination))
 			continue
 		}
-		if f.open < n {
-			newCombination := slices.Clone(f.combination)
-			newCombination = append(newCombination, '(')
-			stack = append(stack, frame{newCombination, f.open + 1, f.close})
+		if f.openNum < n {
+			newCombination := append(slices.Clone(f.combination), '(')
+			stack = append(stack, frame{newCombination, f.openNum + 1, f.closeNum})
 		}
-		if f.open > f.close {
-			newCombination := slices.Clone(f.combination)
-			newCombination = append(newCombination, ')')
-			stack = append(stack, frame{newCombination, f.open, f.close + 1})
+		if f.closeNum < f.openNum {
+			newCombination := append(slices.Clone(f.combination), ')')
+			stack = append(stack, frame{newCombination, f.openNum, f.closeNum + 1})
 		}
 	}
 	return combinations
