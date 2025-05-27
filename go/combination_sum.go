@@ -11,12 +11,11 @@ func combinationSumBacktrackingRecursion(candidates []int, target int) [][]int {
 	var combination []int
 	var generate func(int, int)
 	generate = func(sum, currentIndex int) {
-		if sum == target {
-			newCombination := slices.Clone(combination)
-			combinations = append(combinations, newCombination)
+		if sum > target {
 			return
 		}
-		if sum > target {
+		if sum == target {
+			combinations = append(combinations, slices.Clone(combination))
 			return
 		}
 		for i := currentIndex; i < len(candidates); i++ {
@@ -35,23 +34,22 @@ type combinationFrame struct {
 	currentIndex int
 }
 
-func combinationSum(candidates []int, target int) [][]int {
+func combinationSumBacktrackingIterative(candidates []int, target int) [][]int {
 	var combinations [][]int
 	stack := []combinationFrame{{[]int{}, 0, 0}}
 	for len(stack) > 0 {
 		f := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
+		if f.sum > target {
+			continue
+		}
 		if f.sum == target {
 			combinations = append(combinations, f.combination)
 			continue
 		}
-		if f.sum > target {
-			continue
-		}
 		for i := f.currentIndex; i < len(candidates); i++ {
 			combination := slices.Clone(f.combination)
-			combination = append(combination, candidates[i])
-			stack = append(stack, combinationFrame{combination, f.sum + candidates[i], i})
+			stack = append(stack, combinationFrame{append(combination, candidates[i]), f.sum + candidates[i], i})
 		}
 	}
 	return combinations
@@ -61,11 +59,13 @@ func combinationSumDP(candidates []int, target int) [][]int {
 	memo := make([][][]int, target+1)
 	memo[0] = [][]int{{}}
 	for _, candidate := range candidates {
-		for sum := candidate; sum <= target; sum++ {
-			for _, combination := range memo[sum-candidate] {
-				newCombination := slices.Clone(combination)
-				newCombination = append(newCombination, candidate)
-				memo[sum] = append(memo[sum], newCombination)
+		for sum, combinations := range memo {
+			for _, combination := range combinations {
+				if sum+candidate > target {
+					continue
+				}
+				newCombination := append(slices.Clone(combination), candidate)
+				memo[sum+candidate] = append(memo[sum+candidate], newCombination)
 			}
 		}
 	}
