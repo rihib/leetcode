@@ -18,8 +18,7 @@ func permuteLexicographically(nums []int) [][]int {
 	permutation := slices.Clone(nums)
 	sort.Ints(permutation)
 	for {
-		newPermutation := slices.Clone(permutation)
-		permutations = append(permutations, newPermutation)
+		permutations = append(permutations, slices.Clone(permutation))
 		sortedUntil := len(permutation) - 2
 		for sortedUntil >= 0 && permutation[sortedUntil] > permutation[sortedUntil+1] {
 			sortedUntil--
@@ -70,9 +69,9 @@ type permutationFrame struct {
 
 func permuteBacktrackingIterative(nums []int) [][]int {
 	var permutations [][]int
-	permutation := make([]int, 0, len(nums))
-	inUse := make(map[int]struct{}, len(nums))
-	stack := []permutationFrame{{permutation, inUse}}
+	stack := []permutationFrame{
+		{make([]int, 0, len(nums)), make(map[int]struct{}, len(nums))},
+	}
 	for len(stack) > 0 {
 		f := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
@@ -84,8 +83,7 @@ func permuteBacktrackingIterative(nums []int) [][]int {
 			if _, ok := f.inUse[n]; ok {
 				continue
 			}
-			newPermutation := slices.Clone(f.permutation)
-			newPermutation = append(newPermutation, n)
+			newPermutation := slices.Clone(append(f.permutation, n))
 			newInUse := maps.Clone(f.inUse)
 			newInUse[n] = struct{}{}
 			stack = append(stack, permutationFrame{newPermutation, newInUse})
