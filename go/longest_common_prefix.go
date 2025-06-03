@@ -32,46 +32,44 @@ func longestCommonPrefix(strs []string) string {
 /*
 Trie
 */
-type Trie struct {
-	root *Node
-}
-
-type Node struct {
-	children  map[rune]*Node
+type trieNode struct {
+	children  map[rune]*trieNode
 	isWordEnd bool
 }
 
-func NewTrie() *Trie {
-	return &Trie{root: &Node{children: make(map[rune]*Node)}}
+func newTrie() *trieNode {
+	return &trieNode{make(map[rune]*trieNode), false}
 }
 
-func (t *Trie) Insert(word string) {
-	node := t.root
+func (t *trieNode) insert(word string) {
+	node := t
 	for _, r := range word {
-		if _, ok := node.children[r]; !ok {
-			node.children[r] = &Node{children: make(map[rune]*Node)}
+		next, ok := node.children[r]
+		if !ok {
+			node.children[r] = &trieNode{make(map[rune]*trieNode), false}
+			next = node.children[r]
 		}
-		node = node.children[r]
+		node = next
 	}
 	node.isWordEnd = true
 }
 
-func (t *Trie) Prefix() string {
+func (t *trieNode) commonPrefix() string {
 	var prefix strings.Builder
-	node := t.root
-	for len(node.children) == 1 && !node.isWordEnd {
-		for r, child := range node.children {
+	node := t
+	for node != nil && len(node.children) == 1 && !node.isWordEnd {
+		for r, next := range node.children {
 			prefix.WriteRune(r)
-			node = child // ここでnodeをchildで更新してもrangeは評価済みなのでループが続くことはない
+			node = next
 		}
 	}
 	return prefix.String()
 }
 
 func longestCommonPrefixTrie(strs []string) string {
-	t := NewTrie()
-	for _, word := range strs {
-		t.Insert(word)
+	t := newTrie()
+	for _, s := range strs {
+		t.insert(s)
 	}
-	return t.Prefix()
+	return t.commonPrefix()
 }
