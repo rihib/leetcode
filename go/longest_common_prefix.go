@@ -6,22 +6,26 @@ import (
 )
 
 func longestCommonPrefix(strs []string) string {
+	if len(strs) == 0 {
+		return ""
+	}
 	var prefix strings.Builder
-	for i := 0; ; i++ {
-		var curr rune
-		for _, word := range strs {
-			if i >= len(word) {
+	currentIndex := 0
+	for {
+		var currentChar byte
+		for i, s := range strs {
+			if currentIndex >= len(s) {
 				return prefix.String()
 			}
-			if curr == 0 {
-				curr = rune(word[i])
-				continue
+			if i == 0 {
+				currentChar = s[currentIndex]
 			}
-			if rune(word[i]) != curr {
+			if s[currentIndex] != currentChar {
 				return prefix.String()
 			}
 		}
-		prefix.WriteRune(curr)
+		prefix.WriteByte(currentChar)
+		currentIndex++
 	}
 }
 
