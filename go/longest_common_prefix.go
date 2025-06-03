@@ -39,9 +39,9 @@ func newTrie() *trieNode {
 	return &trieNode{make(map[rune]*trieNode), false}
 }
 
-func (t *trieNode) insert(word string) {
+func (t *trieNode) insert(s string) {
 	node := t
-	for _, r := range word {
+	for _, r := range s {
 		next, ok := node.children[r]
 		if !ok {
 			node.children[r] = &trieNode{make(map[rune]*trieNode), false}
