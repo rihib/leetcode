@@ -17,7 +17,7 @@ func longestCommonPrefix(strs []string) string {
 			if i == 0 {
 				currentChar = s[currentIndex]
 			}
-			if s[currentIndex] != currentChar {
+			if currentChar != s[currentIndex] {
 				return prefix.String()
 			}
 		}
@@ -35,7 +35,7 @@ type trieNode struct {
 	isWordEnd bool
 }
 
-func newTrie() *trieNode {
+func newTrieNode() *trieNode {
 	return &trieNode{make(map[rune]*trieNode), false}
 }
 
@@ -44,7 +44,7 @@ func (t *trieNode) insert(s string) {
 	for _, r := range s {
 		next, ok := node.children[r]
 		if !ok {
-			node.children[r] = &trieNode{make(map[rune]*trieNode), false}
+			node.children[r] = newTrieNode()
 			next = node.children[r]
 		}
 		node = next
@@ -65,7 +65,7 @@ func (t *trieNode) commonPrefix() string {
 }
 
 func longestCommonPrefixTrie(strs []string) string {
-	t := newTrie()
+	t := newTrieNode()
 	for _, s := range strs {
 		t.insert(s)
 	}
