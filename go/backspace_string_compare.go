@@ -39,3 +39,26 @@ func reversedText(s string) string {
 	}
 	return text.String()
 }
+
+/*
+goroutine
+*/
+func backspaceCompareStackGoroutine(s string, t string) bool {
+	chS := make(chan string, 1)
+	chT := make(chan string, 1)
+	go func() { chS <- typedText(s) }()
+	go func() { chT <- typedText(t) }()
+	sText := <-chS
+	tText := <-chT
+	return sText == tText
+}
+
+func backspaceCompareReverseGoroutine(s string, t string) bool {
+	chS := make(chan string, 1)
+	chT := make(chan string, 1)
+	go func() { chS <- reversedText(s) }()
+	go func() { chT <- reversedText(t) }()
+	sText := <-chS
+	tText := <-chT
+	return sText == tText
+}
