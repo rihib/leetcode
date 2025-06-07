@@ -1,12 +1,14 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
+import "strings"
+
 func backspaceCompareStack(s string, t string) bool {
 	return typedText(s) == typedText(t)
 }
 
 func typedText(s string) string {
-	var stack []rune
+	stack := make([]rune, 0, len(s))
 	for _, r := range s {
 		if r == '#' {
 			if len(stack) > 0 {
@@ -19,69 +21,21 @@ func typedText(s string) string {
 	return string(stack)
 }
 
-func backspaceCompareReverse1(s string, t string) bool {
-	runeS, runeT := []rune(s), []rune(t)
-	i, j := len(runeS)-1, len(runeT)-1
-	for i >= 0 || j >= 0 {
-		i, j = nextIndex(runeS, i), nextIndex(runeT, j)
-		if i >= 0 && j >= 0 && runeS[i] == runeT[j] {
-			i--
-			j--
-			continue
-		}
-		if i >= 0 || j >= 0 {
-			return false
-		}
-	}
-	return true
+func backspaceCompareReverse(s string, t string) bool {
+	return reversedText(s) == reversedText(t)
 }
 
-func nextIndex(runeS []rune, index int) int {
-	count := 0
-	for {
-		if index >= 0 && runeS[index] == '#' {
-			count++
-		} else if count > 0 {
-			count--
+func reversedText(s string) string {
+	var text strings.Builder
+	skip := 0
+	for i := len(s) - 1; i >= 0; i-- {
+		if s[i] == '#' {
+			skip++
+		} else if skip > 0 {
+			skip--
 		} else {
-			break
+			text.WriteByte(s[i])
 		}
-		index--
 	}
-	return index
-}
-
-func backspaceCompareReverse2(s string, t string) bool {
-	runeS, runeT := []rune(s), []rune(t)
-	i, j := len(runeS)-1, len(runeT)-1
-	sCount, tCount := 0, 0
-	for i >= 0 || j >= 0 {
-		if i >= 0 && runeS[i] == '#' {
-			sCount++
-			i--
-			continue
-		}
-		if j >= 0 && runeT[j] == '#' {
-			tCount++
-			j--
-			continue
-		}
-		if sCount > 0 {
-			sCount--
-			i--
-			continue
-		}
-		if tCount > 0 {
-			tCount--
-			j--
-			continue
-		}
-		if i >= 0 && j >= 0 && runeS[i] == runeT[j] {
-			i--
-			j--
-			continue
-		}
-		return false
-	}
-	return true
+	return text.String()
 }
