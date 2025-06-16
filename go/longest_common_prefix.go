@@ -42,12 +42,10 @@ func newTrieNode() *trieNode {
 func (t *trieNode) insert(s string) {
 	node := t
 	for _, r := range s {
-		next, ok := node.children[r]
-		if !ok {
+		if _, ok := node.children[r]; !ok {
 			node.children[r] = newTrieNode()
-			next = node.children[r]
 		}
-		node = next
+		node = node.children[r]
 	}
 	node.isWordEnd = true
 }
