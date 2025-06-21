@@ -25,22 +25,24 @@ func addTwoNumbersIteratice(l1 *ListNode, l2 *ListNode) *ListNode {
 }
 
 func addTwoNumbersRecursive(l1 *ListNode, l2 *ListNode) *ListNode {
-	return addTwoNumbersHelper(l1, l2, 0)
+	return addTwoNumbersWithCarry(l1, l2, 0)
 }
 
-func addTwoNumbersHelper(l1 *ListNode, l2 *ListNode, carry int) *ListNode {
+func addTwoNumbersWithCarry(l1 *ListNode, l2 *ListNode, carry int) *ListNode {
 	if l1 == nil && l2 == nil && carry == 0 {
 		return nil
 	}
+	node1, node2 := l1, l2
 	sum := carry
-	if l1 != nil {
-		sum += l1.Val
-		l1 = l1.Next
+	if node1 != nil {
+		sum += node1.Val
+		node1 = node1.Next
 	}
-	if l2 != nil {
-		sum += l2.Val
-		l2 = l2.Next
+	if node2 != nil {
+		sum += node2.Val
+		node2 = node2.Next
 	}
-	next := addTwoNumbersHelper(l1, l2, sum/10)
+	carry = sum / 10
+	next := addTwoNumbersWithCarry(node1, node2, carry)
 	return &ListNode{sum % 10, next}
 }
