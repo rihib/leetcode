@@ -13,9 +13,10 @@ func myAtoi(s string) int {
 	}
 	sign := 1
 	if i < len(s) {
-		if s[i] == '+' {
+		switch s[i] {
+		case '+':
 			i++
-		} else if s[i] == '-' {
+		case '-':
 			sign = -1
 			i++
 		}
@@ -24,11 +25,11 @@ func myAtoi(s string) int {
 	for i < len(s) && unicode.IsDigit(rune(s[i])) {
 		digit := int(s[i] - '0')
 		if sign == 1 {
-			if n > math.MaxInt32/10 || (math.MaxInt32-n*10) <= digit {
+			if n > math.MaxInt32/10 || math.MaxInt32-n*10 <= digit {
 				return math.MaxInt32
 			}
 		} else {
-			if -n < math.MinInt32/10 || (math.MinInt32- -n*10) >= -digit {
+			if -n < math.MinInt32/10 || math.MinInt32- -n*10 >= -digit {
 				return math.MinInt32
 			}
 		}
