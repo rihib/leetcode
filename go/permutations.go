@@ -14,80 +14,77 @@ import (
 // そしてその２つを入れ替える（[1, 3, 4, 2]）
 // そしてその後ろの部分を逆順にする（[1, 3, 2, 4]）
 func permuteLexicographically(nums []int) [][]int {
-	var permutations [][]int
-	permutation := slices.Clone(nums)
-	sort.Ints(permutation)
+	var combinations [][]int
+	combination := slices.Clone(nums)
+	sort.Ints(combination)
 	for {
-		permutations = append(permutations, slices.Clone(permutation))
-		sortedUntil := len(permutation) - 2
-		for sortedUntil >= 0 && permutation[sortedUntil] > permutation[sortedUntil+1] {
+		combinations = append(combinations, slices.Clone(combination))
+		sortedUntil := len(combination) - 2
+		for sortedUntil >= 0 && combination[sortedUntil] > combination[sortedUntil+1] {
 			sortedUntil--
 		}
 		if sortedUntil < 0 {
 			break
 		}
-		swapTarget := len(permutation) - 1
-		for permutation[sortedUntil] > permutation[swapTarget] {
-			swapTarget--
+		target := len(combination) - 1
+		for combination[sortedUntil] >= combination[target] {
+			target--
 		}
-		permutation[sortedUntil], permutation[swapTarget] = permutation[swapTarget], permutation[sortedUntil]
-		sort.Ints(permutation[sortedUntil+1:])
+		combination[sortedUntil], combination[target] = combination[target], combination[sortedUntil]
+		sort.Ints(combination[sortedUntil+1:])
 	}
-	return permutations
+	return combinations
 }
 
 func permuteBacktrackingRecursion(nums []int) [][]int {
-	var permutations [][]int
-	permutation := make([]int, 0, len(nums))
-	inUse := make(map[int]struct{}, len(nums))
+	var combinations [][]int
+	combination := make([]int, 0, len(nums))
+	seen := make(map[int]struct{}, len(nums))
 	var generate func()
 	generate = func() {
-		if len(inUse) == len(nums) {
-			newPermutation := slices.Clone(permutation)
-			permutations = append(permutations, newPermutation)
+		if len(combination) == len(nums) {
+			combinations = append(combinations, slices.Clone(combination))
 			return
 		}
 		for _, n := range nums {
-			if _, ok := inUse[n]; ok {
+			if _, ok := seen[n]; ok {
 				continue
 			}
-			permutation = append(permutation, n)
-			inUse[n] = struct{}{}
+			combination = append(combination, n)
+			seen[n] = struct{}{}
 			generate()
-			permutation = permutation[:len(permutation)-1]
-			delete(inUse, n)
+			combination = combination[:len(combination)-1]
+			delete(seen, n)
 		}
 	}
 	generate()
-	return permutations
+	return combinations
 }
 
 type permutationFrame struct {
-	permutation []int
-	inUse       map[int]struct{}
+	combination []int
+	seen        map[int]struct{}
 }
 
 func permuteBacktrackingIterative(nums []int) [][]int {
-	var permutations [][]int
-	stack := []permutationFrame{
-		{make([]int, 0, len(nums)), make(map[int]struct{}, len(nums))},
-	}
+	var combinations [][]int
+	stack := []permutationFrame{{make([]int, 0, len(nums)), make(map[int]struct{}, len(nums))}}
 	for len(stack) > 0 {
 		f := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
-		if len(f.permutation) == len(nums) {
-			permutations = append(permutations, f.permutation)
+		if len(f.combination) == len(nums) {
+			combinations = append(combinations, f.combination)
 			continue
 		}
 		for _, n := range nums {
-			if _, ok := f.inUse[n]; ok {
+			if _, ok := f.seen[n]; ok {
 				continue
 			}
-			newPermutation := slices.Clone(append(f.permutation, n))
-			newInUse := maps.Clone(f.inUse)
-			newInUse[n] = struct{}{}
-			stack = append(stack, permutationFrame{newPermutation, newInUse})
+			newCombination := append(slices.Clone(f.combination), n)
+			newSeen := maps.Clone(f.seen)
+			newSeen[n] = struct{}{}
+			stack = append(stack, permutationFrame{newCombination, newSeen})
 		}
 	}
-	return permutations
+	return combinations
 }
