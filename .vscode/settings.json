@@ -5,5 +5,10 @@
     "markdown": true,
     "scminput": false
   },
-  "editor.wordWrap": "wordWrapColumn"
+  "editor.wordWrap": "wordWrapColumn",
+  "gopls": {
+    "analyses": {
+      "unusedfunc": false
+    }
+  }
 }
