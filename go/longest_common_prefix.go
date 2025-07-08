@@ -50,7 +50,7 @@ func (t *trieNode) insert(s string) {
 func (t *trieNode) commonPrefix() string {
 	var prefix strings.Builder
 	node := t
-	for node != nil && len(node.children) == 1 && !node.isWordEnd {
+	for len(node.children) == 1 && !node.isWordEnd {
 		for r, next := range node.children {
 			prefix.WriteRune(r)
 			node = next
