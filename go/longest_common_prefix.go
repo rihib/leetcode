@@ -7,24 +7,21 @@ import (
 
 func longestCommonPrefix(strs []string) string {
 	var prefix strings.Builder
-	var currentChar byte
-	currentIndex := 0
-	for len(strs) > 0 {
-		for i, s := range strs {
-			if currentIndex >= len(s) {
+	for i := 0; ; i++ {
+		var currentChar byte
+		for j, s := range strs {
+			if i >= len(s) {
 				return prefix.String()
 			}
-			if i == 0 {
-				currentChar = s[currentIndex]
+			if j == 0 {
+				currentChar = s[i]
 			}
-			if currentChar != s[currentIndex] {
+			if currentChar != s[i] {
 				return prefix.String()
 			}
 		}
 		prefix.WriteByte(currentChar)
-		currentIndex++
 	}
-	return prefix.String()
 }
 
 /*
