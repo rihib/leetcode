@@ -50,8 +50,13 @@ func isSymmetricDFS(root *TreeNode) bool {
 		if f.left == nil || f.right == nil || f.left.Val != f.right.Val {
 			return false
 		}
-		stack = append(stack, nodePair{f.left.Left, f.right.Right})
-		stack = append(stack, nodePair{f.left.Right, f.right.Left})
+		stack = append(
+			stack,
+			[]nodePair{
+				{f.left.Left, f.right.Right},
+				{f.left.Right, f.right.Left},
+			}...,
+		)
 	}
 	return true
 }
