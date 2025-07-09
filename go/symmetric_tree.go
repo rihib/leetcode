@@ -4,17 +4,17 @@ package main
 import "container/list"
 
 func isSymmetric(root *TreeNode) bool {
-	return areRootsSymmetric(root.Left, root.Right)
+	return areSymmetric(root.Left, root.Right)
 }
 
-func areRootsSymmetric(left, right *TreeNode) bool {
+func areSymmetric(left, right *TreeNode) bool {
 	if left == nil && right == nil {
 		return true
 	}
 	if left == nil || right == nil || left.Val != right.Val {
 		return false
 	}
-	return areRootsSymmetric(left.Left, right.Right) && areRootsSymmetric(left.Right, right.Left)
+	return areSymmetric(left.Left, right.Right) && areSymmetric(left.Right, right.Left)
 }
 
 type nodePair struct {
@@ -26,15 +26,15 @@ func isSymmetricBFS(root *TreeNode) bool {
 	queue := list.New()
 	queue.PushBack(nodePair{root.Left, root.Right})
 	for queue.Len() > 0 {
-		f := queue.Remove(queue.Front()).(nodePair)
-		if f.left == nil && f.right == nil {
+		pair := queue.Remove(queue.Front()).(nodePair)
+		if pair.left == nil && pair.right == nil {
 			continue
 		}
-		if f.left == nil || f.right == nil || f.left.Val != f.right.Val {
+		if pair.left == nil || pair.right == nil || pair.left.Val != pair.right.Val {
 			return false
 		}
-		queue.PushBack(nodePair{f.left.Left, f.right.Right})
-		queue.PushBack(nodePair{f.left.Right, f.right.Left})
+		queue.PushBack(nodePair{pair.left.Left, pair.right.Right})
+		queue.PushBack(nodePair{pair.left.Right, pair.right.Left})
 	}
 	return true
 }
@@ -42,17 +42,17 @@ func isSymmetricBFS(root *TreeNode) bool {
 func isSymmetricDFS(root *TreeNode) bool {
 	stack := []nodePair{{root.Left, root.Right}}
 	for len(stack) > 0 {
-		f := stack[len(stack)-1]
+		pair := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
-		if f.left == nil && f.right == nil {
+		if pair.left == nil && pair.right == nil {
 			continue
 		}
-		if f.left == nil || f.right == nil || f.left.Val != f.right.Val {
+		if pair.left == nil || pair.right == nil || pair.left.Val != pair.right.Val {
 			return false
 		}
 		stack = append(stack, []nodePair{
-			{f.left.Left, f.right.Right},
-			{f.left.Right, f.right.Left},
+			{pair.left.Left, pair.right.Right},
+			{pair.left.Right, pair.right.Left},
 		}...)
 	}
 	return true
