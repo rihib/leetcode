@@ -3,38 +3,37 @@ package main
 
 import (
 	"math"
-	"unicode"
+	"strconv"
 )
 
 func myAtoi(s string) int {
-	i := 0
-	for i < len(s) && s[i] == ' ' {
-		i++
+	currentIndex := 0
+	for currentIndex < len(s) && s[currentIndex] == ' ' {
+		currentIndex++
 	}
-	sign := 1
-	if i < len(s) {
-		switch s[i] {
+	signum := 1
+	if currentIndex < len(s) {
+		switch s[currentIndex] {
 		case '+':
-			i++
+			currentIndex++
 		case '-':
-			sign = -1
-			i++
+			signum = -1
+			currentIndex++
 		}
 	}
 	n := 0
-	for i < len(s) && unicode.IsDigit(rune(s[i])) {
-		digit := int(s[i] - '0')
-		if sign == 1 {
-			if n > math.MaxInt32/10 || math.MaxInt32-n*10 <= digit {
-				return math.MaxInt32
-			}
-		} else {
-			if -n < math.MinInt32/10 || math.MinInt32- -n*10 >= -digit {
-				return math.MinInt32
-			}
+	for i := currentIndex; i < len(s); i++ {
+		digit, err := strconv.Atoi(string(s[i]))
+		if err != nil {
+			break
+		}
+		if signum == 1 && (n > math.MaxInt32/10 || digit >= math.MaxInt32-n*10) {
+			return math.MaxInt32
+		}
+		if signum == -1 && (-n < math.MinInt32/10 || -digit <= math.MinInt32- -n*10) {
+			return math.MinInt32
 		}
 		n = n*10 + digit
-		i++
 	}
-	return n * sign
+	return n * signum
 }
