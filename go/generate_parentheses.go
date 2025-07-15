@@ -35,7 +35,7 @@ type frame struct {
 
 func generateParenthesisIterative(n int) []string {
 	var combinations []string
-	stack := []frame{{[]rune{}, 0, 0}}
+	stack := []frame{{make([]rune, 0, n*2), 0, 0}}
 	for len(stack) > 0 {
 		f := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
