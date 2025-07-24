@@ -8,7 +8,7 @@ import "slices"
 
 func combinationSumBacktrackingRecursion(candidates []int, target int) [][]int {
 	var combinations [][]int
-	var combination []int
+	combination := make([]int, 0, len(candidates))
 	var generate func(int, int)
 	generate = func(sum, currentIndex int) {
 		if sum > target {
