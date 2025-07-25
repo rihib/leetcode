@@ -15,23 +15,23 @@ import (
 // そしてその後ろの部分を逆順にする（[1, 3, 2, 4]）
 func permuteLexicographically(nums []int) [][]int {
 	var combinations [][]int
-	combination := slices.Clone(nums)
-	sort.Ints(combination)
+	comb := slices.Clone(nums)
+	sort.Ints(comb)
 	for {
-		combinations = append(combinations, slices.Clone(combination))
-		sortedUntil := len(combination) - 2
-		for sortedUntil >= 0 && combination[sortedUntil] > combination[sortedUntil+1] {
+		combinations = append(combinations, slices.Clone(comb))
+		sortedUntil := len(comb) - 2
+		for sortedUntil >= 0 && comb[sortedUntil] >= comb[sortedUntil+1] {
 			sortedUntil--
 		}
 		if sortedUntil < 0 {
 			break
 		}
-		target := len(combination) - 1
-		for combination[sortedUntil] >= combination[target] {
-			target--
+		swapTarget := len(comb) - 1
+		for comb[sortedUntil] >= comb[swapTarget] {
+			swapTarget--
 		}
-		combination[sortedUntil], combination[target] = combination[target], combination[sortedUntil]
-		sort.Ints(combination[sortedUntil+1:])
+		comb[sortedUntil], comb[swapTarget] = comb[swapTarget], comb[sortedUntil]
+		sort.Ints(comb[sortedUntil+1:])
 	}
 	return combinations
 }
