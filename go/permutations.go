@@ -38,23 +38,23 @@ func permuteLexicographically(nums []int) [][]int {
 
 func permuteBacktrackingRecursion(nums []int) [][]int {
 	var combinations [][]int
-	combination := make([]int, 0, len(nums))
-	seen := make(map[int]struct{}, len(nums))
+	comb := make([]int, 0, len(nums))
+	used := make(map[int]struct{}, len(nums))
 	var generate func()
 	generate = func() {
-		if len(combination) == len(nums) {
-			combinations = append(combinations, slices.Clone(combination))
+		if len(comb) == len(nums) {
+			combinations = append(combinations, slices.Clone(comb))
 			return
 		}
 		for _, n := range nums {
-			if _, ok := seen[n]; ok {
+			if _, ok := used[n]; ok {
 				continue
 			}
-			combination = append(combination, n)
-			seen[n] = struct{}{}
+			comb = append(comb, n)
+			used[n] = struct{}{}
 			generate()
-			combination = combination[:len(combination)-1]
-			delete(seen, n)
+			comb = comb[:len(comb)-1]
+			delete(used, n)
 		}
 	}
 	generate()
@@ -62,8 +62,8 @@ func permuteBacktrackingRecursion(nums []int) [][]int {
 }
 
 type permutationFrame struct {
-	combination []int
-	seen        map[int]struct{}
+	comb []int
+	used map[int]struct{}
 }
 
 func permuteBacktrackingIterative(nums []int) [][]int {
@@ -72,18 +72,18 @@ func permuteBacktrackingIterative(nums []int) [][]int {
 	for len(stack) > 0 {
 		f := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
-		if len(f.combination) == len(nums) {
-			combinations = append(combinations, f.combination)
+		if len(f.comb) == len(nums) {
+			combinations = append(combinations, f.comb)
 			continue
 		}
 		for _, n := range nums {
-			if _, ok := f.seen[n]; ok {
+			if _, ok := f.used[n]; ok {
 				continue
 			}
-			newCombination := append(slices.Clone(f.combination), n)
-			newSeen := maps.Clone(f.seen)
-			newSeen[n] = struct{}{}
-			stack = append(stack, permutationFrame{newCombination, newSeen})
+			newComb := append(slices.Clone(f.comb), n)
+			newUsed := maps.Clone(f.used)
+			newUsed[n] = struct{}{}
+			stack = append(stack, permutationFrame{newComb, newUsed})
 		}
 	}
 	return combinations
