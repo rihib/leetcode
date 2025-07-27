@@ -1,26 +1,26 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-func climbStairsDP(n int) int {
-	prev, curr := 1, 1
-	for i := 1; i < n; i++ {
-		prev, curr = curr, prev+curr
+func climbStairsIterative(n int) int {
+	current, next := 1, 1
+	for range n {
+		current, next = next, current+next
 	}
-	return curr
+	return current
 }
 
-func climbStairsmemorizedRecursion(n int) int {
-	m := make(map[int]int, n)
-	return climbStairsHelper(n, m)
+func climbStairsRecursive(n int) int {
+	memo := make(map[int]int, n+1)
+	return climbStairsWithMemo(n, memo)
 }
 
-func climbStairsHelper(n int, m map[int]int) int {
-	if n == 0 || n == 1 {
-		return 1
+func climbStairsWithMemo(n int, memo map[int]int) int {
+	if n == 1 || n == 2 {
+		return n
 	}
-	if ways, ok := m[n]; ok {
-		return ways
+	if steps, ok := memo[n]; ok {
+		return steps
 	}
-	m[n] = climbStairsHelper(n-1, m) + climbStairsHelper(n-2, m)
-	return m[n]
+	memo[n] = climbStairsWithMemo(n-1, memo) + climbStairsWithMemo(n-2, memo)
+	return memo[n]
 }
