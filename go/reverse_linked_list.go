@@ -16,9 +16,9 @@ func reverseListRecurssive(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
-	curr, next := head, head.Next
+	next := head.Next
 	reversed := reverseListRecurssive(next)
-	next.Next = curr
-	curr.Next = nil
+	next.Next = head
+	head.Next = nil
 	return reversed
 }
