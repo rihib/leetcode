@@ -15,11 +15,11 @@ func climbStairsRecursive(n int) int {
 }
 
 func climbStairsWithMemo(n int, memo map[int]int) int {
-	if n == 1 || n == 2 {
+	if n <= 3 {
 		return n
 	}
-	if steps, ok := memo[n]; ok {
-		return steps
+	if ways, ok := memo[n]; ok {
+		return ways
 	}
 	memo[n] = climbStairsWithMemo(n-1, memo) + climbStairsWithMemo(n-2, memo)
 	return memo[n]
