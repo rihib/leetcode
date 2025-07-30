@@ -8,24 +8,21 @@ import (
 )
 
 func addBinary(a string, b string) string {
-	var reversed strings.Builder
+	var added strings.Builder
 	carry := 0
-	for i := 1; ; i++ {
-		if len(a)-i < 0 && len(b)-i < 0 && carry == 0 {
-			break
-		}
+	for i := 1; i <= len(a) || i <= len(b) || carry != 0; i++ {
 		bitA, bitB := 0, 0
-		if len(a)-i >= 0 {
+		if i <= len(a) {
 			bitA, _ = strconv.Atoi(string(a[len(a)-i]))
 		}
-		if len(b)-i >= 0 {
+		if i <= len(b) {
 			bitB, _ = strconv.Atoi(string(b[len(b)-i]))
 		}
 		sum := bitA + bitB + carry
-		reversed.WriteString(strconv.Itoa(sum % 2))
 		carry = sum / 2
+		added.WriteString(strconv.Itoa(sum % 2))
 	}
-	added := []rune(reversed.String())
-	slices.Reverse(added)
-	return string(added)
+	runes := []rune(added.String())
+	slices.Reverse(runes)
+	return string(runes)
 }
