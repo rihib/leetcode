@@ -1,13 +1,16 @@
 //lint:file-ignore U1000 Ignore all unused code
 package main
 
-import "strings"
+import (
+	"slices"
+	"strings"
+)
 
 func backspaceCompareStack(s string, t string) bool {
-	return typedText(s) == typedText(t)
+	return typedText1(s) == typedText1(t)
 }
 
-func typedText(s string) string {
+func typedText1(s string) string {
 	stack := make([]rune, 0, len(s))
 	for _, r := range s {
 		if r == '#' {
@@ -22,43 +25,22 @@ func typedText(s string) string {
 }
 
 func backspaceCompareReverse(s string, t string) bool {
-	return reversedText(s) == reversedText(t)
+	return typedText2(s) == typedText2(t)
 }
 
-func reversedText(s string) string {
+func typedText2(s string) string {
 	var text strings.Builder
-	skip := 0
+	count := 0
 	for i := len(s) - 1; i >= 0; i-- {
 		if s[i] == '#' {
-			skip++
-		} else if skip > 0 {
-			skip--
+			count++
+		} else if count > 0 {
+			count--
 		} else {
 			text.WriteByte(s[i])
 		}
 	}
-	return text.String()
-}
-
-/*
-goroutine
-*/
-func backspaceCompareStackGoroutine(s string, t string) bool {
-	chS := make(chan string, 1)
-	chT := make(chan string, 1)
-	go func() { chS <- typedText(s) }()
-	go func() { chT <- typedText(t) }()
-	sText := <-chS
-	tText := <-chT
-	return sText == tText
-}
-
-func backspaceCompareReverseGoroutine(s string, t string) bool {
-	chS := make(chan string, 1)
-	chT := make(chan string, 1)
-	go func() { chS <- reversedText(s) }()
-	go func() { chT <- reversedText(t) }()
-	sText := <-chS
-	tText := <-chT
-	return sText == tText
+	runes := []rune(text.String())
+	slices.Reverse(runes)
+	return string(runes)
 }
