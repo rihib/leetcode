@@ -7,20 +7,22 @@ import (
 
 func longestCommonPrefix(strs []string) string {
 	var prefix strings.Builder
-	for i := 0; ; i++ {
-		var currentChar byte
-		for j, s := range strs {
-			if i >= len(s) {
+	var currentChar byte
+	currentIndex := 0
+	for {
+		for i, word := range strs {
+			if currentIndex >= len(word) {
 				return prefix.String()
 			}
-			if j == 0 {
-				currentChar = s[i]
+			if i == 0 {
+				currentChar = word[currentIndex]
 			}
-			if currentChar != s[i] {
+			if currentChar != word[currentIndex] {
 				return prefix.String()
 			}
 		}
 		prefix.WriteByte(currentChar)
+		currentIndex++
 	}
 }
 
@@ -38,6 +40,9 @@ func newTrieNode() *trieNode {
 
 func (t *trieNode) insert(s string) {
 	node := t
+	if node == nil {
+		node = newTrieNode()
+	}
 	for _, r := range s {
 		if _, ok := node.children[r]; !ok {
 			node.children[r] = newTrieNode()
@@ -50,7 +55,7 @@ func (t *trieNode) insert(s string) {
 func (t *trieNode) commonPrefix() string {
 	var prefix strings.Builder
 	node := t
-	for len(node.children) == 1 && !node.isWordEnd {
+	for node != nil && len(node.children) == 1 && !node.isWordEnd {
 		for r, next := range node.children {
 			prefix.WriteRune(r)
 			node = next
@@ -61,8 +66,8 @@ func (t *trieNode) commonPrefix() string {
 
 func longestCommonPrefixTrie(strs []string) string {
 	t := newTrieNode()
-	for _, s := range strs {
-		t.insert(s)
+	for _, word := range strs {
+		t.insert(word)
 	}
 	return t.commonPrefix()
 }
