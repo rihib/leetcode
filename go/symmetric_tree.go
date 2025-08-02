@@ -22,23 +22,6 @@ type nodePair struct {
 	right *TreeNode
 }
 
-func isSymmetricBFS(root *TreeNode) bool {
-	queue := list.New()
-	queue.PushBack(nodePair{root.Left, root.Right})
-	for queue.Len() > 0 {
-		pair := queue.Remove(queue.Front()).(nodePair)
-		if pair.left == nil && pair.right == nil {
-			continue
-		}
-		if pair.left == nil || pair.right == nil || pair.left.Val != pair.right.Val {
-			return false
-		}
-		queue.PushBack(nodePair{pair.left.Left, pair.right.Right})
-		queue.PushBack(nodePair{pair.left.Right, pair.right.Left})
-	}
-	return true
-}
-
 func isSymmetricDFS(root *TreeNode) bool {
 	stack := []nodePair{{root.Left, root.Right}}
 	for len(stack) > 0 {
@@ -54,6 +37,23 @@ func isSymmetricDFS(root *TreeNode) bool {
 			{pair.left.Left, pair.right.Right},
 			{pair.left.Right, pair.right.Left},
 		}...)
+	}
+	return true
+}
+
+func isSymmetricBFS(root *TreeNode) bool {
+	queue := list.New()
+	queue.PushBack(nodePair{root.Left, root.Right})
+	for queue.Len() > 0 {
+		pair := queue.Remove(queue.Front()).(nodePair)
+		if pair.left == nil && pair.right == nil {
+			continue
+		}
+		if pair.left == nil || pair.right == nil || pair.left.Val != pair.right.Val {
+			return false
+		}
+		queue.PushBack(nodePair{pair.left.Left, pair.right.Right})
+		queue.PushBack(nodePair{pair.left.Right, pair.right.Left})
 	}
 	return true
 }
