@@ -26,22 +26,22 @@ func addTwoNumbersIteratice(l1 *ListNode, l2 *ListNode) *ListNode {
 }
 
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-	return addTwoDigitsWithCarry(l1, l2, 0)
+	return addTwoNumbersWithCarry(l1, l2, 0)
 }
 
-func addTwoDigitsWithCarry(node1 *ListNode, node2 *ListNode, carry int) *ListNode {
-	if node1 == nil && node2 == nil && carry == 0 {
+func addTwoNumbersWithCarry(l1, l2 *ListNode, carry int) *ListNode {
+	if l1 == nil && l2 == nil && carry == 0 {
 		return nil
 	}
 	sum := carry
-	if node1 != nil {
-		sum += node1.Val
-		node1 = node1.Next
+	if l1 != nil {
+		sum += l1.Val
+		l1 = l1.Next
 	}
-	if node2 != nil {
-		sum += node2.Val
-		node2 = node2.Next
+	if l2 != nil {
+		sum += l2.Val
+		l2 = l2.Next
 	}
-	next := addTwoDigitsWithCarry(node1, node2, sum/10)
+	next := addTwoNumbersWithCarry(l1, l2, sum/10)
 	return &ListNode{sum % 10, next}
 }
