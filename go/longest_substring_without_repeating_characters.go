@@ -8,8 +8,8 @@ func lengthOfLongestSubstring(s string) int {
 	seen := make(map[byte]int, len(s))
 	for left, right := 0, 0; right < len(s); right++ {
 		c := s[right]
-		if i, ok := seen[c]; ok {
-			left = max(left, i+1)
+		if i, ok := seen[c]; ok && left <= i {
+			left = i + 1
 		}
 		seen[c] = right
 		maxLength = max(maxLength, right-left+1)
