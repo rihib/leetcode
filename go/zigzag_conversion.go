@@ -12,8 +12,8 @@ func convert(s string, numRows int) string {
 	rows := make([]strings.Builder, numRows)
 	blockSize := numRows*2 - 2
 	for i, r := range s {
-		offset := i % blockSize
 		var rowIndex int
+		offset := i % blockSize
 		if offset < numRows {
 			rowIndex = offset
 		} else {
