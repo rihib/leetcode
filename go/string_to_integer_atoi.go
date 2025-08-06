@@ -7,22 +7,22 @@ import (
 )
 
 func myAtoi(s string) int {
-	currentIndex := 0
-	for currentIndex < len(s) && s[currentIndex] == ' ' {
-		currentIndex++
+	index := 0
+	for index < len(s) && s[index] == ' ' {
+		index++
 	}
 	signum := 1
-	if currentIndex < len(s) {
-		switch s[currentIndex] {
+	if index < len(s) {
+		switch s[index] {
 		case '+':
-			currentIndex++
+			index++
 		case '-':
 			signum = -1
-			currentIndex++
+			index++
 		}
 	}
 	n := 0
-	for i := currentIndex; i < len(s); i++ {
+	for i := index; i < len(s); i++ {
 		digit, err := strconv.Atoi(string(s[i]))
 		if err != nil {
 			break
