@@ -19,13 +19,16 @@ func searchHalfClosed(nums []int, target int) int {
 		// left == midになってもバグらないためである
 		// 単にたまたまバグらないだけで、意味的にnums[left] <= nums[mid]の方が適切
 		if nums[left] <= nums[mid] {
-			if nums[left] <= target && target < nums[mid] { // leftがtargetの可能性もあるので<=とする
+			// left = targetの可能性もあるので<=とする
+			if nums[left] <= target && target < nums[mid] {
 				right = mid
 			} else {
 				left = mid + 1
 			}
 		} else {
-			if nums[mid] < target && target <= nums[right-1] { // rightは最初は範囲外なので-1をする。その場合right-1は未探索なので<=とする
+			// rightは探索済みであり、また最初は範囲外でエラーになてしまうので right-1 を使う
+			// right-1 は未探索なので <= とする
+			if nums[mid] < target && target <= nums[right-1] {
 				left = mid + 1
 			} else {
 				right = mid
