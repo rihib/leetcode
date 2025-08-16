@@ -58,13 +58,14 @@ func combinationSumBacktrackingIterative(candidates []int, target int) [][]int {
 func combinationSumDP(candidates []int, target int) [][]int {
 	memo := make([][][]int, target+1)
 	memo[0] = [][]int{{}}
-	for _, c := range candidates {
+	for _, n := range candidates {
 		for sum, combinations := range memo {
-			if sum+c > target {
-				break
+			if sum+n > target {
+				continue
 			}
 			for _, comb := range combinations {
-				memo[sum+c] = append(memo[sum+c], append(slices.Clone(comb), c))
+				newCombination := append(slices.Clone(comb), n)
+				memo[sum+n] = append(memo[sum+n], newCombination)
 			}
 		}
 	}
